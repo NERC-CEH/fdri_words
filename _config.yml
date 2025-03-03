@@ -1,0 +1,40 @@
+# _config.yml
+
+# Site settings
+title: "FDRI WP2 Development Weeknotes"
+description: "Weekly updates on digital developments in FDRI WP2"
+baseurl: "/fdri_words"
+url: "https://nerc-ceh.github.io"
+
+# FDRI theme settings
+fdri:
+  main_color: "#007C91" # FDRI teal color
+  accent_color: "#E64415" # FDRI orange accent
+  text_color: "#333333"
+  link_color: "#007C91"
+  footer_text: "FDRI | Work Package 2"
+  github_url: "https://github.com/nerc-ceh/fdri_words"
+  fdri_website: "https://fdri.org.uk"
+
+# Build settings
+markdown: kramdown
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  weeknotes:
+    output: true
+    permalink: /:collection/:name/
+
+# Default front matter for posts
+defaults:
+  - scope:
+      path: ""
+      type: "weeknotes"
+    values:
+      layout: "weeknote"
+      author: "domgin@ceh.ac.uk"

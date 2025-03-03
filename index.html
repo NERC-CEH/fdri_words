@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<div class="home">
+  <h2>Latest Weeknotes</h2>
+  
+  <ul class="weeknotes-list">
+    {% assign sorted_weeknotes = site.weeknotes | sort: 'date' | reverse %}
+    {% for weeknote in sorted_weeknotes limit:5 %}
+    <li class="weeknote-item">
+      <h3>
+        <a class="weeknote-link" href="{{ weeknote.url | relative_url }}">{{ weeknote.title }}</a>
+      </h3>
+      <div class="weeknote-meta">
+        <span class="weeknote-date">{{ weeknote.date | date: "%d %B %Y" }}</span>
+        {% if weeknote.week_number %} • Week {{ weeknote.week_number }}{% endif %}
+      </div>
+      <div class="weeknote-summary">
+        {{ weeknote.excerpt | strip_html | truncate: 200 }}
+      </div>
+      <a href="{{ weeknote.url | relative_url }}">Read more &raquo;</a>
+    </li>
+    {% endfor %}
+  </ul>
+  
+  <p class="view-all"><a href="{{ '/weeknotes' | relative_url }}">View all weeknotes</a></p>
+</div>
