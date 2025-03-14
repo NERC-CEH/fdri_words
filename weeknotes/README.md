@@ -1,4 +1,1 @@
----
-redirect_from:
-  - /fdri_words
----
+# [FDRI Words](/fdri_words)
