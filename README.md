@@ -1,3 +1,9 @@
+---
+redirect_from:
+  - /fdri_words/weeknotes
+  - /weeknotes
+---
+
 # FDRI Words
 
 Weekly updates for the Floods and Droughts Research Infrastructure Work Package 2 Digital Development projects.
