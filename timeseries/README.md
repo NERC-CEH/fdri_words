@@ -9,6 +9,6 @@ Documentation and notes about the timeseries project
 
 
 ### Discussions
-- [20250528-api-planning](20250528-api-planning.html)
-- [20250528-architecture-golf](20250528-architecture-golf.html)
-- [20250529-data-storage](20250529-data-storage.html)
+- [discussions/20250528-api-planning](discussions/20250528-api-planning.html)
+- [discussions/20250528-architecture-golf](discussions/20250528-architecture-golf.html)
+- [discussions/20250529-data-storage](discussions/20250529-data-storage.html)
