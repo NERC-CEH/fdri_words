@@ -9,6 +9,7 @@ Documentation and notes about the timeseries project
 
 ### Diagrams
 - [diagrams/overview.drawio.png](diagrams/overview.drawio.png)
+- [diagrams/tech-choices.drawio.png](diagrams/tech-choices.drawio.png)
 
 ### Discussions
 - [discussions/20250528-api-planning](discussions/20250528-api-planning.html)
