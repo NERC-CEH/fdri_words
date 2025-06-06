@@ -7,6 +7,8 @@ Documentation and notes about the timeseries project
 - [dri ui intro slides](dri-ui-intro-slides.html)
 - [ways of working](ways-of-working.html)
 
+### Diagrams
+- [diagrams/overview.drawio.png](diagrams/overview.drawio.png)
 
 ### Discussions
 - [discussions/20250528-api-planning](discussions/20250528-api-planning.html)
