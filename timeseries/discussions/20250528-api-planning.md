@@ -6,7 +6,7 @@ Endpoints to create:
 - /v1/networks -> list of networks cosmos/fdri/etc
 - /v1/fdri/sites/(x) -> list of sites + variable info resolution, location
 - /v1/fdri/variables/(x) -> sites, units, resolution, process_level
-- /v1/fdri/data?sites=[]&start_date=x&end_date=y&resolution=z&dataset=aa&&aggregation=bb
+- /v1/fdri/data?sites=[]&start_date=x&end_date=y&resolution=z&variables=[]aa&&aggregation=bb
 - /v1/fdri/data_availability (maybe covered in /variables)
 - /v1/fdri/datasets -> CHESS_catchment_rainfall = list of ts ids
 - /v1/fdri/timeseries_ids -> precip_1min_raw_bunny
