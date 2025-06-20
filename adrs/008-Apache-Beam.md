@@ -60,6 +60,13 @@ that sets out the jobs we need to do to convert and rechunk the data),
 and make the pipeline code easier for users to understand and write/edit
 if necessary.
 
+We have discovered some disadvantages during our use of Beam:
+- Whilst support for Dask and Spark is present, deployment is time-consuming, buggy and difficult, hence we have had to stick with the 'test' 'DirectRunner' deployment of Beam which is not designed for 'operational' workloads and therefore has some limitations and is not 100% reliable.
+- The parallelisation of this runner is particularly flaky, especially when reading/writing from object storage as there is no 'retries' option for failed HTTP requests, so we are in practice limited to only using one worker, which slows down the conversion process.
+- We have also discovered memory issues when datasets start to reach O(100GB). Beam is, from what I am aware, meant to efficiently and automatically handle memory management, but the DirectRunner clearly struggles when running with only 1 worker.
+
+For now it remains the best choice over directly using Dask and Xarray and Kerchunk due to the convenience of integration with Pangeo-forge-recipes which allows a one-size-fits-all approach to developing scripts for data conversion. The development focus of the pangeo community has shifted towards Kerchunk and VirtualiZarr instead of pangeo-forge-recipes, but these tools do not yet work for us due to Zarr's inability to handle varying chunk sizes within one dataset, which is common amongst the datasets we work with. 
+
 ### Positive Consequences
 
 - Much less development work needed (already been done by
@@ -84,7 +91,7 @@ if necessary.
 
 ### \[Beam\]
 
-See above
+See above.
 
 <https://beam.apache.org/>
 
