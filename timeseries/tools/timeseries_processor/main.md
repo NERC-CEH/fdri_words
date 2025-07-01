@@ -10,17 +10,17 @@ This documentation will provide a higher level overview of the application. For 
 2. [Components](#components)
     1. [Inputs](#inputs)
     2. [Building timeseries IDs to process](#building-timeseries-ids-to-process)
-    3. [Corrections](#corrections)
-    4. [Quality control](#quality-control)
-    5. [Infilling](#infilling)
-    6. [Aggregation and Derivation](#aggregation-and-derivation)
-    7. [Outputs](#outputs)
-3. [Flags](#flags)
-4. [Glossary](#glossray)
+    3. [Flags](#flags)
+    4. [Corrections](#corrections)
+    5. [Quality control](#quality-control)
+    6. [Infilling](#infilling)
+    7. [Aggregation and Derivation](#aggregation-and-derivation)
+    8. [Outputs](#outputs)
+3. [Glossary](#glossray)
 
 
 ## Introduction
-The timeseries processor handles the processing of timeseries data within the FDRI project and is powered by configurations available through the [metadata store](https://dri-metadata-api.staging.eds.ceh.ac.uk/doc/reference). It takes level 0 data, which has been ingested through the [ingester application](https://github.com/NERC-CEH/dri-ingestion), processes the data based on the configurations, and exports the data into a database.
+The timeseries processor handles the processing and checking of timeseries data within the FDRI project and is powered by configurations available through the [metadata store](https://dri-metadata-api.staging.eds.ceh.ac.uk/doc/reference). It takes level 0 data, which has been ingested through the [ingester application](https://github.com/NERC-CEH/dri-ingestion), processes the data based on the configurations, and exports the data into a database.
 
 The tool is a python application which takes a set of arguments (see [Inputs](#inputs)). The processor runs automatically at X every day via a workflow orchestration tool called Argo Workflows which is hosted in the FDRI kubernetes cluster. This is managed in the [kubernetes infrastructure repository](https://github.com/NERC-CEH/dri-infrastructure-k8s-staging). The application can also be run as a one-off job as and when required.
 
@@ -199,6 +199,75 @@ All the metadata required to process the requested timeseries IDs has now been c
 
 <[back to table of contents](#table-of-contents)>
 
+### Flags ###
+
+---
+
+A flagging system is used to keep track of what tests have been undertaken as part of the processing. Each column will have a set of core tests that are checked and then additional flags are added to the timestream object based on what component of the processing they relate to. For example, the timeseries for `SWOUT` has core tests and ones for all the components.
+
+```
+┌─────────────────────────┬───────┬─────────────────┬───────────────┬───────────────┬───────────────────┐
+│ time                    ┆ SWOUT ┆ SWOUT_CORE_FLAG ┆ SWOUT_PR_FLAG ┆ SWOUT_QC_FLAG ┆ SWOUT_INFILL_FLAG │
+│ ---                     ┆ ---   ┆ ---             ┆ ---           ┆ ---           ┆ ---               │
+│ datetime[μs, UTC]       ┆ f64   ┆ i64             ┆ i64           ┆ i64           ┆ i64               │
+╞═════════════════════════╪═══════╪═════════════════╪═══════════════╪═══════════════╪═══════════════════╡
+│ 2024-03-08 00:00:00 UTC ┆ 1.265 ┆ 0               ┆ 0             ┆ 0             ┆ 0                 │
+```
+
+Configurations for the tests that can be run on the timeseries are currently stored within the repository, but these will likely be moved to the metadata store. Each test contains an `id` which is a multiple of two (representing a "bit" in a binary number) and is used as part of a bitwise flagging system.
+
+```
+        "corrected": {
+            "name": "Corrected",
+            "description": "Data point has been adjusted from original value.",
+            "symbol": "C",
+            "id": 1
+        },
+        "estimated": {
+            "name": "Estimated",
+            "description": "Data point is an estimate in some way, either through infilling techniques or incomplete derivation.",
+            "symbol": "E",
+            "id": 2
+        },
+        "missing": {
+            "name": "Missing",
+            "description": "Data point was not recorded.",
+            "symbol": "M",
+            "id": 4
+        },
+        "removed": {
+            "name": "Removed",
+            "description": "Data point was removed by QC.",
+            "symbol": "R",
+            "id": 8
+        },
+        "suspicious": {
+            "name": "Suspicious",
+            "description": "Data point is potentially erroneous or requiring further investigation.",
+            "symbol": "S",
+            "id": 16
+        },
+        "unchecked": {
+            "name": "Unchecked",
+            "description": "Data point has not been verified by QC.",
+            "symbol": "U",
+            "id": 32
+        }
+```
+
+If the data point fails a test, then the `id` is added to the flag column. This results in a integer which is a unique identifier for which tests have failed.
+
+```
+┌─────────────────────────┬───────┬─────────────────┬───────────────┬───────────────┬───────────────────┐
+│ time                    ┆ SWOUT ┆ SWOUT_CORE_FLAG ┆ SWOUT_PR_FLAG ┆ SWOUT_QC_FLAG ┆ SWOUT_INFILL_FLAG │
+│ ---                     ┆ ---   ┆ ---             ┆ ---           ┆ ---           ┆ ---               │
+│ datetime[μs, UTC]       ┆ f64   ┆ i64             ┆ i64           ┆ i64           ┆ i64               │
+╞═════════════════════════╪═══════╪═════════════════╪═══════════════╪═══════════════╪═══════════════════╡
+│ 2024-03-08 00:00:00 UTC ┆ 1.265 ┆ 50               ┆ 7             ┆ 10             ┆ 0                 │
+```
+For example, SWOUT failed the `estimated`, `suspicious` and `unchecked` core tests, and didnt fail any infilling tests.
+
+
 ### Corrections
 
 ---
@@ -238,11 +307,6 @@ Sample text here
 <[back to table of contents](#table-of-contents)>
 
 
-## Flags
-
-
-
-
 
 ## Glossary
 
@@ -250,10 +314,10 @@ Sample text here
 
 **Level minus 1**: Level minus 1 data is the raw data directly from the sensor.
 
-**Level 0**: Level 0 data is the raw data (level minus 1) from the sensor that has been validated against an expected schema and saved to parquet files
+**Level 0**: Level 0 data is the raw data (level minus 1) from the sensor that has been validated against an expected schema and saved to parquet files.
 
-**Timeseries ID**:
+**Timeseries definition**: A timeseries defined by a network, column, processing level and period e.g. `http://fdri.ceh.ac.uk/ref/cosmos/time-series/precip_30min_raw`
 
-**Timeseries definition**:
+**Timeseries ID**: A timeseries definition for a particular site e.g. `cosmos-chobh-precip_30min_raw`. A timeseries definition will contain several timeseries IDs.
 
 <[back to table of contents](#table-of-contents)>
