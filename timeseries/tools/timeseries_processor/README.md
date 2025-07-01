@@ -310,8 +310,6 @@ Sample text here
 
 ## Glossary
 
----
-
 **Level minus 1**: Level minus 1 data is the raw data directly from the sensor.
 
 **Level 0**: Level 0 data is the raw data (level minus 1) from the sensor that has been validated against an expected schema and saved to parquet files.
