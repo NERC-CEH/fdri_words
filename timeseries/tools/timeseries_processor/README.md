@@ -39,7 +39,11 @@ Insert flowchart
 
 The application takes a variety of user inputs entered as command-line arguments. These arguments define the date range and the timeseries IDs to be processed.
 
-> period (**required**):\
+> --network (**required**):\
+The network to process
+- Must be a valid network (e.g cosmos or fdri)
+
+> --period (**required**):\
 The period of time to process
 - Must be a valid [ISO8601 duration](https://docs.digi.com/resources/documentation/digidocs/90001488-13/reference/r_iso_8601_duration_format.htm)
 - Must not have a time component
@@ -71,34 +75,34 @@ The period(s) to process
 
 Some examples:
 
-Get the last two days data for all sites, columns and periodicities
+Get the last two days data for cosmos for all sites, columns and periodicities
 
 ```
-python -m dritimeseriesprocessor P2D
+python -m dritimeseriesprocessor --period=P2D --network=cosmos
 ```
 
-Get the last two days data from 2024-03-05 for all sites, columns and periodicities
+Get the last two days data from 2024-03-05 for cosmos for all sites, columns and periodicities
 
 ```
-python -m dritimeseriesprocessor P2D --end_date=2024-03-05
+python -m dritimeseriesprocessor --period=P2D --network=cosmos --end_date=2024-03-05
 ```
 
-Get the last months data from 2024-03-05 for ALCI and BUNNY sites and all columns and periodicities
+Get the last months data from 2024-03-05 for cosmos ALCI and BUNNY sites and all columns and periodicities
 
 ```
-python -m dritimeseriesprocessor P1M --end_date=2024-03-05 --sites=alic1,bunny
+python -m dritimeseriesprocessor --period=P1M --network=cosmos --end_date=2024-03-05 --sites=alic1,bunny
 ```
 
-Get the last two days data from 2024-03-05 for ALCI and BUNNY sites, variables TA and PA and all periodicities
+Get the last two days data from 2024-03-05 for cosmos ALCI and BUNNY sites, variables TA and PA and all periodicities
 
 ```
-python -m dritimeseriesprocessor P2D --end_date=2024-03-05 --sites=alic1,bunny --columns=TA,PA
+python -m dritimeseriesprocessor --period=P2D --network=cosmos --end_date=2024-03-05 --sites=alic1,bunny --columns=TA,PA
 ```
 
-Get the last two days data from 2024-03-05 for ALCI and BUNNY sites, variables TA and PA and a periodicity of 30 mins
+Get the last two days data from 2024-03-05 for cosmos ALCI and BUNNY sites, variables TA and PA and a periodicity of 30 mins
 
 ```
-python -m dritimeseriesprocessor P2D --end_date=2024-03-05 --sites=alic1,bunny --columns=TA,PA --periodicity=PT30M
+python -m dritimeseriesprocessor --period=P2D --network=cosmos --end_date=2024-03-05 --sites=alic1,bunny --columns=TA,PA --periodicity=PT30M
 ```
 
 <[back to table of contents](#table-of-contents)>
@@ -124,7 +128,7 @@ Finally, some additional metadata (`method_type` and `inputs`) are added from th
 Below is an example output of these processes when the processing is run with the following arguments.
 
 ```
-python -m dritimeseriesprocessor P2D --sites=eastb --columns=WD --periodicity=PT30M
+python -m dritimeseriesprocessor --period=P2D --network=cosmos --sites=eastb --columns=WD --periodicity=PT30M
 ```
 
 ```
