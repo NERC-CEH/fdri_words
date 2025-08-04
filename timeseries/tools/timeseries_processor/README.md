@@ -140,7 +140,7 @@ python -m dritimeseriesprocessor --period=P2D --network=cosmos --sites=eastb --c
         "resolution": "PT30M",
         "periodicity": "PT30M",
         "processing_level": "processed",
-        "sourceBucket": "ukceh-fdri-staging-timeseries-qc",
+        "sourceBucket": "ukceh-fdri-staging-timeseries-processed",
         "sourceDataset": "PROCESSED_DATA_30MIN",
         "sourceColumnName": "WD",
         "sourceSite": "EASTB",
