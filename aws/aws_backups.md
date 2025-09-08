@@ -2,6 +2,8 @@
 
 Some notes on using [AWS Backup](https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html) for s3. We currently [backup the m1 bucket](https://github.com/NERC-CEH/dri-infrastructure/blob/main/staging/modules/backups/main.tf) hourly, but all backups (for s3 and other resources) will likely be managed from a central account in the future.
 
+Using [periodic (snapshot)](https://docs.aws.amazon.com/aws-backup/latest/devguide/s3-backups.html#compare-s3-backup-types) backups rather than continuous because of the small rentention time for continuous backups, and the fact that the bucket contents change every minute.
+
 ## Requirement for s3 backups
 * The bucket must have versioning
 * The bucket must have ACL enabled
