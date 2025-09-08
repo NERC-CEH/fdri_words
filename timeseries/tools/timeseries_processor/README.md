@@ -14,8 +14,9 @@ This documentation will provide a higher level overview of the application. For 
     4. [Corrections](#corrections)
     5. [Quality control](#quality-control)
     6. [Infilling](#infilling)
-    7. [Aggregation and Derivation](#aggregation-and-derivation)
-    8. [Outputs](#outputs)
+    7. [Aggregation](#aggregation)
+    8. [Derivation](#derivation)
+    9. [Outputs](#outputs)
 3. [Glossary](#glossray)
 
 
@@ -216,7 +217,7 @@ All the metadata required to process the requested timeseries IDs has now been c
 
 ---
 
-A flagging system is used to keep track of what tests have been undertaken as part of the processing. Each column will have a set of core tests that are checked and then additional flags are added to the timestream object based on what component of the processing they relate to. For example, the timeseries for `SWOUT` has core tests and ones for all the components.
+A flagging system is used to keep track of what tests have been undertaken as part of the processing. Each column will have a set of core tests that are checked and then additional flags are added to the [Timestream](https://nerc-ceh.github.io/time-stream/) object based on what component of the processing they relate to. For example, the timeseries for `SWOUT` has core tests and ones for all the components.
 
 ```
 ┌─────────────────────────┬───────┬─────────────────┬───────────────┬───────────────┬───────────────────┐
@@ -285,7 +286,7 @@ For example, SWOUT failed the `estimated`, `suspicious` and `unchecked` core tes
 
 ---
 
-Corrections are where known adustments are purposely made to data. If for example, a sensor has had an incorrect calibration value applied, the raw data can be corrected at this point.
+Corrections are where known adjustments are purposely made to data. If for example, a sensor has had an incorrect calibration value applied, the raw data can be corrected at this point.
 
 There are three basic adjustment methods:
 1. **Addition**: Add a correction factor to values. y=x + C
@@ -354,7 +355,7 @@ There are three base types of QC tests:
 2. **Spike test**: Pick out spikes above a given threshold.
 3. **Comparison test**: Compare values against a threshold, either above, bleow or equal to.
 
-These come as methods of the TimeSeries object from TimeStream. The comparison test is used in particular as the base to many bespoke tests.
+These come as methods of the TimeSeries object from [Timestream](https://nerc-ceh.github.io/time-stream/). The comparison test is used in particular as the base to many bespoke tests.
 QC methods are registered in the codebase:
 ```
 src/metadata_manager/models/methods/qc_methods.json
@@ -484,7 +485,7 @@ Parameters required by infilling methods may include:
 
 When a data point is infilled, the corresponding flag is set in the flag column (e.g., `TA_INFILL_FLAG`). This allows users to identify which values have been estimated and by which method.
 
-Infilling occurs after [quality control](#quality-control) on all measured data. Infilling is then applyied after each step of [aggregation](#aggregation) and [derivation](#derivation).
+Infilling occurs after [quality control](#quality-control) on all measured data. Infilling is then applied after each step of [aggregation](#aggregation) and [derivation](#derivation).
 
 
 <[back to table of contents](#table-of-contents)>
@@ -504,7 +505,7 @@ Aggregation methods are registered in the codebase:
 ```
 src/metadata_manager/models/methods/aggregation_methods.json
 ```
-Note, the aggregation functionality is built into TimeStream.
+Note, the aggregation functionality is built into [Timestream](https://nerc-ceh.github.io/time-stream/).
 
 Example configuration:
 ```
@@ -543,7 +544,7 @@ Aggregation is configured via metadata, which specifies:
 
 Aggregration (and derivation) metadata configs are found here:
 ```
-{self.host}/id/dataset/{timeseries_id}/_dependencies
+https://dri-metadata-api.staging.eds.ceh.ac.uk/id/dataset/{timeseries_id}/_dependencies
 ```
 
 Aggregation occurs in conjuction with [derivation](#derivation) in the processing pipeline.
@@ -593,7 +594,7 @@ Derivation is configured via metadata, which specifies:
 
 Derivation (and aggregation) configs are found here:
 ```
-{self.host}/id/dataset/{timeseries_id}/_dependencies
+https://dri-metadata-api.staging.eds.ceh.ac.uk/id/dataset/{timeseries_id}/_dependencies
 ```
 
 Derivation occurs alongside [aggregation](#aggregation) in the processing pipeline.
