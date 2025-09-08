@@ -443,15 +443,161 @@ QC results are stored in dedicated flag columns (e.g., `SWOUT_QC_FLAG`)
 
 ---
 
-Sample text here
+Infilling is the process of estimating and filling in missing or removed data points within a timeseries. This ensures continuity and completeness of the dataset.
+
+There are currently two types of infilling methods implemented:
+1. **Interpolation**: Estimates missing values by interpolating between known data points.
+2. **Alternative data**: Uses values from a related timeseries.
+
+Infilling methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/infilling_methods.json
+```
+Example configuration:
+```
+{
+    "linear_linear": {
+        "name": "Linear interpolation",
+        "description": "Linear interpolation. Creates straight line through the gap",
+        "id": 1,
+        "function_name": "linear"
+    },
+    "alt_data": {
+        "name": "Alternate data",
+        "description": "Use alternate data source to fill gaps",
+        "id": 2,
+        "function_name": "alt_data"
+    }
+}
+```
+Each infilling method includes an `id` used for flagging, as described in the [Flags](#flags) section.
+
+Infilling is configured via metadata, which specifies:
+- **A timeseries**, e.g. 30 minute temperature at site Bunny Park
+- **An infilling method** (and parameters), e.g. linear interpolation for max gap size 6
+- **A date period**, e.g. apply infilling between 2020-01-01 and 2020-02-01
+- **A priority**, Where multple infill methods are available for a gap, this determines which use first.
+
+Parameters required by infilling methods may include:
+- **Max gap size**
+- **Alternative data timeseries**
+
+When a data point is infilled, the corresponding flag is set in the flag column (e.g., `TA_INFILL_FLAG`). This allows users to identify which values have been estimated and by which method.
+
+Infilling occurs after [quality control](#quality-control) on all measured data. Infilling is then applyied after each step of [aggregation](#aggregation) and [derivation](#derivation).
+
 
 <[back to table of contents](#table-of-contents)>
 
-### Aggregation and Derivation
+### Aggregation
 
 ---
 
-Sample text here
+Aggregation is the process of transforming timeseries data into new time periods by combining multiple data points into summary values over a specified interval.
+
+There are several types of aggregation methods implemented:
+1. **Sum**: Adds up all values within the aggregation period.
+2. **Mean**: Calculates the average value within the aggregation period.
+3. **Min/Max**: Finds the minimum or maximum value within the aggregation period.
+
+Aggregation methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/aggregation_methods.json
+```
+Note, the aggregation functionality is built into TimeStream.
+
+Example configuration:
+```
+{
+  "aggregate-sum": {
+    "name": "Aggregate Sum",
+    "description": "Aggregate to the total value for the required time resolution",
+    "id": 1,
+    "function_name": "sum"
+  },
+  "aggregate-mean": {
+    "name": "Aggregate Mean",
+    "description": "Aggregate to the mean value for the required time resolution",
+    "id": 2,
+    "function_name": "mean"
+  },
+  "aggregate-max": {
+    "name": "Aggregate Max",
+    "description": "Aggregate to the maximum value for the required time resolution",
+    "id": 3,
+    "function_name": "max"
+  },
+  "aggregate-min": {
+    "name": "Aggregate Min",
+    "description": "Aggregate to the minimum value for the required time resolution",
+    "id": 4,
+    "function_name": "min"
+  }
+}
+```
+
+Aggregation is configured via metadata, which specifies:
+- **Dependant timeseries**, e.g. 30 minute precipitation at site Bunny Park (for daily preip)
+- **An aggregation method**, e.g. sum for daily totals
+
+
+Aggregration (and derivation) metadata configs are found here:
+```
+{self.host}/id/dataset/{timeseries_id}/_dependencies
+```
+
+Aggregation occurs in conjuction with [derivation](#derivation) in the processing pipeline.
+
+
+<[back to table of contents](#table-of-contents)>
+
+### Derivation
+
+---
+
+Derivation is the process of calculating new timeseries data from existing measurements using mathematical or logical operations. This allows for the creation of derived variables that are not directly measured but are important for analysis.
+
+Derivation methods are all bespoke, they are registered in the codebase:
+```
+src/metadata_manager/models/methods/derivation_methods.json
+```
+Example configuration:
+```
+{
+  "calculate-calculate_pe": {
+    "name": "Potential evaporation 30 minutes",
+    "description": "Potential evaporation calculated at a 30 minute time resultion.",
+    "id": 1,
+    "function_name": "PotentialEvapotranspiration30Min"
+  },
+  "calculate-calculate_rn": {
+    "name": "Net Radiation",
+    "description": "Net radiation calculated at a 30 minute time resolution.",
+    "id": 2,
+    "function_name": "NetRadiation"
+  },
+}
+```
+The functionality for each method is built into a class that inherts from a `Calculation` class found here:
+```
+src/dritimeseriesprocessor/deriving/calculation.py
+```
+Each specifc derivation class is found here:
+```
+src/dritimeseriesprocessor/deriving/derivations.py
+```
+
+Derivation is configured via metadata, which specifies:
+- **Input timeseries**, e.g. SWIN, SWOUT, LWIN, LWOUT for Net radiation calculation
+- **A derivation method**, e.g. calculate_rn
+
+Derivation (and aggregation) configs are found here:
+```
+{self.host}/id/dataset/{timeseries_id}/_dependencies
+```
+
+Derivation occurs alongside [aggregation](#aggregation) in the processing pipeline.
+
 
 <[back to table of contents](#table-of-contents)>
 
