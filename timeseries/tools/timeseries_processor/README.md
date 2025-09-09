@@ -14,8 +14,9 @@ This documentation will provide a higher level overview of the application. For 
     4. [Corrections](#corrections)
     5. [Quality control](#quality-control)
     6. [Infilling](#infilling)
-    7. [Aggregation and Derivation](#aggregation-and-derivation)
-    8. [Outputs](#outputs)
+    7. [Aggregation](#aggregation)
+    8. [Derivation](#derivation)
+    9. [Outputs](#outputs)
 3. [Glossary](#glossray)
 
 
@@ -216,7 +217,7 @@ All the metadata required to process the requested timeseries IDs has now been c
 
 ---
 
-A flagging system is used to keep track of what tests have been undertaken as part of the processing. Each column will have a set of core tests that are checked and then additional flags are added to the timestream object based on what component of the processing they relate to. For example, the timeseries for `SWOUT` has core tests and ones for all the components.
+A flagging system is used to keep track of what tests have been undertaken as part of the processing. Each column will have a set of core tests that are checked and then additional flags are added to the [Timestream](https://nerc-ceh.github.io/time-stream/) object based on what component of the processing they relate to. For example, the timeseries for `SWOUT` has core tests and ones for all the components.
 
 ```
 ┌─────────────────────────┬───────┬─────────────────┬───────────────┬───────────────┬───────────────────┐
@@ -285,7 +286,61 @@ For example, SWOUT failed the `estimated`, `suspicious` and `unchecked` core tes
 
 ---
 
-Sample text here
+Corrections are where known adjustments are purposely made to data. If for example, a sensor has had an incorrect calibration value applied, the raw data can be corrected at this point.
+
+There are three basic adjustment methods:
+1. **Addition**: Add a correction factor to values. y=x + C
+2. **Scalar**: Multiply values by a correction factor. y=Cx
+3. **Power**: Raise values to the power of a correction factor. y=x^C
+
+Additional methods can also be added for more bespoke corrections, for example the long wave correction method where correcting long wave value affected by incorrect calibration values is more complex than a simple scalar.
+
+Correction methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/correction_methods.json
+```
+```
+{
+    "add": {
+        "name": "ADD",
+        "description": "Sum the data point and correction value. E.g. y=x+ C, where x is the data point and C is the change factor.",
+        "id": 1,
+        "function_name": "add" 
+    },
+    "lw_corr": {
+        "name": "LW_CORR",
+        "description": "Correction for long wave radiation where calibration values are incorrect.",
+        "id": 2,
+        "function_name": "lw"
+    },
+    "scalar": {
+        "name": "SCALAR",
+        "description": "Multiply the data point by a correction factor. E.g. y=Cx where x is the data point and C is the correction factor.",
+        "id": 4,
+        "function_name": "multiply"
+    },
+}
+```
+Each correction method includes an `id` that is used as a [flag](#flags) value where the method is applied.
+
+The methods themselves are saved as classes here:
+```
+src/dritimeseriesprocessor/correcting/operations.py
+```
+Each has an `apply` method where the correction method is implemented, and a `name` attribute that matches the "function_name" in the method registery.
+
+The data on which each method is applied is determined by metadata configs. Each config references:
+- **A timeseries**, e.g. 30 minute air pressure at site Bunny Park
+- **A correction method** (and parameters), e.g. apply scalar method with correction factor 1.23
+- **A date period**, e.g. apply correction between 1-1-2020 10:00 and 2-2-2020 17:30
+
+Each correction method requires a set of parameters. For the addition, scalar and power methods, this is a single numeric correction factor. For other methods this could be more.
+There are three types of parameter a correction method can take:
+- **Correction factors** - These are always numeric
+- **Dependant timeseries** - Other datasets required to make the adjustment, for example, there is a wind direction correction the requires UX and UY wind components
+- **Site attributes** - Site information required to make the adjustment, for example, an air pressure correction that requires site altitude.
+
+With all this information the correction code is able to apply the adjustments and flag the data accordingly.
 
 <[back to table of contents](#table-of-contents)>
 
@@ -293,7 +348,95 @@ Sample text here
 
 ---
 
-Sample text here
+Quality control (QC) is the process of identifying and handling data points that appear may be erroneous. The timeseries processor applies a series of QC tests to each timeseries, flagging data points according to the outcome of these tests.
+
+There are three base types of QC tests:
+1. **Range test**: Ensure values fall within expected minimum and maximum thresholds.
+2. **Spike test**: Pick out spikes above a given threshold.
+3. **Comparison test**: Compare values against a threshold, either above, bleow or equal to.
+
+These come as methods of the TimeSeries object from [Timestream](https://nerc-ceh.github.io/time-stream/). The comparison test is used in particular as the base to many bespoke tests.
+QC methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/qc_methods.json
+```
+Example configuration:
+```
+{
+    "range": {
+        "name": "Range check",
+        "description": "Checks if the value falls within a specified range",
+        "id": 1,
+        "function_name": "range",
+        "arg_mapping": {
+            "min_value": "lt",
+            "max_value": "gt"
+        },
+        "kwargs": {
+            "within": false
+        }
+    },
+    "battery_v": {
+        "name": "Battery voltage check",
+        "description": "Checks that the battery voltage level is above the threshold",
+        "id": 2,
+        "function_name": "comparison",
+        "arg_mapping": {
+            "compare_to": "lt"
+        },
+        "kwargs": {
+            "operator": "<"
+        }
+    },
+    "samples": {
+        "name": "Samples check",
+        "description": "Checks if the number of samples taken in measuring period are too low.",
+        "id": 4,
+        "function_name": "comparison",
+        "arg_mapping": {
+            "compare_to": "lt"
+        },
+        "kwargs": {
+            "operator": "<"
+        }
+    },
+    "error_code": {
+        "name": "Error codes check",
+        "description": "Check for specific error codes",
+        "id": 8,
+        "function_name": "comparison",
+        "arg_mapping": {
+            "compare_to": "value"
+        },
+        "kwargs": {
+            "operator": "is_in"
+        }
+    },
+    "spike": {
+        "name": "Spike check",
+        "description": "Checks for individual spikes in data that exceed a threshold",
+        "id": 16,
+        "function_name": "spike",
+        "arg_mapping": {
+            "threshold": "gt"
+        }
+    },
+}
+```
+Each QC test includes an `id` used for flagging.
+
+The data on which each test is applied is determined by metadata configs. Each config references:
+- **A timeseries**, e.g. 30 minute air pressure at site Bunny Park
+- **A QC test** (and parameters), e.g. spike checks with threshold 100
+
+Each test requires a set of parameters. There are a number of parameter a QC test can have:
+- **Dependant timeseries** - Other datasets required to test against, for example, look at battery voltage being high enough to trust a pressure sensor reading.
+- **Threshold values** - For example, min/max for range checks. This can also include times, for example, flag any values between 00:30 and 01:00.
+
+When a data point fails a QC test, the corresponding flag is set using the bitwise system described in the [Flags](#flags) section. This allows multiple QC outcomes to be tracked for each data point.
+
+QC results are stored in dedicated flag columns (e.g., `SWOUT_QC_FLAG`)
+
 
 <[back to table of contents](#table-of-contents)>
 
@@ -301,15 +444,161 @@ Sample text here
 
 ---
 
-Sample text here
+Infilling is the process of estimating and filling in missing or removed data points within a timeseries. This ensures continuity and completeness of the dataset.
+
+There are currently two types of infilling methods implemented:
+1. **Interpolation**: Estimates missing values by interpolating between known data points.
+2. **Alternative data**: Uses values from a related timeseries.
+
+Infilling methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/infilling_methods.json
+```
+Example configuration:
+```
+{
+    "linear_linear": {
+        "name": "Linear interpolation",
+        "description": "Linear interpolation. Creates straight line through the gap",
+        "id": 1,
+        "function_name": "linear"
+    },
+    "alt_data": {
+        "name": "Alternate data",
+        "description": "Use alternate data source to fill gaps",
+        "id": 2,
+        "function_name": "alt_data"
+    }
+}
+```
+Each infilling method includes an `id` used for flagging, as described in the [Flags](#flags) section.
+
+Infilling is configured via metadata, which specifies:
+- **A timeseries**, e.g. 30 minute temperature at site Bunny Park
+- **An infilling method** (and parameters), e.g. linear interpolation for max gap size 6
+- **A date period**, e.g. apply infilling between 2020-01-01 and 2020-02-01
+- **A priority**, Where multple infill methods are available for a gap, this determines which use first.
+
+Parameters required by infilling methods may include:
+- **Max gap size**
+- **Alternative data timeseries**
+
+When a data point is infilled, the corresponding flag is set in the flag column (e.g., `TA_INFILL_FLAG`). This allows users to identify which values have been estimated and by which method.
+
+Infilling occurs after [quality control](#quality-control) on all measured data. Infilling is then applied after each step of [aggregation](#aggregation) and [derivation](#derivation).
+
 
 <[back to table of contents](#table-of-contents)>
 
-### Aggregation and Derivation
+### Aggregation
 
 ---
 
-Sample text here
+Aggregation is the process of transforming timeseries data into new time periods by combining multiple data points into summary values over a specified interval.
+
+There are several types of aggregation methods implemented:
+1. **Sum**: Adds up all values within the aggregation period.
+2. **Mean**: Calculates the average value within the aggregation period.
+3. **Min/Max**: Finds the minimum or maximum value within the aggregation period.
+
+Aggregation methods are registered in the codebase:
+```
+src/metadata_manager/models/methods/aggregation_methods.json
+```
+Note, the aggregation functionality is built into [Timestream](https://nerc-ceh.github.io/time-stream/).
+
+Example configuration:
+```
+{
+  "aggregate-sum": {
+    "name": "Aggregate Sum",
+    "description": "Aggregate to the total value for the required time resolution",
+    "id": 1,
+    "function_name": "sum"
+  },
+  "aggregate-mean": {
+    "name": "Aggregate Mean",
+    "description": "Aggregate to the mean value for the required time resolution",
+    "id": 2,
+    "function_name": "mean"
+  },
+  "aggregate-max": {
+    "name": "Aggregate Max",
+    "description": "Aggregate to the maximum value for the required time resolution",
+    "id": 3,
+    "function_name": "max"
+  },
+  "aggregate-min": {
+    "name": "Aggregate Min",
+    "description": "Aggregate to the minimum value for the required time resolution",
+    "id": 4,
+    "function_name": "min"
+  }
+}
+```
+
+Aggregation is configured via metadata, which specifies:
+- **Dependant timeseries**, e.g. 30 minute precipitation at site Bunny Park (for daily preip)
+- **An aggregation method**, e.g. sum for daily totals
+
+
+Aggregration (and derivation) metadata configs are found here:
+```
+https://dri-metadata-api.staging.eds.ceh.ac.uk/id/dataset/{timeseries_id}/_dependencies
+```
+
+Aggregation occurs in conjuction with [derivation](#derivation) in the processing pipeline.
+
+
+<[back to table of contents](#table-of-contents)>
+
+### Derivation
+
+---
+
+Derivation is the process of calculating new timeseries data from existing measurements using mathematical or logical operations. This allows for the creation of derived variables that are not directly measured but are important for analysis.
+
+Derivation methods are all bespoke, they are registered in the codebase:
+```
+src/metadata_manager/models/methods/derivation_methods.json
+```
+Example configuration:
+```
+{
+  "calculate-calculate_pe": {
+    "name": "Potential evaporation 30 minutes",
+    "description": "Potential evaporation calculated at a 30 minute time resultion.",
+    "id": 1,
+    "function_name": "PotentialEvapotranspiration30Min"
+  },
+  "calculate-calculate_rn": {
+    "name": "Net Radiation",
+    "description": "Net radiation calculated at a 30 minute time resolution.",
+    "id": 2,
+    "function_name": "NetRadiation"
+  },
+}
+```
+The functionality for each method is built into a class that inherts from a `Calculation` class found here:
+```
+src/dritimeseriesprocessor/deriving/calculation.py
+```
+Each specifc derivation class is found here:
+```
+src/dritimeseriesprocessor/deriving/derivations.py
+```
+
+Derivation is configured via metadata, which specifies:
+- **Input timeseries**, e.g. SWIN, SWOUT, LWIN, LWOUT for Net radiation calculation
+- **A derivation method**, e.g. calculate_rn
+
+Derivation (and aggregation) configs are found here:
+```
+https://dri-metadata-api.staging.eds.ceh.ac.uk/id/dataset/{timeseries_id}/_dependencies
+```
+
+Derivation occurs alongside [aggregation](#aggregation) in the processing pipeline.
+
 
 <[back to table of contents](#table-of-contents)>
 
