@@ -123,6 +123,7 @@ metadata:
 https://github.com/NERC-CEH/dri-infrastructure-k8s-staging/blob/main/workloads/dri-ingestion/service-accounts.yaml#L41
 https://github.com/NERC-CEH/dri-infrastructure-k8s-staging/blob/main/workloads/dri-ingestion/deployment-phenocam.yaml#L17
 
+### 4. Check everything works
 
 With these 3 things in place, they should map together and allow the service to connect to the RDS database under the define postgres role. The connection can be tested with the following python code.
 
