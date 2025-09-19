@@ -1,6 +1,6 @@
 # Debugging inside the K8s Cluster
 
-To debug permissions (and maybe other things), it can be useful to spin up a debug pod and exec onto it, so things can be testing from within the k8s cluster.
+To debug permissions (and maybe other things), it can be useful to spin up a debug pod and exec onto it, so things can be tested from within the k8s cluster.
 
 One way to do this is create the following debug.yaml file (change the service account/namespace)
 
