@@ -23,12 +23,14 @@ For the latter, this covers permissions for all resources so could be filtered f
 ## Issues
 * Backups were failing for cosmos (probably due to permissions). Because of the volume of objects (~30,000,000) and the fact it was trying to backup up all of them every hour (because they kept failing) the costs started soaring. We could have tagged the cosmos data to remove from the backup plan, but this would have cost a good chunk of money. Hence, we switched off the backup plan and looked for other options.
 
+
 # s3 replication
 
-[s3 replication](https://aws.amazon.com/s3/features/replication/) allows you to replicate objects in your bucket via a [replication config](https://github.com/NERC-CEH/dri-infrastructure/pull/203). Rules can be set to replicate only certain objects. These rules are run on all new objects in the bucket. For our purposes we only want to replicate objects under the `fdri/fdri_sensors` and `nrfa` prefixes. With this in place, costs went up by around 5% from ~ $2 to ~$2.10.
+[s3 replication](https://aws.amazon.com/s3/features/replication/) allows you to replicate objects in your bucket via a [replication config](https://github.com/NERC-CEH/dri-infrastructure/pull/203). Rules can be set to replicate only certain objects. These rules are run on all new objects in the bucket. For our purposes we only want to replicate objects under the `fdri/fdri_sensors` and `nrfa` prefixes. With this in place, daily costs went up by around 5% from ~ $2 to ~$2.10.
 
 To replicate existing objects, you need to run a [batch replication](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-batch-replication-batch.html) job. The job requires a manifest that you can either provide or AWS can build for you. We had AWS build one for us to replicate all objects that had a replication status as `NONE` (i.e. they have never been replicated by the rules mentioned above). This cost ~ $50 for around 1.7 million objects.
 
 ## Some good to knows
 * The replication job for existing objects needs to be run through the console, not in Terraform. Its a one time job rather than a resource.
 * [Specific permissions](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-batch-replication-policies.html) are required for the batch replication.
+* Both source and destination bucket need versioning
