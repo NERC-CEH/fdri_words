@@ -231,17 +231,17 @@ following numbers:
 
 When looking at the proportion of time taken by each stage within a batch, it is clear that writing is the most time consuming (~57%), followed by the initial ingress stage (~37%). Validation (shown in yellow in the chart below) is negligible (~0.4%), and whilst deduplication takes longer than validation, it also only contributes a minor amount to the total processing time per batch (~6%).
 
-<img src="./images/performance_testing/mean_proportions_within_a_batch.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
+<img src="./images/mean_proportions_within_a_batch.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
 
 ### Batches containing multiple messages
 
 Looking at the same set of log messages, but without excluding multiple-message batches allows any economies of scale to become visible. The chart below shows both the total time per batch and the calculated total time per message within a batch, and clearly shows that whilst the total time per batch increases with more messages, on a per-message basis, each message is processed faster within the batch. 
 
-<img src="./images/performance_testing/total_message_time_economies_of_scale.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
+<img src="./images/total_message_time_economies_of_scale.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
 
 Looking at the individual stages within a batch, there are no clear trends visible in any changes to the proportion of time taken per stage in relation to the batch size. Ingress does appear to take slightly longer where a batch contains more than one message, and writing possibly a slightly shorter proportion of time, but these differences are relatively negligible. 
 
-<img src="./images/performance_testing/mean_proportions_within_a_batch_economies_of_scale.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
+<img src="./images/mean_proportions_within_a_batch_economies_of_scale.png" alt="Mean proportion of time taken per stage within a batch" height="400px">
 
 The table below shows the projected runtimes for various number of messages for a single site against the number of 
 messages within a batch. It is interesting to see how the projected runtimes reduce with the increasing number of messages within a batch. However it should be noted that in general, the source data for multiple messages within a batch comes from each batch processing multiple sites (e.g. 5 messages in a batch is a message for each of 5 sites). As such, these projected figures can only be considered a rough indication of performance for a single site with multiple messages.
