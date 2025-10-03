@@ -13,7 +13,7 @@ We discussed the technical aspects of building the architecture that would allow
 ## Second iteration - multiple files and metadata
 
 - The user can upload multiple files for the same batch
-- The user can enter their own batch name and some other metadata for the batch (person uploading, timestamp)
+- The user can enter their own batch name and some other metadata for the batch
 - Data and metadata zipped and sent to the ingester
 - Batch metadata added to the metadata API.
 - Data available to view in the UI.
