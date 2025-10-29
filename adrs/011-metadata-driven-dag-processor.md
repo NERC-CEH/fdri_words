@@ -59,71 +59,53 @@ This proposal outlines a **metadata-driven Directed Acyclic Graph (DAG)** method
 
 ```mermaid
 graph LR
-  %% === Layout Direction ===
-  %% LR = left-to-right
-  %% Nodes are grouped into subgraphs for readability
-
-  %% --- Base Sensor Inputs ---
-  subgraph BASE["Base Sensor Inputs"]
-    BATTV_RAW["BATTV_30MIN_RAW"]
-    SCANS_RAW["SCANS_30MIN_RAW"]
-    TA_RAW["TA_30MIN_RAW"]
-    TNR01C_RAW["TNR01C_30MIN_RAW"]
-    LWIN_UNC_RAW["LWIN_UNC_30MIN_RAW"]
-    LWOUT_UNC_RAW["LWOUT_UNC_30MIN_RAW"]
-  end
-
-  %% --- Raw Datasets ---
-  subgraph RAW["Raw Datasets"]
-    LWIN_RAW["LWIN_30MIN_RAW"]
-    LWOUT_RAW["LWOUT_30MIN_RAW"]
-    SWIN_RAW["SWIN_30MIN_RAW"]
-    SWOUT_RAW["SWOUT_30MIN_RAW"]
-  end
-
-  %% --- Processed Datasets ---
-  subgraph PROCESSED["Processed Datasets"]
-    LWIN_PROC["LWIN_30MIN_PROCESSED"]
-    LWOUT_PROC["LWOUT_30MIN_PROCESSED"]
-    SWIN_PROC["SWIN_30MIN_PROCESSED"]
-    SWOUT_PROC["SWOUT_30MIN_PROCESSED"]
-  end
-
   %% --- Derived Variable ---
   RN_PROC["RN_30MIN_PROCESSED"]
+  
+  LWIN_PROC["LWIN_30MIN_PROCESSED"]
+  LWOUT_PROC["LWOUT_30MIN_PROCESSED"]
+  SWIN_PROC["SWIN_30MIN_PROCESSED"]
+  SWOUT_PROC["SWOUT_30MIN_PROCESSED"]
+  
+  LWIN_RAW["LWIN_30MIN_RAW"]
+  LWOUT_RAW["LWOUT_30MIN_RAW"]
+  SWIN_RAW["SWIN_30MIN_RAW"]
+  SWOUT_RAW["SWOUT_30MIN_RAW"]
+  
+  BATTV_RAW["BATTV_30MIN_RAW"]
+  SCANS_RAW["SCANS_30MIN_RAW"]
+  TA_RAW["TA_30MIN_RAW"]
+  TNR01C_RAW["TNR01C_30MIN_RAW"]
+  LWIN_UNC_RAW["LWIN_UNC_30MIN_RAW"]
+  LWOUT_UNC_RAW["LWOUT_UNC_30MIN_RAW"]
+  
+  RN_PROC --> LWIN_PROC
+  RN_PROC --> LWOUT_PROC
+  RN_PROC --> SWIN_PROC
+  RN_PROC --> SWOUT_PROC
 
-  %% === Dependencies ===
-  %% Base → Raw
-  BATTV_RAW --> LWIN_RAW
-  BATTV_RAW --> LWOUT_RAW
-  BATTV_RAW --> SWIN_RAW
-  BATTV_RAW --> SWOUT_RAW
+  LWIN_PROC --> LWIN_RAW
+  LWOUT_PROC --> LWOUT_RAW
+  SWIN_PROC --> SWIN_RAW
+  SWOUT_PROC --> SWOUT_RAW
 
-  SCANS_RAW --> LWIN_RAW
-  SCANS_RAW --> LWOUT_RAW
-  SCANS_RAW --> SWIN_RAW
-  SCANS_RAW --> SWOUT_RAW
+  LWIN_RAW --> BATTV_RAW
+  LWIN_RAW --> LWIN_UNC_RAW
+  LWIN_RAW --> SCANS_RAW
+  LWIN_RAW --> TA_RAW
+  LWIN_RAW --> TNR01C_RAW
 
-  TA_RAW --> LWIN_RAW
-  TA_RAW --> LWOUT_RAW
+  LWOUT_RAW --> BATTV_RAW
+  LWOUT_RAW --> LWOUT_UNC_RAW
+  LWOUT_RAW --> SCANS_RAW
+  LWOUT_RAW --> TA_RAW
+  LWOUT_RAW --> TNR01C_RAW
 
-  TNR01C_RAW --> LWIN_RAW
-  TNR01C_RAW --> LWOUT_RAW
+  SWIN_RAW --> BATTV_RAW
+  SWIN_RAW --> SCANS_RAW
 
-  LWIN_UNC_RAW --> LWIN_RAW
-  LWOUT_UNC_RAW --> LWOUT_RAW
-
-  %% Raw → Processed
-  LWIN_RAW --> LWIN_PROC
-  LWOUT_RAW --> LWOUT_PROC
-  SWIN_RAW --> SWIN_PROC
-  SWOUT_RAW --> SWOUT_PROC
-
-  %% Processed → Derived
-  LWIN_PROC --> RN_PROC
-  LWOUT_PROC --> RN_PROC
-  SWIN_PROC --> RN_PROC
-  SWOUT_PROC --> RN_PROC
+  SWOUT_RAW --> BATTV_RAW
+  SWOUT_RAW --> SCANS_RAW
 
   %% === Styling ===
   classDef base fill:#dcfce7,stroke:#15803d,stroke-width:1px,color:#000,font-size:11px;
