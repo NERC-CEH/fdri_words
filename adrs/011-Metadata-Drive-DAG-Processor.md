@@ -205,11 +205,11 @@ Example code:
 
 ### Components
 
-| Layer                 | Module                                                                                         | Description                                                                |
-|-----------------------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| **API Models**        | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/api_models                             | Pydantic schemas for FDRI metadata (datasets, dependencies, configs)       |
-| **Domain Models**     | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/domain_models/time_series_container.py | A more usable data class for holding the metadata + data for a timeseries  |
-| **Mappers**           | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/mappers/api_to_domain.py               | Extracts essential information from Pydantic objects into the domain model |
-| **DAG Builder**       | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/dag.py                                 | Builds and resolves the dependency graph, applies topological sort         |
-| **Pipeline Executor** | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/pipeline.py                            | Dummy example of executing dataset processing in dependency order          |
-| **Entrypoint**        | ../timeseries/snippets/011-Metadata-Drive-DAG-Processor/main.py                                | Example runner                                                             |
+| Layer                 | Module                                                                                      | Description                                                                |
+|-----------------------|---------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **API Models**        | [api_models](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/api_models)            | Pydantic schemas for FDRI metadata (datasets, dependencies, configs)       |
+| **Domain Models**     | [domain_models](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/domain_models)      | A more usable data class for holding the metadata + data for a timeseries  |
+| **Mappers**           | [mappers](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/mappers/api_to_domain.py) | Extracts essential information from Pydantic objects into the domain model |
+| **DAG Builder**       | [dag.py](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/dag.py)                    | Builds and resolves the dependency graph, applies topological sort         |
+| **Pipeline Executor** | [pipeline.py](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/pipeline.py)          | Dummy example of executing dataset processing in dependency order          |
+| **Entrypoint**        | [main.py](../timeseries/snippets/011-Metadata-Drive-DAG-Processor/main.py)                  | Example runner                                                             |
