@@ -58,71 +58,81 @@ This proposal outlines a **metadata-driven Directed Acyclic Graph (DAG)** method
    - Dependents can exist in the list of multiple parent datasets
 
 ```mermaid
-graph TD
+graph LR
+  %% === Layout Direction ===
+  %% LR = left-to-right
+  %% Nodes are grouped into subgraphs for readability
 
-  %% === Top-level Derived Variable ===
-  RN_PROCESSED["RN_30MIN_PROCESSED"]
+  %% --- Base Sensor Inputs ---
+  subgraph BASE["Base Sensor Inputs"]
+    BATTV_RAW["BATTV_30MIN_RAW"]
+    SCANS_RAW["SCANS_30MIN_RAW"]
+    TA_RAW["TA_30MIN_RAW"]
+    TNR01C_RAW["TNR01C_30MIN_RAW"]
+    LWIN_UNC_RAW["LWIN_UNC_30MIN_RAW"]
+    LWOUT_UNC_RAW["LWOUT_UNC_30MIN_RAW"]
+  end
 
-  %% === Processed Dependencies ===
-  LWIN_PROC["LWIN_30MIN_PROCESSED"]
-  LWOUT_PROC["LWOUT_30MIN_PROCESSED"]
-  SWIN_PROC["SWIN_30MIN_PROCESSED"]
-  SWOUT_PROC["SWOUT_30MIN_PROCESSED"]
+  %% --- Raw Datasets ---
+  subgraph RAW["Raw Datasets"]
+    LWIN_RAW["LWIN_30MIN_RAW"]
+    LWOUT_RAW["LWOUT_30MIN_RAW"]
+    SWIN_RAW["SWIN_30MIN_RAW"]
+    SWOUT_RAW["SWOUT_30MIN_RAW"]
+  end
 
-  %% === Raw Dependencies ===
-  LWIN_RAW["LWIN_30MIN_RAW"]
-  LWOUT_RAW["LWOUT_30MIN_RAW"]
-  SWIN_RAW["SWIN_30MIN_RAW"]
-  SWOUT_RAW["SWOUT_30MIN_RAW"]
+  %% --- Processed Datasets ---
+  subgraph PROCESSED["Processed Datasets"]
+    LWIN_PROC["LWIN_30MIN_PROCESSED"]
+    LWOUT_PROC["LWOUT_30MIN_PROCESSED"]
+    SWIN_PROC["SWIN_30MIN_PROCESSED"]
+    SWOUT_PROC["SWOUT_30MIN_PROCESSED"]
+  end
 
-  %% === Shared Lower-Level Dependencies ===
-  BATTV_RAW["BATTV_30MIN_RAW"]
-  SCANS_RAW["SCANS_30MIN_RAW"]
-  TA_RAW["TA_30MIN_RAW"]
-  TNR01C_RAW["TNR01C_30MIN_RAW"]
-  LWIN_UNC_RAW["LWIN_UNC_30MIN_RAW"]
-  LWOUT_UNC_RAW["LWOUT_UNC_30MIN_RAW"]
+  %% --- Derived Variable ---
+  RN_PROC["RN_30MIN_PROCESSED"]
 
-  %% === Relationships ===
-  RN_PROCESSED --> LWIN_PROC
-  RN_PROCESSED --> LWOUT_PROC
-  RN_PROCESSED --> SWIN_PROC
-  RN_PROCESSED --> SWOUT_PROC
+  %% === Dependencies ===
+  %% Base → Raw
+  BATTV_RAW --> LWIN_RAW
+  BATTV_RAW --> LWOUT_RAW
+  BATTV_RAW --> SWIN_RAW
+  BATTV_RAW --> SWOUT_RAW
 
-  LWIN_PROC --> LWIN_RAW
-  LWOUT_PROC --> LWOUT_RAW
-  SWIN_PROC --> SWIN_RAW
-  SWOUT_PROC --> SWOUT_RAW
+  SCANS_RAW --> LWIN_RAW
+  SCANS_RAW --> LWOUT_RAW
+  SCANS_RAW --> SWIN_RAW
+  SCANS_RAW --> SWOUT_RAW
 
-  %% --- LWIN RAW deps ---
-  LWIN_RAW --> BATTV_RAW
-  LWIN_RAW --> LWIN_UNC_RAW
-  LWIN_RAW --> SCANS_RAW
-  LWIN_RAW --> TA_RAW
-  LWIN_RAW --> TNR01C_RAW
+  TA_RAW --> LWIN_RAW
+  TA_RAW --> LWOUT_RAW
 
-  %% --- LWOUT RAW deps ---
-  LWOUT_RAW --> BATTV_RAW
-  LWOUT_RAW --> LWOUT_UNC_RAW
-  LWOUT_RAW --> SCANS_RAW
-  LWOUT_RAW --> TA_RAW
-  LWOUT_RAW --> TNR01C_RAW
+  TNR01C_RAW --> LWIN_RAW
+  TNR01C_RAW --> LWOUT_RAW
 
-  %% --- SWIN RAW deps ---
-  SWIN_RAW --> BATTV_RAW
-  SWIN_RAW --> SCANS_RAW
+  LWIN_UNC_RAW --> LWIN_RAW
+  LWOUT_UNC_RAW --> LWOUT_RAW
 
-  %% --- SWOUT RAW deps ---
-  SWOUT_RAW --> BATTV_RAW
-  SWOUT_RAW --> SCANS_RAW
+  %% Raw → Processed
+  LWIN_RAW --> LWIN_PROC
+  LWOUT_RAW --> LWOUT_PROC
+  SWIN_RAW --> SWIN_PROC
+  SWOUT_RAW --> SWOUT_PROC
+
+  %% Processed → Derived
+  LWIN_PROC --> RN_PROC
+  LWOUT_PROC --> RN_PROC
+  SWIN_PROC --> RN_PROC
+  SWOUT_PROC --> RN_PROC
 
   %% === Styling ===
-  classDef processed fill:#dbeafe,stroke:#1e3a8a,stroke-width:2px,color:#000;
-  classDef raw fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#000;
-  classDef base fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#000;
+  classDef base fill:#dcfce7,stroke:#15803d,stroke-width:1px,color:#000,font-size:11px;
+  classDef raw fill:#fef3c7,stroke:#92400e,stroke-width:1px,color:#000,font-size:11px;
+  classDef processed fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px,color:#000,font-size:11px;
+  classDef derived fill:#c7d2fe,stroke:#3730a3,stroke-width:2px,color:#000,font-weight:bold,font-size:12px;
 
-  class RN_PROCESSED processed
-  class LWIN_PROC,LWOUT_PROC,SWIN_PROC,SWOUT_PROC processed
-  class LWIN_RAW,LWOUT_RAW,SWIN_RAW,SWOUT_RAW raw
-  class BATTV_RAW,SCANS_RAW,TA_RAW,TNR01C_RAW,LWIN_UNC_RAW,LWOUT_UNC_RAW base
+  class BATTV_RAW,SCANS_RAW,TA_RAW,TNR01C_RAW,LWIN_UNC_RAW,LWOUT_UNC_RAW base;
+  class LWIN_RAW,LWOUT_RAW,SWIN_RAW,SWOUT_RAW raw;
+  class LWIN_PROC,LWOUT_PROC,SWIN_PROC,SWOUT_PROC processed;
+  class RN_PROC derived;
 ```
