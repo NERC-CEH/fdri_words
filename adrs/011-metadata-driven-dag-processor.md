@@ -57,6 +57,7 @@ This proposal outlines a **metadata-driven Directed Acyclic Graph (DAG)** method
    - Essentially a dictionary of `{parent dataset ID: [dependent1, dependent2, etc]}`
    - Dependents can exist in the list of multiple parent datasets
 
+```mermaid
 graph TD
 
   %% === Top-level Derived Variable ===
@@ -124,3 +125,4 @@ graph TD
   class LWIN_PROC,LWOUT_PROC,SWIN_PROC,SWOUT_PROC processed
   class LWIN_RAW,LWOUT_RAW,SWIN_RAW,SWOUT_RAW raw
   class BATTV_RAW,SCANS_RAW,TA_RAW,TNR01C_RAW,LWIN_UNC_RAW,LWOUT_UNC_RAW base
+```
