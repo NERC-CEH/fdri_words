@@ -1,7 +1,9 @@
 # 011: Metadata-Driven DAG Architecture for Time Series Processing
 
 Status: proposed
+
 Authors: Richard Smith
+
 Date: 2025-10-28
 
 ## Context and Problem Statement
