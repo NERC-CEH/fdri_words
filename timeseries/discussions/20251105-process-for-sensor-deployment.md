@@ -146,7 +146,7 @@ This returns a list of available site ids. Each entry should contain:
 
 On a per-site basis this endpoint returns details of all available variables for a particular site ID
 
-https://dri-metadata-api.staging.eds.ceh.ac.uk/id/site/fdri-se-carwe-01/_datasets?_projection=observedProperty%28prefLabel%29%2Ctype%28prefLabel%29%2Cmeasure%28hasUnit.prefLabel%29%2CsourceColumnName%2Cmeasure%28aggregation%28valueStatistic%28prefLabel%29%29%29%2Cmeasure%28aggregation%28resolution%29%29&%40type=http%3A%2F%2Ffdri.ceh.ac.uk%2Fvocab%2Fmetadata%2FTimeSeriesDataset&processingLevel=http%3A%2F%2Ffdri.ceh.ac.uk%2Fref%2Fcommon%2Fprocessing-level%2Fraw
+https://dri-metadata-api.staging.eds.ceh.ac.uk/id/site/fdri-se-carwe-01/_datasets.json?_projection=observedProperty%28prefLabel%29%2Ctype%28prefLabel%29%2Cmeasure%28hasUnit.prefLabel%29%2CsourceColumnName%2Cmeasure%28aggregation%28valueStatistic%28prefLabel%29%29%29%2Cmeasure%28aggregation%28resolution%29%29&%40type=http%3A%2F%2Ffdri.ceh.ac.uk%2Fvocab%2Fmetadata%2FTimeSeriesDataset&processingLevel=http%3A%2F%2Ffdri.ceh.ac.uk%2Fref%2Fcommon%2Fprocessing-level%2Fraw
 
 It should provide:
 
@@ -309,13 +309,22 @@ date would not be able to be switched off.
 
 ## Next steps
 
-- Agree which field in the logger message will be used to store the logger id
+- Update any existing test loggers to transmit using their final site ids and add the corresponding metadata, but use
+  the Wallingford location coordinates instead of the final site coordinates. These will be updated once the test loggers
+  are deployed at their final site location.
+- Add a temporary mapping between the station_name values used in messages for existing deployed loggers and their 
+  correct site ids into the ingestion app so data is stored in the level 0 bucket under the correct site ids. 
+
 - Apply code changes to the ingester to add the extra level of granularity to the S3 storage structure to produce the 
   new S3 structure with the extra `logger=` bucket
-- Agree the name to use for the `deployed_from` metadata field and request changes to the metadata API so it is available
-  as part of the response when querying this url `https://dri-metadata-api.staging.eds.ceh.ac.uk/id/network/fdri.json`
 - Make the code changes to support using site and variable information from both the metadata api and DuckDB at the 
   same time (https://jira.ceh.ac.uk/browse/FPM-608)
+
+
+### To be done after the new Asset Management System is implemented
+- Agree the name to use for the `deployed_from` metadata field and request changes to the metadata API so it is available
+  as part of the response when querying this url `https://dri-metadata-api.staging.eds.ceh.ac.uk/id/network/fdri.json`
+
 - Make the code changes to search for a `deployed_from` field when checking the API and apply filtering so only data
   from that date is returned unless an additional parameter negating the functionality is provided. Also apply code
   changes to the UI to add a toggle to enable / disable data filtering from the `deployed_from` date. 
