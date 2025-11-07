@@ -226,7 +226,7 @@ These are the proposed stages
 The test logger is configured to send messages with the following parameters
 
 `station_name`: The ID of the site to be used as the `site=` part of the ingested S3 file structure
-`serial_no`: The unique logger ID to be used as the `logger_id=` part of the ingested S3 file structure
+`serial_no`: The unique logger ID to be used as the `serial_no=` part of the ingested S3 file structure
 `table_name`: The name of the collection (in the UI) to be used as the `dataset=` part of the S3 file structure.
 This also indicates the resolution of the data being sent.
 
@@ -234,7 +234,7 @@ Ingested messages are stored in a new S3 structure, with extra subdivisions so e
 Whilst this subdivision will not be visible within the UI, it will allow investigation into indiviual logger's data
 if necessary (e.g. if checking to see if a particular logger is sending faulty data)
 
-`s3://ukceh-fdri-staging-timeseries-level-0/fdri/dataset=one_minute/site=SITE_1/date=2025-10-13/logger=LOGGER_1/data.parquet`
+`s3://ukceh-fdri-staging-timeseries-level-0/fdri/dataset=one_minute/site=SITE_1/date=2025-10-13/serial_no=SERIAL_NO/data.parquet`
 
 <details>
 <summary>Example message content</summary>
