@@ -313,10 +313,11 @@ date would not be able to be switched off.
   the Wallingford location coordinates instead of the final site coordinates. These will be updated once the test loggers
   are deployed at their final site location.
 - Add a temporary mapping between the station_name values used in messages for existing deployed loggers and their 
-  correct site ids into the ingestion app so data is stored in the level 0 bucket under the correct site ids. 
+  correct site ids into the ingestion app so data is stored in the level 0 bucket under the correct site ids 
+  (https://jira.ceh.ac.uk/browse/FPM-632).
 
 - Apply code changes to the ingester to add the extra level of granularity to the S3 storage structure to produce the 
-  new S3 structure with the extra `logger=` bucket
+  new S3 structure with the extra `serial_no=` bucket (https://jira.ceh.ac.uk/browse/FPM-635)
 - Make the code changes to support using site and variable information from both the metadata api and DuckDB at the 
   same time (https://jira.ceh.ac.uk/browse/FPM-608)
 
