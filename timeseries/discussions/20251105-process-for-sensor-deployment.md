@@ -234,7 +234,7 @@ Ingested messages are stored in a new S3 structure, with extra subdivisions so e
 Whilst this subdivision will not be visible within the UI, it will allow investigation into indiviual logger's data
 if necessary (e.g. if checking to see if a particular logger is sending faulty data)
 
-`s3://ukceh-fdri-staging-timeseries-level-0/fdri/dataset=one_minute/site=SITE_1/date=2025-10-13/serial_no=SERIAL_NO/data.parquet`
+`s3://ukceh-fdri-staging-timeseries-level-0/fdri/dataset=one_minute/site=SITE_1/serial_no=SERIAL_NO/date=2025-10-13/data.parquet`
 
 <details>
 <summary>Example message content</summary>
