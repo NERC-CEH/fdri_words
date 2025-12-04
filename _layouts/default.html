@@ -110,6 +110,7 @@
 		      if (!h.id) {
 		        h.id = "section-" + index;
 		      }
+			  h.innerHTML = `<a href="#${h.id}" style="color:inherit; text-decoration:none;" class="header-anchor">${h.innerText}</a>`;
 		      links.push(`<a href="#${h.id}" style="text-decoration:none; color:#0969da;">${h.innerText}</a>`);
 		    });
 		
@@ -119,15 +120,6 @@
 		    // Insert summary before the first subheading
 		    headings[0].parentNode.insertBefore(summaryBox, headings[0]);
 		  }
-
-		  headings.forEach((h, index) => {
-		      const slug = h.innerText.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-		      if (!h.id) h.id = slug;
-		
-		      h.innerHTML = `<a href="#${h.id}" style="color:inherit; text-decoration:none;" class="header-anchor">${h.innerText}</a>`;
-		      links.push(`<a href="#${h.id}" style="text-decoration:none; color:#0969da;">${h.innerText}</a>`);
-    		});
-
 	});
 	</script>
   </head>
