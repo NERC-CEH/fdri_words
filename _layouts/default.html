@@ -26,9 +26,9 @@
         padding: 0 20px;
       }
 
-			img {
-				max-width: 100%;
-			}
+		img {
+			max-width: 100%;
+		}
       
       header {
         background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
@@ -73,6 +73,22 @@
       main {
         padding: 40px 0;
       }
+
+		.tag-badge {
+		  display: inline-block;
+		  background-color: #ddf4ff;
+		  color: #0969da;
+		  padding: 4px 10px;
+		  border-radius: 12px;
+		  font-size: 14px;
+		  margin-right: 5px;
+		  text-decoration: none;
+		  border: 1px solid rgba(9, 105, 218, 0.2);
+		}
+		.tag-badge:hover {
+		  background-color: #0969da;
+		  color: white;
+		}
     </style>
 	  <script>
 		document.addEventListener("DOMContentLoaded", function() {
@@ -116,6 +132,15 @@
 						</div>
 					</nav>
 				</div>
+		  	<div class="tag-header-container" style="padding: 10px; border-bottom: 1px solid #eaecef;">
+  <strong>Filter by Tag:</strong>
+  {% assign all_tags = site.tags | sort %}
+  {% for tag in all_tags %}
+    <a href="{{ site.baseurl }}/tags/#{{ tag[0] | slugify }}" class="tag-badge">
+      {{ tag[0] }} <span style="font-size:0.8em; opacity:0.7;">({{ tag[1].size }})</span>
+    </a>
+  {% endfor %}
+</div>
 			</div>
 		</header>
 		<main class="container">
