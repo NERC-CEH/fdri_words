@@ -88,6 +88,24 @@ You can set up a shared folder to quickly share files between the virtual and ho
     - Log out and back in.
     - Verify with: `docker run hello-world` (no sudo)
 
+## 6. Install Localstack CLI
+
+1. Install the pre-built binary
+```
+curl --output localstack-cli-4.11.1-linux-amd64-onefile.tar.gz \
+    --location https://github.com/localstack/localstack-cli/releases/download/v4.11.1/localstack-cli-4.11.1-linux-amd64-onefile.tar.gz
+```
+
+2. Extract the LocalStack CLI from the terminal
+
+```
+sudo tar xvzf localstack-cli-4.11.1-linux-*-onefile.tar.gz -C /usr/local/bin
+```
+
+## 7. Setup AWS-Vault
+
+See [https://github.com/NERC-CEH/fdri_words/blob/main/aws/aws-vault.md](https://github.com/NERC-CEH/fdri_words/blob/main/aws/aws-vault.md)
+
 ## Additional Recommendations
 
 ### Snapshots
