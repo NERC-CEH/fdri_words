@@ -42,7 +42,7 @@ To make a request use the following curl command. Make sure that
 
 - the header matches the source data type
 - the filepath to the source data has been updated
-- the correct component has been selected (this is `nrfa-batch` below and correponds to the component name you set in the `config.yml`)
+- the correct component has been selected (this is `nrfa-batch` below and corresponds to the component name you set in the `config.yml`)
 
 ```
 curl -X POST -H "Content-Type: application/jsonlines" --data-binary '@./source_data/nrfa_batches.jsonl' "localhost:8000/api/nrfa-batch/publish"
@@ -52,15 +52,13 @@ It is advised to do a `dry_run` first which will provide a zipfile with some log
 
 ```
 curl -X POST -H "Content-Type: application/jsonlines" --data-binary '@./source_data/nrfa_batches.jsonl' -o test_result.zip "localhost:8000/api/nrfa-batch/publish?dryrun=true"
+```
 
-You can also run the request in delete mode
+You can also run the request in delete mode.
 
 ```
 curl -X POST -H "Content-Type: application/jsonlines" --data-binary '@./source_data/nrfa_batches.jsonl' "localhost:8000/api/nrfa-batch/publish?delete=true"
 ```
-The status of any request to the metadata-ingest tool can be found in the `ms-ingester` pod.
+The status of any request to the metadata-ingest tool can be found in the `ms-ingester` pod. If successful this will get passed to the fuseki consumer. The status can then be checked in the fuseki pod. You should see something along the lines of "The SPARQL query has been successfully processed..."
 
 Everytime a request is made, the information is stored in the buckets above named `xxxxx-destination`. This is essentially the output from the `dry_run`.
-
-The status of the request can be checked in the fuseki pod. You should see something along the lines of "The SPARQL query has been successfully processed..."
-
