@@ -26,6 +26,9 @@ We also want to replicate a subset of production data into the staging environme
 
 Chosen option: Option 1: Two AWS accounts, because AWS recommends separating production workloads from non-production workloads using separate accounts, this is the standard used by most organisations.
 
+<img width="869" height="843" alt="image" src="https://github.com/user-attachments/assets/068e295c-5c21-40d0-8c1b-43bc5a137cf8" />
+
+
 ### Positive Consequences
 
 - Strong default isolation: accounts are an AWS-native security/access boundary and are isolated unless explicitly opened up which reduces risk of staging impacting production.
@@ -49,6 +52,8 @@ One account containing both environments, separated by network boundaries (disti
 - Bad, because it does not provide the same natural security/access/billing boundary as separate accounts, and requires more careful controls to avoid accidental cross-environment impact.
 
 #### Option 3: Single AWS account + single Kubernetes cluster + namespaces
+
+<img width="904" height="615" alt="image" src="https://github.com/user-attachments/assets/2547ce10-8cda-4bbc-9875-1626349d613b" />
 
 One account and one cluster; staging and production are separated primarily by Kubernetes namespaces and Kubernetes RBAC, with shared underlying AWS resources.
 
