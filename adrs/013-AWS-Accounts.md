@@ -45,11 +45,11 @@ Chosen option: Option 1: Two AWS accounts, because AWS recommends separating pro
 
 #### Option 2: Single AWS account with two VPCs
 
-One account containing both environments, separated by network boundaries (distinct VPCs), but still sharing the same account-level IAM/billing/quotas.
+One account containing both environments, separated by network boundaries (distinct VPCs), but still sharing the same account.
 
-- Good, because it can reduce administrative overhead compared to multiple accounts.
-- Good, because it may lower some costs for shared tooling/components.
-- Bad, because it does not provide the same natural security/access/billing boundary as separate accounts, and requires more careful controls to avoid accidental cross-environment impact.
+- Good, because it can reduce administrative overhead compared to multiple accounts, keeps inline with one account per project
+- Good, because it may lower some costs for shared tooling/components
+- Bad, because it does not provide the same natural security/access boundary as separate accounts, and requires more careful controls to avoid accidental cross-environment impact
 
 #### Option 3: Single AWS account + single Kubernetes cluster + namespaces
 
