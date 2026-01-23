@@ -32,6 +32,8 @@ Where:
 - `dataset=one_minute` is the dataset (collection in the UI). This is also used to indicate the resolution of the data
 - `site=SITE_1` is the ID of the site
 
+**Note** Due to limitations on the number of columns that can be sent within one datastream another one will be used to send additional columns. This should come in the form `<datastream>_<digit>` with the message For example, the `one_minute` datastream has reached its max columns but there are extra ones required. In this case data should be sent with the datastream as  `one_minute_2`. This will then get merged into the `one_minute` dataset and stored in the same s3 key allowing all columns to be visible in the UI.
+
 This S3 structure is used by the API both to find the correct data to return to the UI, and to list available sites and
 and variables. The available variables are determined by reading the parquet files and using the column names
 (excluding `time`) as the variable ids. An example of the parquet file contents can be seen below:
@@ -236,6 +238,8 @@ if necessary (e.g. if checking to see if a particular logger is sending faulty d
 
 `s3://ukceh-fdri-staging-timeseries-level-0/fdri/dataset=one_minute/site=SITE_1/serial_no=SERIAL_NO/date=2025-10-13/data.parquet`
 
+**Note** Due to limitations on the number of columns that can be sent within one datastream another one will be used to send additional columns. This should come in the form `<datastream>_<digit>` with the message For example, the `one_minute` datastream has reached its max columns but there are extra ones required. In this case data should be sent with the datastream as  `one_minute_2`. This will then get merged into the `one_minute` dataset and stored in the same s3 key allowing all columns to be visible in the UI.
+
 <details>
 <summary>Example message content</summary>
 
@@ -280,7 +284,7 @@ if necessary (e.g. if checking to see if a particular logger is sending faulty d
 
 </details>
 
-There is no metadata available in the API at thos point so data displayed in the UI is derived solely from the S3 data
+There is no metadata available in the API at this point so data displayed in the UI is derived solely from the S3 data
 using DuckDB
 
 ### 2. Metadata begins to be added to the Asset Management System and Metadata API
