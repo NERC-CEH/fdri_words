@@ -19,26 +19,26 @@ Note: Processed data will be stored in separate buckets.
 ## Considered Options
 
 - Option 1: Single shared Level -1 bucket with time series data (`ukceh-fdri-staging-timeseries-level-m1/flux/...`)
-- Option 2: Separate Level -1 bucket with basic day partitioning (`ukceh-fdri-staging-flux-level-m1/site/year/month/day/...`)
-- Option 3: Separate Level -1 bucket with hour-level Hive partitioning
+- Option 2: Separate Level -1 bucket with day-level partitioning (`ukceh-fdri-staging-flux-level-m1/site/year/month/day/...`)
+- Option 3: Separate Level -1 bucket with hour-level partitioning
 
 ## Decision Outcome
 
-Chosen option: "Option 3: Separate Level -1 bucket with optimized Hive partitioning", because flux data has significantly different volume and lifecycle characteristics than time series data. Hour-level Hive partitioning enables efficient data filtering and partition pruning, significantly reducing the amount of data scanned during queries and improving performance.
+Chosen option: "Option 2: Separate Level -1 bucket with day-level partitioning", because flux data has significantly different volume and lifecycle characteristics than time series data, and hourly queries are not expected for this dataset. Day-level partitioning provides sufficient granularity for typical query patterns (site and date-based) while maintaining operational simplicity.
 
 Level -1 bucket structure (raw data ingestion):
 ```
 s3://ukceh-fdri-staging-flux-level-m1/
-└── site={site}/year={year}/month={month}/day={day}/hour={hour}/
+└── site={site}/year={year}/month={month}/day={day}/
     └── TOA5_{SITE}_FluxRaw_{YYYYMMDD}_{HHMM}.dat
 
-Example: site=PLYNL/year=2024/month=08/day=14/hour=09/TOA5_PLYNL_FluxRaw_20240814_0900.dat
+Example: site=PLYNL/year=2024/month=08/day=14/TOA5_PLYNL_FluxRaw_20240814_0900.dat
 ```
 
 ### Positive Consequences
 
-- Query costs substantially reduced through partition pruning
-- Query performance significantly improved
+- Query costs reduced through partition pruning at day level
+- Simpler partition structure reduces operational complexity
 - Independent lifecycle policies with automatic tiering to lower-cost storage classes
 - Clear operational boundaries for monitoring and access control
 
@@ -54,10 +54,12 @@ Example: site=PLYNL/year=2024/month=08/day=14/hour=09/TOA5_PLYNL_FluxRaw_2024081
 - Good, because unified Level -1 management and simpler integration
 - Bad, because mixed access patterns (flux 20 Hz vs standard time series) and difficult to set independent lifecycle policies
 
-### Option 2: Separate Level -1 bucket with basic day partitioning
+### Option 3: Separate Level -1 bucket with hour-level partitioning
 
-- Good, because clear separation of flux from time series and independent lifecycle policies
-- Bad, because hour-specific queries must scan full day's data (no partition pruning benefit)
+- Good, because maximum query optimization through finest-grained partitioning
+- Good, because enables efficient hour-specific queries
+- Bad, because adds unnecessary complexity given hourly queries are not expected
+- Bad, because requires more partition management overhead
 
 ## Links
 
