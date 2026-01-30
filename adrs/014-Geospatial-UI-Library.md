@@ -1,4 +1,4 @@
-# [Architecture Decision Record (ADR) Identifier]. [short title of solved problem and solution] 
+# 0.14. Geospatial UI Library
 
 - Status: Draft v.1
 
