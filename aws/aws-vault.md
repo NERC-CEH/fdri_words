@@ -2,6 +2,8 @@
 
 New users might need to install brew.
 
+## Guide for existing AWS account
+
 ```
 # Store AWS credentials for the "ceh-test" profile
 $ aws-vault add ceh-test
@@ -24,3 +26,13 @@ You can now start a subshell with temporary credentials. These will last for 1 h
 $ aws-vault exec ceh-test
 Starting subshell /bin/zsh, use `exit` to exit the subshell
 ```
+
+## Guide for new AWS accounts (through the landing zone)
+
+Go the AWS access portal and select the account you want to connect to. Select `Access Keys` and then copy the `aws configure sso` command into your terminal.
+
+Enter the requested details, `SSO start url` and `SSO Region` are taken from the page above, and then follow the instructions. If the provided URL doesn't load in the VM then load it outside and copy the code in.
+
+Once finished, there should be a new profile in `~/.aws/config`. You can rename this profile to something more sensible.
+
+Then `aws-vault exec <your-profile-name>` should start a session. Again, you will need to sing-in via the provided URL but this might only work outside of the VM.
