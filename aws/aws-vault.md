@@ -31,7 +31,7 @@ Starting subshell /bin/zsh, use `exit` to exit the subshell
 
 Go the AWS access portal and select the account you want to connect to. Select `Access Keys` and then copy the `aws configure sso` command into your terminal.
 
-Enter the requested details, `SSO start url` and `SSO Region` are taken from the page above, and then follow the instructions. If the provided URL doesn't load in the VM then load it outside and copy the code in.
+Enter the requested details, `SSO start url` and `SSO Region` are taken from the page above, and then follow the instructions (just hit enter for the session scope value). If the provided URL doesn't load in the VM then load it outside and copy the code in.
 
 Once finished, there should be a new profile in `~/.aws/config`. You can rename this profile to something more sensible.
 
