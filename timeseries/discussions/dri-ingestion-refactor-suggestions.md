@@ -18,12 +18,17 @@
     - Can the `NRFAFileIngester` class be renamed to `NRFAIngester`, as for other networks, or do we need to distinguish 'file ingesters' and 'metadata ingesters'?
     - Make variable names for e.g. `MetaDataRouter` in ingester `__init__`s consistent.
     - add another interface layer to ingesters, e.g.: 
-      
-      ingester_interface
-      -> sqs_interface
-          -> sepa, cosmos, fdri
-      -> non-sqs_interface
-          -> nmdb, nrfa
+  
+      ```text
+        ingester_interface
+        ├─ sqs_interface
+        │  ├─ sepa
+        │  ├─ cosmos
+        │  └─ fdri
+        └─ non-sqs_interface
+           ├─ nmdb
+           └─ nrfa
+      ```
       
     - include some basic implementation for `start`, `dedupe`, `validate`, `writer` methods in `integester_interface.py` to reduce duplication in different network ingester implementations.
       - Make the variable names in these methods across different networks more consistent where possible. For example, make `sites` v. `stations` consistent.
