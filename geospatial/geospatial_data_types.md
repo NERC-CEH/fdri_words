@@ -89,7 +89,8 @@ Each feature should contain at least the following properties:
 - id: A unique ID to represent the feature
 - name: The display name to show in a tooltip for the feature
 - description: A description of what the point represents. This may be empty
-- url: The url to associate with the point, and to open in a new tab when the user clicks on it. 
+- url: The url to associate with the point, and to open in a new tab when the user clicks on it.
+- start_date / end_date / timestamp (TBC) - an indication of the start and end dates / sampling timestamp
 
 It is likely that a lot of these layers will be generated on the fly from external API data, such as the FDRI metadata 
 API serving a list of COSMOS, FDRI and NRFA sites.
