@@ -11,7 +11,12 @@ flexible solution. Not only would it mean a single raster is stored in S3 instea
 
 ## Current implementation structure
 
+<img src="./images/geospatial_api_design.png">
+
+
 ### Data requirements
+
+More details of data requirements can be found in the separate file: 
 
 #### Raster
 
@@ -49,3 +54,5 @@ There are three main endpoints to the data (see https://dri-geospatial-api.stagi
 ## Still in progress / yet to be decided
 
 Some kind of database is needed to be able to store additional metadata surrounding the geospatial data. For example, the bounding box, or more accurate bounding geometry for the raster, any legend information, min/max zoom levels supported by the raster's resolution etc. The type and structure of this database has yet to be decided. 
+
+
