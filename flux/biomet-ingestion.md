@@ -76,13 +76,15 @@ yyyy-mm-dd HH:MM,C,%,kPa,W m-2,W m-2,W m-2,W m-2
 ### Quality Control
 
 - **Missing data:** `-9999` (replace with standard missing value)
-- **Range checks:**
-  - Ta: Flag if <-40°C or >50°C
+- **Range checks** (AmeriFlux Technical Documents, Table A1 - Physical Range Module):
+  - Ta (TA): Flag if <-50°C or >50°C
   - RH: Flag if <0% or >100%
-  - Pa: Flag if <50 kPa or >110 kPa
-  - SHF: Flag if <-200 or >200 W m⁻²
-  - Rn: Flag if <-200 or >1000 W m⁻²
-  - SWin: Flag if <0 or >1500 W m⁻²
+  - Pa (PA): Flag if <60 kPa or >105 kPa
+  - SHF (G): Flag if <-250 or >400 W m⁻²
+  - Rn (NETRAD): Flag if <-200 or >1100 W m⁻²
+  - SWin (SW_IN): Flag if <0 or >1300 W m⁻²
+
+**Source:** AmeriFlux Physical Range Module (PRM) limits for automated QC
 
 ---
 
@@ -98,4 +100,6 @@ s3://flux-data/flux/ancillary/biomet/
 ---
 
 ## References
+- AmeriFlux Technical Documents, Table A1 (Physical Range Module): https://cran.r-project.org/web/packages/fluxtools/vignettes/introduction.html
+- AmeriFlux Physical Range Module documentation: https://ameriflux.lbl.gov/data/flux-data-products/data-qaqc/physical-range-module/
 - EddyPro documentation: Biomet file requirements
