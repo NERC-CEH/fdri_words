@@ -17,7 +17,7 @@ If you are working inside a managed virtual machine or otherwise, see the **VMWa
 - install Git
 - install Docker
 - install Localstack CLI
-- set up AWS Vault
+- set up [AWS Vault](https://github.com/NERC-CEH/fdri_words/blob/main/aws/aws-vault.md)
 
 All of these steps can be performed inside the VS Code integrated terminal.
 
