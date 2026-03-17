@@ -13,6 +13,7 @@ Documentation and notes about the timeseries project
 - [dri-utils](https://github.com/NERC-CEH/dri-utils/) - Generic common code used mainly by the API project
 - [dri-database-models](https://github.com/NERC-CEH/dri-database-models) - Postgres database schema definitions and migrations, mainly for use with the Phenocam extensions to the data API
 - [dri-ingestion](https://github.com/NERC-CEH/dri-ingestion/) - Pipelines that load data from different sources into s3
+- [dri-timeseries-processor](https://github.com/nerc-ceh/dri-timeseries-processor) - processing rules for derived timeseries from raw sensor data
 
 
 ### Diagrams
