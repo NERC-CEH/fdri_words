@@ -83,6 +83,8 @@
 
 *Getting layers processed, uploaded, and visible. Prioritise what's needed for soft launch.*
 
+Each layer may need it's own data processing scripts developed. (e.g. Automate COG conversion, colourmaps, legends, S3 upload).
+
 ### Priority Layers for Soft Launch
 
 | Task | Target | JIRA | Notes |
@@ -91,28 +93,28 @@
 | FDRI / COSMOS site locations | 🟢 Sept | | Point records linking to timeseries UI. Point locations taken from FDRI metadata API? |
 | River flow gauging stations | 🟢 Sept | FPM-847 | EA/SEPA/NRW APIs. Highlight NRFA stations. Link out. |
 | River level stations | 🟢 Sept | FPM-848 | From EA/SEPA/NRW APIs. |
-| UKCEH rivers (IRN) | 🟢 Sept | FPM-865 | Complex vector. ~400k features. May need vector tiles or WMS. (dependent on FPM-843) |
-| Elevation (50m DTM) | 🟢 Sept | | Colourised COG. Performance test — browser crash risk at national scale, may need 1km fallback. |
+| UKCEH rivers (IRN) | 🟢 Sept | FPM-865 | Complex vector. ~400k features. May need vector tiles or WMS. (dependent on FPM-843). Use NRFA WMS. |
+| Elevation (50m DTM) | 🟢 Sept | | Colourised COG. |
 | Average annual rainfall | 🟢 Sept | | Existing raster, needs COG conversion. |
 | Raingauges | 🟢 Sept | FPM-849 | Point layer from various operators (e.g. EA, Met office, SEPA). |
-| NRFA catchment boundaries | 🟢 Sept | | ~1700 overlapping polygons. Complex vector — needs vector tiles. |
+| NRFA catchment boundaries | 🟢 Sept | | ~1700 overlapping polygons. Complex vector — needs vector tiles. Use NRFA WMS. |
 | Land cover map (latest) | 🟢 Sept | FPM-867 | Latest year. Re-use existing EIDC WMS if possible. |
+| 1m EA/NRW LiDAR (clipped) | 🟢 Sept | FPM-866 | Clipped to catchments (Chess and Severn) |
+| Plynlimon monitoring sites (7 layers) | 🟢 Sept | FPM-859–864 | Flow, AWS, raingauges, soil moisture, groundwater, water quality, daily weather. |
 
 ### Second Priority Layers (Operational Beta)
 
 | Task | Target | JIRA | Notes |
 |------|--------|------|-------|
 | Land cover map (historical) | 🔵 Mar 27 | | Might be nice to allow users to look back at previous land cover products to look at land cover change. |
-| Develop bulk data processing scripts | 🔵 Mar 27 | | Automate COG conversion, colourmaps, legends, S3 upload. |
-| BGS hydrogeology 625k | 🔵 Mar 27 | FPM-869 | Existing raster. Contextual layer. |
-| BGS superficial geology | 🔵 Mar 27 | FPM-870 | Existing raster. |
-| BGS soil texture | 🔵 Mar 27 | FPM-871 | Existing raster. |
-| BGS soil thickness | 🔵 Mar 27 | FPM-872 | Existing raster. |
-| BGS boreholes | 🔵 Mar 27 | FPM-856 | UK-wide point data from BGS API. |
+| BGS hydrogeology 625k | 🟢 Sept (nice to have) | FPM-869 | Existing raster. Contextual layer. |
+| BGS superficial geology | 🟢 Sept (nice to have) | FPM-870 | Existing raster. |
+| BGS soil texture | 🟢 Sept (nice to have) | FPM-871 | Existing raster. |
+| BGS soil thickness | 🟢 Sept (nice to have) | FPM-872 | Existing raster. |
+| BGS boreholes | 🟢 Sept (nice to have) | FPM-856 | UK-wide point data from BGS API. |
 | Weather stations (MIDAS) | 🔵 Mar 27 | FPM-873 | Needs processing. Show type metadata on hover. |
-| 1m EA/NRW LiDAR | 🔵 Mar 27 | FPM-866 | Large dataset. Probably WMS-based. Check SEPA data for Tweed. |
-| Tweed UAV LiDAR DEM + imagery | 🔵 Mar 27 | FPM-857/858 | 2 processed sites. Link DEM/DSM/orthomosaic per flight. |
-| Plynlimon monitoring sites (7 layers) | 🔵 Mar 27 | FPM-859–864 | Flow, AWS, raingauges, soil moisture, groundwater, water quality, daily weather. |
+| 1m EA/NRW LiDAR (national) | 🔵 Mar 27 | FPM-866 | Large dataset. Probably WMS-based. Check SEPA data for Tweed. |
+| Tweed UAV LiDAR DEM + imagery | 🟢 Sept (nice to have) | FPM-857/858 | 2 processed sites. Link DEM/DSM/orthomosaic per flight. |
 | CHASM monitoring sites + data | 🔵 Mar 27 | FPM-876–878 | Upper Severn only. TBR, AWS, flow sites. |
 | Chess spring locations | 🔵 Mar 27 | FPM-854 | BGS survey. Internal only? |
 | BGS geophysical survey lines | 🔵 Mar 27 | FPM-855 | Internal only? |
