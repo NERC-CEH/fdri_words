@@ -65,7 +65,7 @@
 | Improve layer navigation/panel | 🟢 Sept | FPM-838 | Current design just set up for testing. Needs categories (e.g. region, data type). |
 | Configure zoom levels per layer | 🟢 Sept | FPM-733 | Prevent users zooming to irrelevant scales. Related: FPM-899 (min/max zoom). |
 | Point record layers with popups | 🟢 Sept | FPM-851 | Click to select, show metadata, link out to timeseries UI / NRFA / EA pages. Needs site info from metadata API. |
-| Point value queries from rasters | 🟢 Sept | | Click on raster to see value. TiTiler supports natively, needs API wiring. |
+| Point value queries from rasters | 🟢 Sept (nice to have) | | Click on raster to see value. TiTiler supports natively, needs API wiring. Has implications for how rasters are stored - will need to be stored as grey-scale rather than colorised COG. Possibly stored both grey-scale (for querying) and colorised rasters (for viewing) |
 | Complex vector data support | 🟢 Sept | FPM-843 | For huge vector datasets that can't be served via geojson. Investigate PostGIS served vector tiles for large datasets (NRFA catchments, river lines)? Or rasterise and serve via WMS? Need for riverlines layer. |
 
 ### Enhanced Viewing (Operational Beta)
