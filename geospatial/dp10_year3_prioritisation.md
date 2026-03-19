@@ -66,13 +66,13 @@
 | Configure zoom levels per layer | 🟢 Sept | FPM-733 | Prevent users zooming to irrelevant scales. Related: FPM-899 (min/max zoom). |
 | Point record layers with popups | 🟢 Sept | FPM-851 | Click to select, show metadata, link out to timeseries UI / NRFA / EA pages. Needs site info from metadata API. |
 | Point value queries from rasters | 🟢 Sept (nice to have) | | Click on raster to see value. TiTiler supports natively, needs API wiring. Has implications for how rasters are stored - will need to be stored as grey-scale rather than colorised COG. Possibly stored both grey-scale (for querying) and colorised rasters (for viewing) |
-| Complex vector data support | 🟢 Sept | FPM-843 | For huge vector datasets that can't be served via geojson. Investigate PostGIS served vector tiles for large datasets (NRFA catchments, river lines)? Or rasterise and serve via WMS? Need for riverlines layer. |
+| 3D terrain visualisation | 🟢 Sept (nice to have) | | Prototype working with deck.gl TerrainLayer. Height exaggeration helps. Performance issues with 50m DEM at national scale. Limit to small layers to start with. |
 
 ### Enhanced Viewing (Operational Beta)
 
 | Task | Target | JIRA | Notes |
 |------|--------|------|-------|
-| 3D terrain visualisation | 🔵 Mar 27 | | Prototype working with deck.gl TerrainLayer. Height exaggeration helps. Performance issues with 50m DEM at national scale. |
+| Complex vector data support | 🔵 Mar 27 | FPM-843 | For huge vector datasets that can't be served via geojson. Investigate PostGIS served vector tiles for large datasets (NRFA catchments, river lines)? Or rasterise and serve via WMS? Need for riverlines layer. Use existing NRFA Geoserver WMS feeds for September |
 | Suppress 500 errors in console |🔵 Mar 27 | FPM-839 | Not user-facing but important for production. |
 | Dynamic colourmap changes | 🟡 Later | | Let users change colourmap on the fly for greyscale rasters. |
 | User-chosen vector colours | 🟡 Later | FPM-840 | Nice to have. |
