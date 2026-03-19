@@ -38,8 +38,7 @@
 | Task | Target | JIRA | Notes |
 |------|--------|------|-------|
 | Design production S3 bucket structure | 🟢 Sept | FPM-710 | Ready for doing. Tied to AWS migration. Finalise folder/partition key conventions. |
-| Migrate existing data to production bucket | 🟢 Sept | | Current data is under a "testing" folder. UI may be temporarily blank during migration. |
-| Standardise data formats on S3 | 🟢 Sept | | COG rasters in EPSG:3857, GeoJSON vectors in EPSG:4326, consistent legend files alongside rasters. Tools available to generate these standardised layers. |
+| Create S3 bucket structure | 🟢 Sept | FPM-710 | Tied to AWS migration. |
 
 ### OGC Web Services
 
@@ -135,7 +134,7 @@
 |------|--------|------|-------|
 | Define minimum metadata per layer type | 🟢 Sept | FPM-99 | Raster: name, S3 URL, legend, bounding box. Vector: name, S3 URL, display fields. Point: name, coord, URLs, dates. |
 | Layer categorisation scheme | 🟢 Sept | | Region + data type at minimum. Drives UI navigation panel. |
-| Hardcode/bootstrap metadata if needed | 🟢 Sept | | Pragmatic approach: don't wait for full metadata integration. Get layers showing. |
+| Hardcode metadata if needed | 🟢 Sept | | Pragmatic approach: don't wait for full metadata integration. Get layers showing. |
 
 ### Full Integration (Operational Beta)
 
