@@ -134,9 +134,11 @@ Each layer may need it's own data processing scripts developed. (e.g. Automate C
 
 | Task | Target | JIRA | Notes |
 |------|--------|------|-------|
-| Define minimum metadata per layer type | 🟢 Sept | FPM-99 | Raster: name, S3 URL, legend, bounding box. Vector: name, S3 URL, display fields. Point: name, coord, URLs, dates. |
+| Define minimum metadata per layer type | 🟢 Sept | FPM-99 | Concentrate on what metadata that scientists/end users want to see in the UI. This metadata should sit in the metadata service / EIDC catalogue rather than PostGIS |
 | Layer categorisation scheme | 🟢 Sept | | Region + data type at minimum. Drives UI navigation panel. |
+| Define dataset series (collections) and how to access from metadata API | 🟢 Sept | | Needs talks with Epimorphics. Fall back to hardcoding lists if necessary. |
 | Hardcode metadata if needed | 🟢 Sept | | Pragmatic approach: don't wait for full metadata integration. Get layers showing. |
+| Integrate with EIDC catalogue | 🟢 Sept | | Link to EIDC catalogue pages from our UI where available. |
 
 ### Full Integration (Operational Beta)
 
@@ -145,8 +147,8 @@ Each layer may need it's own data processing scripts developed. (e.g. Automate C
 | Define what metadata API provides vs PostGIS | 🔵 Mar 27 | | Key architectural question. PostGIS for spatial index + display config; metadata API for dataset descriptions? |
 | API reads layer list from metadata service | 🔵 Mar 27 | FPM-98 | Generic geospatial endpoint. Discuss with Epimorphics. |
 | Fetch site info from metadata API | 🔵 Mar 27 | FPM-851 | Generic approach for FDRI, COSMOS, NRFA sites. |
-| Integrate with EIDC catalogue | 🔵 Mar 27 | | Use catalogue records for certain data layers, e.g. LCM. Link to EIDC pages. |
 | Ingestion process for 3rd party layers | 🔵 Mar 27 | | Ingestion process for keeping 3rd party API data (EA, SEPA, Met Office) up to date (as agencies add or remove sites). Similar to timeseries ingester but metadata-only? |
+| Further integration with EIDC catalogue | 🔵 Mar 27 | | Get more datasets in the catalogue and determine what other bits of metadata we want to pull through from here. |
 
 ---
 
