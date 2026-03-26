@@ -1,6 +1,6 @@
 # 016 Use of an intermediate bucket
 
-- Status: draft
+- Status: Agreed by Mike Brown, Dom Ginger was also consulted on the agreed solution
 
 ## Context and Problem Statement
 
