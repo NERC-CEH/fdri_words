@@ -81,4 +81,8 @@ Metrics for these are more qualitative. Perhaps could be summerised with bad, ok
 There are a number of timeseries prediction AI tools out there that should be investigated. A good resource for finding these:
 https://huggingface.co/models?pipeline_tag=time-series-forecasting&sort=trending
 
+Good starting point--this paper and references therein:
+- Schmidt, J.Q., Kerkez, B., 2023. Machine Learning-Assisted, Process-Based Quality Control for Detecting Compromised Environmental Sensors. Environ. Sci. Technol. 57, 18058–18066. https://doi.org/10.1021/acs.est.3c00360
+
+
 ---
