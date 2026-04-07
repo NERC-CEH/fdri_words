@@ -56,23 +56,24 @@ There are three main endpoints to the data (see https://dri-geospatial-api.stagi
 
 A registry of layers, containing a spatial index is required. An initial design for the main table is as follows:
 
-| Column Name             | Required? | Description / Notes                                                                                                                                                                                  |
-| ----------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                      | Required  |                                                                                                                                                                                                      |
-| Name                    | Required  | Used for displaying the name in the UI                                                                                                                                                               |
-| Project                 | Required  | FDRI/ NC-UK etc – Links to project table                                                                                                                                                             |
-| Start date              | Required  |                                                                                                                                                                                                      |
-| End date                | Required  |                                                                                                                                                                                                      |
-| S3 key                  | Optional  | e.g. LCM_0.5m.tif - if provided, catalogue WMS should be empty                                                                                                                                       |
-| Catalogue WMS ID        | Optional  | e.g. https://catalogue.ceh.ac.uk/maps/76405b92-17ec-4ed2-ac7f-17caeb2d14f6 . If provided then `S3 key` should be empty. Could we include a partial link to avoid hardcoding the catalogue url fully? |
-| Data format             | Required  | Raster / vector etc                                                                                                                                                                                  |
-| Data type               | Required  | DOM / DEM etc                                                                                                                                                                                        |
-| Resolution              | Optional  | Required for raster data?                                                                                                                                                                            |
-| Legend (JSON)           | Optional  | Required for raster data only. For vector data the legend will be stored per feature                                                                                                                 |
-| Boundary                | Required? | Used for building the spatial index? Simplified boundary to allow for location queries                                                                                                               |
-| Bounding box?           | Required  | Alternative to boundary for the spatial index? Would both be useful?                                                                                                                                 |
-| Categories              | Required  | List of category objects – see separate notes                                                                                                                                                        |
-| Catalogue download link | Optional  | If download is available in the catalogue. Partial url to catalogue page – maybe just unique ID we can use to construct the URL?                                                                     |
+| Column Name             | Required? | Description / Notes                                                                                                                                                                  |
+| ----------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ID                      | Required  | Primary key created by the database                                                                                                                                                  |
+| Name                    | Required  | Used for displaying the name in the UI                                                                                                                                               |
+| Project                 | Required  | FDRI/ NC-UK etc – Links to project table                                                                                                                                             |
+| Date                    | Required  |                                                                                                                                                                                      |
+| Source type             | Required  | Links to the SourceType table to provide information about where the data is coming from (e.g. S3, metadata api etc)                                                                 | 
+| Raw Source id           | Optional  | The S3 key, catalogue identifier etc to point the API to the raw data (if available). This should be the singleband EPSG 3857 COG tif or any vector (geojson) data.                  |
+| Colour Source id        | Optional  | The S3 key, catalogue identifier etc to point the API to the colourised data (if available). It's expected this will be a cog formatted colourised raster, or a WMS source.          |
+| Data format             | Required  | Raster / vector etc. Links to the DataFormat database table                                                                                                                          |
+| Data category           | Required  | DOM / DEM etc. Links to the DataCategory database table.                                                                                                                             |                                                                                                                                                              |
+| Legend (JSON)           | Optional  | Required for raster data only. For vector data the legend will be stored per feature                                                                                                 |
+| Boundary                | Optional  | Simplified boundary in WGS84 to allow for location queries                                                                                                                           |
+| Bounding box (bbox)     | Required  | Bounding box (in WGS84) of the layer stored as a geometry (not a list of 4 floats)                                                                                                   |
+| Catalogue id            | Optional  | If download is available in the catalogue. Partial url to catalogue page – maybe just unique ID we can use to construct the URL?                                                     |
+| Processing level        | Required  | Links to the ProcessingLevel database table. Aims to identify whether data is raw or processed.                                                                                      |
+| AreaName                | Required  | Links to the AreaName database table. Defines the area name (e.g. Chess) which links to the AreaType (e.g. Catchment).                                                               |
+
 
 ### Project table - project metadata and data categorisation
 
@@ -82,51 +83,81 @@ resolution. The project metadata can then be used to derive the S3 structure.
 
 The project table could have the following fields (likely to be expanded):
 
-| Column Name | Required? | Description / Notes                                                                                                                                                                               |
-| ----------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID          | Required  |                                                                                                                                                                                                   |
-| Name        | Required  | Used for displaying the name in the UI                                                                                                                                                            |
-| Categories  | Required  | Links to category type table instance. A list of types of categories, ordered by their priority. This can then be used to indicate the structure of data categorisation both within S3 and the UI |
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
 
-### CategoryType table
-
-This is a basic table storing different category types. The ID could be used as the S3 key category and the name as the
-display name for the category in the UI. For example for a category type of {"id": "region", "name": Region}, the S3 key structure would be "region=" and the display name of the category in the UI would be "Region"
-
-| Column Name | Required? | Description / Notes                             |
-| ----------- | --------- | ----------------------------------------------- |
-| ID          | Required  | Used as a unique ID and for the S3 key indexing |
-| Name        | Required  | Used for displaying the name in the UI          |
-
-### Category table
-
-This would link category types to values. For example a category type of "Region" may have several values, such as "UK", "Chess", which could then be associated with one or more layers. The Name would be used as the display name in the
-UI and the ID would be used as the "value" part of the S3 key. For example for the previous example and a category ID of "chess", the s3 key structure would be `region=chess`.
-
-| Column Name  | Required? | Description / Notes                                                   |
-| ------------ | --------- | --------------------------------------------------------------------- |
-| ID           | Required  | Used as a unique ID and can be used as the "value" part of the s3 key |
-| Name         | Required  | Used for displaying the name in the UI                                |
-| CategoryType | Required  | Links to the CategoryType table                                       |
 
 ### Data Format table
 
-Not sure if this is needed. It would link to the data_format field in the main table and would store standardised data types, such as "raster from WMS", "Raster from TiTiler", "Simple vector", "Complex vector"
+This links to the data_format field in the main table and stores standardised data types, such as "raster" and "vector".
 
-| Column Name  | Required? | Description / Notes                                                   |
-| ------------ | --------- | ---------------------|
-| ID           | Required  | Used as a unique ID  |
-| Name         | Required  | Display name         |
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
 
-### Data type
+### Data Category 
 
-A not sure if this is needed. It would be similar to the DataFormat table above but would describe the type of the data, for example DEM, DSM etc
+This links to the data_category field in the main Layer table, and stores the category of the data, for example DEM etc
+
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
 
 
-| Column Name  | Required? | Description / Notes                                                   |
-| ------------ | --------- | ---------------------|
-| ID           | Required  | Used as a unique ID  |
-| Name         | Required  | Display name         |
+### Source type
+
+This links to the source_type field in the main Layer table, and stores information about where the layer is being 
+sourced from. For example from S3 or the metadata api. 
+
+| Column Name | Required? | Description / Notes                                                                                                          |
+| ----------- | --------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                                                                                          |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item.                                                                     |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                                                                                       |
+| Base url    | Required  | The base url used for constructing the full source url. E.g. "s3://geospatial_data_bucket" or "https://catalogue.ceh.ac.uk/" |
+
+### Processing Level
+
+This links to the processing_level field in the main Layer table, and stores the processing level of the data, for example Raw, Processed etc.
+
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
+
+### Area Name
+
+This links to the area_name field in the main Layer table, and stores details about the location associated with the layer.
+Its use case is to create instances of different area types, each with a unique name that can be easily associated with
+multiple layers without risking duplication due to typos (e.g. one layer referred to as "chess", another as "Chess", another as "Chess Catchment" etc)
+This table stores the name to use for the area associated with the layer, and links to the type of area it corresponds to.
+
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
+| Area type   | Required  | Links to the AreaType table                              |
+
+
+### Area Type
+
+This links to the area_type field in the AreaName table, and stores details type of location. Predominantly the type of 
+area, such as whether the data is expected to cover a catchment, or is at a national level.
+
+| Column Name | Required? | Description / Notes                                      |
+| ----------- | --------- | -------------------------------------------------------- |
+| ID          | Required  | Primary key created by the database                      |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Name        | Required  | Used for displaying the name in the UI                   |
 
 
 ## Still in progress / yet to be decided
