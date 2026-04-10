@@ -152,7 +152,28 @@ Each layer may need it's own data processing scripts developed. (e.g. Automate C
 
 ---
 
-## 5. Wider Requirements & Future Work
+## 5. National LiDAR dataset and notebooks
+
+### Dataset publication
+
+| Task | Target | JIRA | Notes |
+|------|--------|------|-------|
+| Finalise supporting documentation | 🟢 Apr 26 | | Finalise detail, decide on whether notebooks will be referenced in docs |
+| Publish dataset | 🟢 May 26 | | Need to given EIDC sufficient time to ingest. Process started by Michael T |
+
+### Notebook publication
+
+| Task | Target | JIRA | Notes |
+|------|--------|------|-------|
+| Summarise changes to notebooks | 🟢 Apr 26 | | MF |
+| Decide consistent approach to notebook style, format, storage | 🟢 Apr 26 | | Discuss with gridded data work. Logos in notebooks, attribution, github repo? |
+| Implement updates | 🟢 May 26 | |  |
+| Publish to zenodo | 🟢 May 26 | |  |
+| Link to dataset catalogue record | 🟢 June 26 | | |
+
+---
+
+## 6. Wider Requirements & Future Work
 
 ### Access Control
 
