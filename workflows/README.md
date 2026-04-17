@@ -25,3 +25,5 @@ Each `.md` file is written as standalone documentation, but if you're new to the
 6. **GH_tokens.md**: Explains how to create and add a GitHub token to your development environment.
 Especially useful when working with Dockerfiles that need to clone private repositories during builds.
 
+7. **linux-laptop.md**: Some guides on working on a linux laptop directly instead of through a VM
+
