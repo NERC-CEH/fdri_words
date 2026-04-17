@@ -1,6 +1,6 @@
 [AWS vault](https://github.com/99designs/aws-vault) is used to securely store access your AWS creds in your dev environment. To get setup create a profile (ceh-test) and enter your AWS creds.
 
-MacOS users might need to install brew.
+aws-vault can be installed via brew
 
 > [!NOTE]  
 > The original `aws-vault` is an abandoned project; an [active fork provides updates for range of platforms](https://github.com/byteness/aws-vault/releases/tag/v7.9.8)
