@@ -39,6 +39,8 @@ The remaining option from the datalogger perspective is to make it available to 
 ## Decision Outcome
 Chosen option: "Make data available via VPN", because it's the only option that WP1 hasn't tried, but requires some additional work from WP2.
 
+Raw data files presently span 30 minutes, which potentially aids downloads (allowing smaller files to complete). But potentially could be changed.
+
 ### Positive Consequences
 * Reduces in-field equipment complexity
 * Provides the most flexibility with direct connection to equipment
