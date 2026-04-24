@@ -27,7 +27,7 @@ Some gateways (such as the LoRaWAN enabled Robustel LG5100 gateway) support runn
 We intend our cameras to be switched off some of the time, to conserve power, potentially preventing them from being used for this service - they also may not be reliable enough.
 
 ### Make data available via public IP
-Other networks use SIM cards with publically addressible static IP addresses, there's increased SIM costs to this and puts the gateway in a position that's exposed to external traffic. Other monitoring networks have experienced gateways that have been comprised and also have significantly higher traffic.
+Other networks use SIM cards with publically addressible static IP addresses, there's increased SIM costs to this and puts the gateway in a position that's exposed to external traffic. Other monitoring networks have experienced gateways that have been comprised and only notice due to significantly higher data usage.
 
 ### Make data available via VPN
 The remaining option from the datalogger perspective is to make it available to data requests from another machine. The datalogger provides multiple interfaces to pull data from it. The VPN can be switched on and off, which could save power and data bandwidth (openVPN has data overheads). VPN stops systems from being exposed to external threats.
