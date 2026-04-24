@@ -1,4 +1,4 @@
-# Architecture Decision Record (ADR) Identifier] 
+# Architecture Decision Record (ADR) Identifier
 ## Raw flux data transfer mechanism
 
 Status: **draft**
