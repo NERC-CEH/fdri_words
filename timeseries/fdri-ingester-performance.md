@@ -1,4 +1,4 @@
-## Ingestor performance test
+## Ingester performance test
 
 <img width="1805" height="676" alt="image" src="https://github.com/user-attachments/assets/2079e259-345f-45b0-a9b7-f4df04c5b63a" />
 
