@@ -13,7 +13,7 @@
 | Temperature    | High                    |                                                            | Diurnal and seasonal cycles, low spacial variabilty, dense networks |
 | River Flow     | Medium to High          | River bed changes, rating changes, out of bank behaviour   | Influenced by upstream river flow and precip events. Seasonal cycles |
 | Soil Moisture  | Medium                  | Point sensors sensitive to air pockets flooding with water | Influenced by precipitation and evapotranspiration  |
-| Wind Speed     | Low to Medium           | Highly variable, gusty behavior                            | Lower spacial variablilty at larger resolutions     |
+| Wind Speed     | Low to Medium           | Highly variable, gusty behavior                            | Lower spatial variablilty at larger resolutions     |
 | Wind direction | Low to Medium           | Highly variable, gusty behavior                            |                                                     |
 | Precipitation  | Low                     | False rain. Blockages. Predicting Y/N to precip occuring. Predicting accurate quantities. Difficulty changes with resolution. Low spacial variability | Dense networks, radar |
 
@@ -77,12 +77,20 @@ Metrics for these are more qualitative. Perhaps could be summerised with bad, ok
 | **Machine Learning**  | Random Forest, SVM            | Capture nonlinearities, flexible     | Require tuning, less interpretable |
 | **Deep Learning / AI**| LSTM, Transformer, CNN        | Handle complex temporal dependencies | Data-hungry, computationally heavy |
 | **Hybrid Approaches** | Combination of above          | Balance domain knowledge and data-driven insights | Complex to implement  |
+| **Pre-trained foundation models** | Advantage of AI/DL models without training          | No training needed | May not work for our cases  |
 
 There are a number of timeseries prediction AI tools out there that should be investigated. A good resource for finding these:
 https://huggingface.co/models?pipeline_tag=time-series-forecasting&sort=trending
+- e.g. [Google time sereis foundation model](https://huggingface.co/google/timesfm-2.5-200m-pytorch)
 
+<<<<<<< patch-1
+
+Google Rearch Neural Hydrology python package:
+https://neuralhydrology.readthedocs.io/en/latest/tutorials/index.html
+=======
 Good starting point--this paper and references therein:
 - Schmidt, J.Q., Kerkez, B., 2023. Machine Learning-Assisted, Process-Based Quality Control for Detecting Compromised Environmental Sensors. Environ. Sci. Technol. 57, 18058–18066. https://doi.org/10.1021/acs.est.3c00360
 
 
+>>>>>>> main
 ---
