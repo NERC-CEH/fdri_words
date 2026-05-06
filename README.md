@@ -4,7 +4,15 @@ Weekly updates for the Floods and Droughts Research Infrastructure Work Package 
 
 [https://fdri.org.uk/](https://fdri.org.uk/)
 
+### 2026
+- [Week 18](weeknotes/2026/18.md)
+- [Week 8](weeknotes/2026/08.md)
+- [Week 6](weeknotes/2026/06.md)
+- [Week 4](weeknotes/2026/04.md)
+- [Week 3](weeknotes/2026/03.md)
+
 ### 2025
+- [Week 51](weeknotes/2025/51.md)
 - [Week 50](weeknotes/2025/50.md)
 - [Week 49](weeknotes/2025/49.md)
 - [Week 48](weeknotes/2025/48.md)

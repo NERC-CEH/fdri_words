@@ -83,7 +83,14 @@ There are a number of timeseries prediction AI tools out there that should be in
 https://huggingface.co/models?pipeline_tag=time-series-forecasting&sort=trending
 - e.g. [Google time sereis foundation model](https://huggingface.co/google/timesfm-2.5-200m-pytorch)
 
+<<<<<<< patch-1
 
 Google Rearch Neural Hydrology python package:
 https://neuralhydrology.readthedocs.io/en/latest/tutorials/index.html
+=======
+Good starting point--this paper and references therein:
+- Schmidt, J.Q., Kerkez, B., 2023. Machine Learning-Assisted, Process-Based Quality Control for Detecting Compromised Environmental Sensors. Environ. Sci. Technol. 57, 18058–18066. https://doi.org/10.1021/acs.est.3c00360
+
+
+>>>>>>> main
 ---
