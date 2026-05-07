@@ -1,5 +1,16 @@
 # FDRI Developer Day - Agenda
 
+## Attendees
+- Dom
+- Evgeniya
+- Jon
+- Leanne
+- Ludwig
+- Nathan
+- Richard
+- Samantha
+- Simon
+
 ## Day 1 (Full Day)
 
 ### 9:00 - Coffee 
