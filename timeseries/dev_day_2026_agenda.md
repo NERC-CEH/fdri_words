@@ -14,12 +14,13 @@
 ## Day 1 (Full Day)
 
 ### 9:00 - Coffee 
+Discuss why we are gathering and what we hope to get out of the day
 
 ### 9:30 - Architecture Golf: The full pipeline
 Draw the system - ingestion through processing to sharing. One person at a time builds up the diagram on the whiteboard.
 
 ### 10:30 - Coffee break
-Discuss why we are gathering and what we hope to get out of the day
+
 ### 11:00 - Lightning talks (5 min talk, 5–10 min discussion)
 - **Dom:** Why Kubernetes?
 - **Richard:** How does the DAG work?
@@ -53,6 +54,7 @@ Open discussion:
 
 ### 9:00 - Coffee
 Reflect on yesterday. Discuss what we hope to get out of the today
+
 ### 9:30 - September launch: What are we actually shipping?
 Technical focus, what we need to do practically ahead of the launch.
 - API - how to make it public
