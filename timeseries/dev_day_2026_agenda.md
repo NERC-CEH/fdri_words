@@ -37,6 +37,14 @@ Open discussion:
 ### 14:00 - Fix it in 25
 - Gather niggles beforehand - ask people to submit ideas in advance. 
 - Two or three rounds, demo at the end.
+- Doesn't have to be a bug necessarily... ideas include:
+  - documentation that's wrong or missing
+  - lack of a unit test for something
+  - unclear error message in logs
+  - something just annoying from a dev experience (slow script, annoying dependency)
+ 
+**PLEASE GATHER IDEAS HERE:**
+-
 
 ### 15:00 - Coffee break
 
@@ -55,16 +63,16 @@ Open discussion:
 ### 9:00 - Coffee
 Reflect on yesterday. Discuss what we hope to get out of the today
 
-### 9:30 - September launch: What are we actually shipping?
-Technical focus, what we need to do practically ahead of the launch.
-- API - how to make it public
-- UI - timeseries and geospatial / How to split up the DRI bits
-  
-### 10:30 - Coffee break
-
-### 11:00 - Tech radar: What should we be using?
+### 9:30 - Tech radar: What should we be using?
 - Gather technologies people think we should adopt
 - Gather technologies people think we should drop
 - Collate and discuss actions to take
+ 
+### 10:30 - Coffee break
+
+### 11:00 - September launch: What are we actually shipping?
+Technical focus, what we need to do practically ahead of the launch.
+- API - how to make it public
+- UI - timeseries and geospatial / How to split up the DRI bits
 
 ### 12:00 - Done
