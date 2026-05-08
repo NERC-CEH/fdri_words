@@ -25,6 +25,7 @@ Draw the system - ingestion through processing to sharing. One person at a time 
 - **Dom:** Why Kubernetes?
 - **Richard:** How does the DAG work?
 - **Leanne:** How ingesters work and/or Combining the metadata, timestream and the time series processor to perform a calculation.
+  ** OTHER VOLUNTEERS PLEASE**
 
 ### 12:00 - AI: How are we using it?
 Open discussion: 
