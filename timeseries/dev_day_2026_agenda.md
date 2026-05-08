@@ -24,7 +24,7 @@ Draw the system - ingestion through processing to sharing. One person at a time 
 ### 11:00 - Lightning talks (5 min talk, 5–10 min discussion)
 - **Dom:** Why Kubernetes?
 - **Richard:** How does the DAG work?
-- **OTHER VOLUNTEERS PLEASE**
+- **Leanne:** How ingesters work and/or Combining the metadata, timestream and the time series processor to perform a calculation.
 
 ### 12:00 - AI: How are we using it?
 Open discussion: 
