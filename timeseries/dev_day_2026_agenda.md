@@ -44,7 +44,7 @@ Open discussion:
   - something just annoying from a dev experience (slow script, annoying dependency)
  
 **PLEASE GATHER IDEAS HERE:**
--
+
 
 ### 15:00 - Coffee break
 
