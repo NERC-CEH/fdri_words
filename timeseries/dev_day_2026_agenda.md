@@ -22,9 +22,14 @@ Draw the system - ingestion through processing to sharing. One person at a time 
 ### 10:30 - Coffee break
 
 ### 11:00 - Lightning talks (5 min talk, 5–10 min discussion)
-- **Dom:** Why Kubernetes?
-- **Richard:** How does the DAG work?
-- **Leanne:** How ingesters work and/or Combining the metadata, timestream and the time series processor to perform a calculation.
+- **Dom:**
+  - Why Kubernetes?
+- **Richard:**
+  - How does the DAG work?
+  - Use of cookiecutter python template   
+- **Leanne:**
+  - How ingesters work
+  - Combining the metadata, timestream and the time series processor to perform a calculation.
 
 **OTHER VOLUNTEERS PLEASE**
 
