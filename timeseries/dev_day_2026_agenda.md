@@ -30,6 +30,12 @@ Draw the system - ingestion through processing to sharing. One person at a time 
 - **Leanne:**
   - How ingesters work
   - Combining the metadata, timestream and the time series processor to perform a calculation.
+- **Jon:**
+  - Recent improvments to how we handle state in React:
+    - what is state?
+    - state management and query params
+    - state management and api's
+
 
 **OTHER VOLUNTEERS PLEASE**
 
@@ -62,6 +68,8 @@ Open discussion:
 ### 15:30 - How we present flags in the UI
 - Linking to metadata
 - Linking to Timestream
+- Dashboard mockup demo focussing on QC
+- Agree strategy for capturing stats on short-term metrics like QC, completeness, etc ([link](https://github.com/NERC-CEH/fdri_discussions/discussions/9))
 
 ### 17:00 - Wrap up day 1
 
@@ -85,6 +93,6 @@ Reflect on yesterday. Discuss what we hope to get out of the today
 ### 11:00 - September launch: What are we actually shipping?
 Technical focus, what we need to do practically ahead of the launch.
 - API - how to make it public
-- UI - timeseries and geospatial / How to split up the DRI bits
+- UI - timeseries and geospatial / How to split up the DRI bits / branding, entry point, others involved?
 
 ### 12:00 - Done
