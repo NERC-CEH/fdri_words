@@ -51,6 +51,10 @@ Open discussion:
   - something just annoying from a dev experience (slow script, annoying dependency)
  
 **PLEASE GATHER IDEAS HERE:**
+- Handle empty dataframes in data API with better error message ([link](https://teams.microsoft.com/l/message/19:cbc6af143122431b9d69743bb37dcd7c@thread.v2/1778252080195?context=%7B%22contextType%22%3A%22chat%22%7D))
+- Replace Enums with Literal[] type hints in time-stream for better UI with the methods
+- Investigate k8s metadata service timeout errors
+- 
 
 
 ### 15:00 - Coffee break
@@ -62,7 +66,8 @@ Open discussion:
 ### 17:00 - Wrap up day 1
 
 ### 18:00 - Dinner
-- Dinner and drinks at the borough 😄 
+- Dinner and drinks at the borough 😄
+- The 42nd Annual FDRI Developer Day Awards Ceremony
 ---
 
 ## Day 2 (Half Day)
