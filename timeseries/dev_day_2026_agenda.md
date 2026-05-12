@@ -21,9 +21,22 @@ Draw the system - ingestion through processing to sharing. One person at a time 
 
 ### 10:30 - Coffee break
 
-### 11:00 - Lightning talks (5 min talk, 5–10 min discussion)
-- **Dom:**
-  - Why Kubernetes?
+### 11:00 - September launch: What are we actually shipping?
+Technical focus, what we need to do practically ahead of the launch.
+- API - how to make it public
+- UI - timeseries and geospatial / How to split up the DRI bits / branding, entry point, others involved?
+
+### 12:00 - AI: How are we using it?
+Open discussion: 
+- best practices
+- Claude Code
+- what's working, what isn't
+
+### 13:00 - Lunch
+
+### 14:00 - Lightning talks (5 min talk, 5–10 min discussion)
+- ~**Dom:**~
+  ~- Why Kubernetes?~
 - **Richard:**
   - How does the DAG work?
   - Use of cookiecutter python template   
@@ -36,21 +49,7 @@ Draw the system - ingestion through processing to sharing. One person at a time 
     - state management and query params
     - state management and api's
 
-
 **OTHER VOLUNTEERS PLEASE**
-
-### 12:00 - AI: How are we using it?
-Open discussion: 
-- best practices
-- Claude Code
-- what's working, what isn't
-
-### 13:00 - Lunch
-
-### 14:00 - September launch: What are we actually shipping?
-Technical focus, what we need to do practically ahead of the launch.
-- API - how to make it public
-- UI - timeseries and geospatial / How to split up the DRI bits / branding, entry point, others involved?
 
 ### 15:00 - Coffee break
 
