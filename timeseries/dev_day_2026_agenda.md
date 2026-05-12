@@ -100,5 +100,7 @@ Reflect on yesterday. Discuss what we hope to get out of the today
 - Handle empty dataframes in data API with better error message ([link](https://teams.microsoft.com/l/message/19:cbc6af143122431b9d69743bb37dcd7c@thread.v2/1778252080195?context=%7B%22contextType%22%3A%22chat%22%7D))
 - Replace Enums with Literal[] type hints in time-stream for better UI with the methods
 - Investigate k8s metadata service timeout errors
+- Choice for dri-ingestion docs, fix sphinx build?
+- pre-git-hooks to improve commits and avoid errors in git actions (or is this just me?)
 - 
 
