@@ -47,21 +47,10 @@ Open discussion:
 
 ### 13:00 - Lunch
 
-### 14:00 - Fix it in 25
-- Gather niggles beforehand - ask people to submit ideas in advance. 
-- Two or three rounds, demo at the end.
-- Doesn't have to be a bug necessarily... ideas include:
-  - documentation that's wrong or missing
-  - lack of a unit test for something
-  - unclear error message in logs
-  - something just annoying from a dev experience (slow script, annoying dependency)
- 
-**PLEASE GATHER IDEAS HERE:**
-- Handle empty dataframes in data API with better error message ([link](https://teams.microsoft.com/l/message/19:cbc6af143122431b9d69743bb37dcd7c@thread.v2/1778252080195?context=%7B%22contextType%22%3A%22chat%22%7D))
-- Replace Enums with Literal[] type hints in time-stream for better UI with the methods
-- Investigate k8s metadata service timeout errors
-- 
-
+### 14:00 - September launch: What are we actually shipping?
+Technical focus, what we need to do practically ahead of the launch.
+- API - how to make it public
+- UI - timeseries and geospatial / How to split up the DRI bits / branding, entry point, others involved?
 
 ### 15:00 - Coffee break
 
@@ -76,6 +65,7 @@ Open discussion:
 ### 18:00 - Dinner
 - Dinner and drinks at the borough 😄
 - The 42nd Annual FDRI Developer Day Awards Ceremony
+  
 ---
 
 ## Day 2 (Half Day)
@@ -90,9 +80,26 @@ Reflect on yesterday. Discuss what we hope to get out of the today
  
 ### 10:30 - Coffee break
 
-### 11:00 - September launch: What are we actually shipping?
-Technical focus, what we need to do practically ahead of the launch.
-- API - how to make it public
-- UI - timeseries and geospatial / How to split up the DRI bits / branding, entry point, others involved?
+### 11:00 - Open session 
+- Final discussions on anything that has come up over the past 2 days
+- Potential to discuss general ways of working - e.g. are we happy with the Kanban, planning sessions, retros, etc.
 
 ### 12:00 - Done
+
+---
+
+### Optional session (to fit in if we have a lull): Fix it in 25
+- Gather niggles beforehand - ask people to submit ideas in advance. 
+- Two or three rounds, demo at the end.
+- Doesn't have to be a bug necessarily... ideas include:
+  - documentation that's wrong or missing
+  - lack of a unit test for something
+  - unclear error message in logs
+  - something just annoying from a dev experience (slow script, annoying dependency)
+ 
+**PLEASE GATHER IDEAS HERE:**
+- Handle empty dataframes in data API with better error message ([link](https://teams.microsoft.com/l/message/19:cbc6af143122431b9d69743bb37dcd7c@thread.v2/1778252080195?context=%7B%22contextType%22%3A%22chat%22%7D))
+- Replace Enums with Literal[] type hints in time-stream for better UI with the methods
+- Investigate k8s metadata service timeout errors
+- 
+
