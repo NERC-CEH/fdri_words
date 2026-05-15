@@ -58,7 +58,7 @@ Platforms may still exist in the AMS, so we must ensure that any relevant inform
 
 A ``Sensor Slot`` represents a defined measurement at a ``Station``. Each ``Sensor Slot`` corresponds to one time series dataset. Each ``Sensor Slot`` can host one ``Sensor`` at any given time. The ``Sensor`` deployed to a ``Sensor Slot`` may be replaced by another ``Sensor`` that measures the same variable, and this will not change the ``Sensor Slot``. This allows for long-term continuity in our time series datasets.
 
-``Sensor Slot`` names should describe what is measured, e.g. primary rainfall measurement, secondary rainfall measurement, soil moisture at 30 cm depth.
+``Sensor Slot`` names should describe what is measured and its instance, e.g. primary rainfall measurement, secondary rainfall measurement, Soil temperture 1, soil tempertaure 2
 
 ### Sensor
 
