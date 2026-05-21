@@ -1,6 +1,13 @@
 # 015. S3 Bucket Architecture for Raw Flux Data
 
-- Status: proposed
+- Status: **superseded**
+
+New format (still within m1/raw bucket) as described in [this
+discussion][discussion].
+
+[discussion]: https://github.com/NERC-CEH/fdri_discussions/discussions/2#discussioncomment-16409604
+
+Example path: `network=FDRI/collection=FLUX_20HZ/site=MC_MILFA_EC_01/date=2026-01-01/data.dat`
 
 ## Context and Problem Statement
 
