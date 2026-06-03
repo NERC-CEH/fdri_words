@@ -47,15 +47,35 @@ You can set up a shared folder to quickly share files between the virtual and ho
     sudo apt update
     sudo apt install git
     ```
-2. Generate SSH Key for GitHub
+    
+2. Install the GitHub CLI (gh)
+   See instructions here: [https://github.com/cli/cli#installation](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
+
+3. Authenticate with:
+   ```bash
+   gh auth login
+   ```
+
+**Alternative GitHub authentication** (optional - not required if you've done the gh cli above): 
+1. Generate SSH Key for GitHub
     ```bash
     ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa_vmware_github
     ```
-3. Add the public key to GitHub
+2. Add the public key to GitHub
    - Copy contents of `~/.ssh/id_rsa_vmware_github.pub`
    - Add to GitHub: Settings > SSH and GPG keys
 
-## 5. Install Docker
+## 5. Install uv (python package and dependency manager)
+1. Install uv
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+2. Verify
+   ```bash
+   uv --version
+   ```
+   
+## 6. Install Docker
 1. Add Docker's GPG key. This is a security step that ensures any Docker packages you install are actually from Docker 
    and haven't been tampered with.
 
@@ -88,7 +108,7 @@ You can set up a shared folder to quickly share files between the virtual and ho
     - Log out and back in.
     - Verify with: `docker run hello-world` (no sudo)
 
-## 6. Install Localstack CLI
+## 7. Install Localstack CLI
 
 1. Install the pre-built binary
 ```
@@ -102,7 +122,7 @@ curl --output localstack-cli-4.11.1-linux-amd64-onefile.tar.gz \
 sudo tar xvzf localstack-cli-4.11.1-linux-*-onefile.tar.gz -C /usr/local/bin
 ```
 
-## 7. Setup AWS-Vault
+## 8. Setup AWS-Vault
 
 See [https://github.com/NERC-CEH/fdri_words/blob/main/aws/aws-vault.md](https://github.com/NERC-CEH/fdri_words/blob/main/aws/aws-vault.md)
 
