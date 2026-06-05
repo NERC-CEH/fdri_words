@@ -12,7 +12,7 @@ There's also a route for devices which can't or won't do certificate-based authe
 
 ### Implications for FDRI Infrastructure
 
-Each field device needs the address of the MQTT broker in an AWS account.
+Each field device needs the address of the MQTT broker in an AWS account. Please see the [campbell-mqtt-control](https://github.com/NERC-CEH/campbell-mqtt-control/) project for detail of remotely configuring settings on a Campbell datalogger via MQTT.
 
 ![diagram of data flowing from logger to s3](assets/mqtt.png)
 
@@ -24,7 +24,7 @@ In FDRI we have set up a VPN to provide direct access to automate downloading da
  
 ### Implications for FDRI Infrastructure
 
-The server which runs the scheduled pipeline to collect data from field devices needs credentials to write to s3 in the correct AWS account (access keys, role to assume, and bucket name).
+The server which runs the scheduled pipeline to collect data from field devices needs credentials to write to s3 in the correct AWS account (access keys, role to assume, and bucket name). Please see the [fdri_field_access](https://github.com/NERC-CEH/fdri_field_access) project for detail of how this is set up.
 
 ![diagram of data collected from logger sent to s3](assets/openvpn.png)
  
