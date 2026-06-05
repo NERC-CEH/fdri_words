@@ -60,20 +60,22 @@ A registry of layers, containing a spatial index is required. An initial design 
 | ----------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ID                      | Required  | Primary key created by the database                                                                                                                                                  |
 | Name                    | Required  | Used for displaying the name in the UI                                                                                                                                               |
+| Description             | Optional  | A basic description to associate with the layer, where appropriate.                                                                                                                  |
 | Project                 | Required  | FDRI/ NC-UK etc – Links to project table                                                                                                                                             |
-| Date                    | Required  |                                                                                                                                                                                      |
+| Date                    | Optional  | The single date to associate with the layer. If not provided then it is assumed at least a start date will be present.                                                               |
+| Start Date              | Optional  | The start date for a dataset. If not provided then it is assumed that the "Date" field will be present.                                                                              |
+| End Date                | Optional  | The end date for a dataset. This is an optional field as many layers may have ongoing data collection.                                                                               |
 | Source type             | Required  | Links to the SourceType table to provide information about where the data is coming from (e.g. S3, metadata api etc)                                                                 | 
 | Raw Source id           | Optional  | The S3 key, catalogue identifier etc to point the API to the raw data (if available). This should be the singleband EPSG 3857 COG tif or any vector (geojson) data.                  |
 | Colour Source id        | Optional  | The S3 key, catalogue identifier etc to point the API to the colourised data (if available). It's expected this will be a cog formatted colourised raster, or a WMS source.          |
 | Data format             | Required  | Raster / vector etc. Links to the DataFormat database table                                                                                                                          |
-| Data category           | Required  | DOM / DEM etc. Links to the DataCategory database table.                                                                                                                             |                                                                                                                                                              |
+| Data category           | Required  | DOM / DEM etc. Links to the DataCategory database                                                                                                                                    |                                                                                                                                                              |
 | Legend (JSON)           | Optional  | Required for raster data only. For vector data the legend will be stored per feature                                                                                                 |
 | Boundary                | Optional  | Simplified boundary in WGS84 to allow for location queries                                                                                                                           |
 | Bounding box (bbox)     | Required  | Bounding box (in WGS84) of the layer stored as a geometry (not a list of 4 floats)                                                                                                   |
-| Catalogue id            | Optional  | If download is available in the catalogue. Partial url to catalogue page – maybe just unique ID we can use to construct the URL?                                                     |
 | Processing level        | Required  | Links to the ProcessingLevel database table. Aims to identify whether data is raw or processed.                                                                                      |
-| AreaName                | Required  | Links to the AreaName database table. Defines the area name (e.g. Chess) which links to the AreaType (e.g. Catchment).                                                               |
-
+| Location                | Required  | Links to the Location database table. Defines the area name (e.g. Chess) which links to the AreaType (e.g. Catchment).                                                               |
+| Field metadata          | Optional  | Describes any associated metadata for the vector layer. For example which fields to display as a tooltip and their data type.                                                        |
 
 ### Project table - project metadata and data categorisation
 
@@ -86,7 +88,7 @@ The project table could have the following fields (likely to be expanded):
 | Column Name | Required? | Description / Notes                                      |
 | ----------- | --------- | -------------------------------------------------------- |
 | ID          | Required  | Primary key created by the database                      |
-| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   
 | Name        | Required  | Used for displaying the name in the UI                   |
 
 
@@ -97,18 +99,31 @@ This links to the data_format field in the main table and stores standardised da
 | Column Name | Required? | Description / Notes                                      |
 | ----------- | --------- | -------------------------------------------------------- |
 | ID          | Required  | Primary key created by the database                      |
-| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   
 | Name        | Required  | Used for displaying the name in the UI                   |
 
-### Data Category 
+### Data Category Group
 
 This links to the data_category field in the main Layer table, and stores the category of the data, for example DEM etc
 
 | Column Name | Required? | Description / Notes                                      |
 | ----------- | --------- | -------------------------------------------------------- |
 | ID          | Required  | Primary key created by the database                      |
-| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
+| Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   
 | Name        | Required  | Used for displaying the name in the UI                   |
+
+
+### Data Category Group
+
+This is a higher level grouping for the data categories. For example "Hydrology", which would then contain 
+"River network" and "Flow monitoring" data category objects.
+
+| Column Name         | Required? | Description / Notes                                      |
+| ------------------- | --------- | -------------------------------------------------------- |
+| ID                  | Required  | Primary key created by the database                      |
+| Data category group | Required | The group to associate the specific data category to |
+| Object key          | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   
+| Name                | Required  | Used for displaying the name in the UI                   |
 
 
 ### Source type
@@ -133,10 +148,10 @@ This links to the processing_level field in the main Layer table, and stores the
 | Object key  | Required  | Used as a unique ID for easily finding the correct item. |                                                                                                                                                                                                   |
 | Name        | Required  | Used for displaying the name in the UI                   |
 
-### Area Name
+### Location
 
-This links to the area_name field in the main Layer table, and stores details about the location associated with the layer.
-Its use case is to create instances of different area types, each with a unique name that can be easily associated with
+This links to the location field in the main Layer table, and stores details about the location associated with the layer.
+Its use case is to create instances of different locations, each with a unique name that can be easily associated with
 multiple layers without risking duplication due to typos (e.g. one layer referred to as "chess", another as "Chess", another as "Chess Catchment" etc)
 This table stores the name to use for the area associated with the layer, and links to the type of area it corresponds to.
 
@@ -148,10 +163,11 @@ This table stores the name to use for the area associated with the layer, and li
 | Area type   | Required  | Links to the AreaType table                              |
 
 
-### Area Type
+### Location Type
 
-This links to the area_type field in the AreaName table, and stores details type of location. Predominantly the type of 
-area, such as whether the data is expected to cover a catchment, or is at a national level.
+This links to the location_type field in the Location table, and stores details type of location. This is predominantly
+meant to help identify the type of location such as whether the data is expected to cover a catchment, or is at a 
+national level.
 
 | Column Name | Required? | Description / Notes                                      |
 | ----------- | --------- | -------------------------------------------------------- |
