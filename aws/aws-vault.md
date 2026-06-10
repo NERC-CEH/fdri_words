@@ -32,10 +32,72 @@ Starting subshell /bin/zsh, use `exit` to exit the subshell
 
 ## Guide for new AWS accounts (through the landing zone)
 
-Go the AWS access portal and select the account you want to connect to. Select `Access Keys` and then copy the `aws configure sso` command into your terminal.
+### One-time: install aws-vault (if not installed already)
 
-Enter the requested details, `SSO start url` and `SSO Region` are taken from the page above, and then follow the instructions (just hit enter for the session scope value). If the provided URL doesn't load in the VM then load it outside and copy the code in.
+The original `99designs/aws-vault` is abandoned; use the `ByteNess` fork.  
 
-Once finished, there should be a new profile in `~/.aws/config`. You can rename this profile to something more sensible.
+Go to https://github.com/ByteNess/aws-vault/releases and find the latest version number (v7.12.1 as of writing).
 
-Then `aws-vault exec <your-profile-name>` should start a session. Again, you will need to sing-in via the provided URL but this might only work outside of the VM.
+```bash
+# Download latest Linux amd64 binary - replace version number as appropriate
+sudo curl -L -o /usr/local/bin/aws-vault \
+  https://github.com/ByteNess/aws-vault/releases/download/v7.12.1/aws-vault-linux-amd64
+
+sudo chmod 755 /usr/local/bin/aws-vault
+aws-vault --version
+```
+
+### One-time: remove the old IAM user credentials 
+
+If you had IAM user set up for the old account, might be best to remove these so things don't get confused.
+
+1. Remove from aws-vault's store:
+   
+   ```bash
+   aws-vault list
+   aws-vault remove <user name>
+   ```
+   
+3. Remove the long-term keys from the plain credentials file:
+   
+   ```bash
+   gedit ~/.aws/credentials      # delete the IAM-user block
+   ```
+   
+4. Remove the old IAM-user profile from `~/.aws/config`
+   
+### One-time: configure SSO
+
+Go the AWS access portal and select the account you want to connect to (e.g. dri-staging). Select `Access Keys` - this will give you the values for the prompts that will come up below.
+
+Configure SSO:
+
+```bash
+aws configure sso
+```
+
+Provide when prompted (from the `Access Keys` panel in the AWS access portal):
+
+- SSO start URL
+- SSO region
+- Session scope - just hit enter for the default
+- A sensible profile name
+
+It will give you a URL that requires you to enter a one-time code.
+
+This writes an `[sso-session ...]` block and an SSO `[profile ...]` block into `~/.aws/config`.  You can rename this profile to something more sensible if you didn't set it already.
+
+### Daily usage
+
+`aws-vault` should now detect the SSO profile and runs the SSO device-auth flow automatically (opens a browser, shows a `user_code`). Approve it in the browser; the token is cached until it expires (typically 8–12h), then re-prompts.
+
+```bash
+aws-vault exec <profile name>
+
+# Do the authentication as prompted
+
+# Starts a subshell - for a working session with many commands
+#   ...run commands...
+
+exit                              # leaves subshell, creds cleared from env
+```
