@@ -8,13 +8,13 @@ A few of the layer management endpoints require providing a `model_name`. This i
 
 Models which are added / edited using shared endpoints:
 - project
-- source_type
 - data_format
 - data_category_group
 - processing_level
 - location_type
 
 Models with model-specific endpoints for adding or modifying data:
+- source_type
 - data_category
 - location
 
@@ -33,6 +33,12 @@ For those models listed as "generic", new entries can be added using the `/add_m
 For example `/add_model?model_name=data_category_group&name=Example%20group&object_key=test` will create a new DataCategoryGroup object with a display name of "Example group" and a unique id of "test".
 
 To edit an existing generic model, use the `/update_model` endpoint. The numeric primary key ID of the model (stored as `id` in the data returned using the /list_model endpoint) must be provided alongside any relevant fields to be changed. For example to edit the name of an existing project, with a primary key ID of 1 the following url would be used: `/update_model?model_name=project&model_id=1&name=Flood%20and%20Drought%20Research%20Infrastructure`. Note that no `object_key` value was provided in order to ensure the existing object value is not modified. 
+
+### Source Type
+
+The source type model is very similar to the core generic model, but contains an additional `base_url` field. The base url is expected to be the name of the base bucket if the source type is S3 (e.g. "s3://ukceh-fdri-staging-geospatial"), or the base metadata api url if the source type is the metadata api (e.g. `https://dri-metadata-api.dri.ceh.ac.uk`). For the base url of any other source types, it is intended to be the basic url from which customisations can be added on a per-layer basis. 
+
+The urls to add or edit a source type model instance are `/add_source_type` and `/update_source_type` respectively
 
 ### Data categories
 Data categories link to data category group instances to allow similar categories to be grouped together. This means that in addition to the generic endpoint fields of `name` and `object_key` an additional `category_group_key` field is expected. The value of the `category_group_field` is expected to match an existing `object_key` found in the list of available data_category_group model instances. 
