@@ -24,6 +24,8 @@ Each field device needs the address of the MQTT broker in an AWS account. Please
 MQTT is designed for "Internet of Things" services and not for high-bandwidth data at large volumes. 
 
 In FDRI we have set up a VPN to provide direct access to automate downloading data from field devices and storing it directly in s3. The [Architectural Decision Record](https://github.com/NERC-CEH/fdri_words/blob/b7b511a210a5eac5a112d2f157767ad9b4456828/017-Flux-Raw-Data-Transfer-Method.md) provides some background to why it's done this way, and what else was tried.
+
+4G routers at field sites are connected to a VPN, and can be configured to forward requests through to dataloggers. This means we have direct access to a field site network from within one of the UKCEH office networks, and can e.g. set up scheduled processes to collect data hourly.
  
 ### Implications for FDRI Infrastructure
 
