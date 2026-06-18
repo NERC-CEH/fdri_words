@@ -11,7 +11,7 @@ AWS staging and production accounts currently have the following security servic
 * AWS Security Hub
 * Amazon Detective
 
-While these services provide strong security monitoring and visibility, Amazon Detective is generating significant ongoing costs. We need to determine whether its additional investigation capabilities justify the expense.
+While these services provide strong security monitoring and visibility, Amazon Detective is generating significant ongoing costs of approximately $600 per month. We need to determine whether its additional investigation capabilities justify the expense.
 This decision will sit under **infrastructure monitoring cost ownership and optimisation**, where IT is responsible for both current and long-term monitoring cost while ensuring effective security coverage. We therefore need to jointly evaluate the optimal use of these services to achieve full value, which may lead to further investigation work with IT in the background.
 
 Amazon Detective applies machine learning and statistical analysis mainly to:
