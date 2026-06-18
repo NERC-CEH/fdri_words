@@ -1,6 +1,6 @@
 # ADR-017. Adopt Conditional Use of Amazon Detective within AWS Security Architecture
 
-**Status:** Agreed - revisit in 4-6 months time
+**Status:** Agreed - revisit in 4-6 months time.  Approved by Mike Brown
 
 ## Context and Problem Statement
 
@@ -81,7 +81,7 @@ For our current requirements, the cost of Detective is not justified by its usag
 ## Negative Consequences
 
 * Loss of advanced investigation and relationship-graph capabilities
-* Increased manual effort during incident investigations
+* Increased manual effort during incident investigations.  The increased  effort would involve manually correlating GuardDuty, security hub and cloudtrail data for any incidents potentially increasing incident response times.
 
 
 ## AWS Recommendations
