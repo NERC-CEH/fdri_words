@@ -2,13 +2,16 @@
 
 ## Low-bandwidth data via MQTT
 
-Datalogger sends observations to an "MQTT broker". Data is _published_ to a topic (which is structured like a web URL) and other services can _subscribe_ to that topic and read the messages.
+Datalogger sends observations to an "MQTT broker". Each set of observations is a document in JSON format. The JSON data is _published_ to an MQTT topic (which is structured like a web URL) and other services can _subscribe_ to that topic and read the messages sent to it.
 
-In FDRI the MQTT broker is provided by Amazon Web Services IoT Core. When the data is received, the raw messages are stored in s3 storage in AWS.
+Datalogger scripts take readings from different sensors at different frequencies - there will be some measurements coming in once a minute, some once every 30 minutes.
 
-We use authentication certificates (preferred) for devices which support them, this includes Campbell dataloggers.
+In FDRI the MQTT service is provided by Amazon Web Services IoT Core. When new messages is received, there's a [rule](https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html) that stores the raw messages in AWS s3 cloud storage. 
 
-There's also a route for devices which can't or won't do certificate-based authentication to use a username and password to connect to an MQTT broker.
+> [!NOTE]
+> AWS is the [platform chosen by FDRI](https://github.com/NERC-CEH/fdri_words/blob/main/adrs/002-IoT-Telemetry-Ingress.md) for Internet of Things, for ease of management and scaling. There are also [smaller-scale , open source approaches](http://www.steves-internet-guide.com/logging-mqtt-sensor-data/) to doing the same thing.
+
+We use a secure, encrypted version of MQTT, AWS IoT helps manage certificates for devices which support them to authenticate with, this includes Campbell dataloggers. There's also a route for devices which can't or won't do certificate-based authentication to use a username and password to connect to an MQTT broker.
 
 ### Implications for FDRI Infrastructure
 
