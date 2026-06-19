@@ -1,6 +1,6 @@
 # ADR-017. Adopt Conditional Use of Amazon Detective within AWS Security Architecture
 
-**Status:** Agreed - revisit in 4-6 months time.  Approved by Mike Brown
+**Status:** Agreed - revisit in 4-6 months time.  Approved by Mike Brown (18-Jun-2026)
 
 ## Context and Problem Statement
 
