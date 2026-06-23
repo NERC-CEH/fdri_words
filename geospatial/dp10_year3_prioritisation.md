@@ -73,9 +73,9 @@ Useful links:
 | Layer opacity controls | 🟢 Sept | FPM-842 | Done | Essential for overlaying layers. |
 | Change basemap | 🟢 Sept | FPM-845 | Ready for doing. | Currently hardcoded. Add OS maps, satellite, light, street. Consider licencing, costs etc. |
 | Improve layer navigation/panel | 🟢 Sept | FPM-838 | Done | Likely to require some fine tuning once lots of layers available in postgis |
-| Configure zoom levels per layer | 🟢 Sept | FPM-733 | Invalid | Handled by deck.gl, no longer required. Prevent users zooming to irrelevant scales. Related: FPM-899 (min/max zoom). |
 | Point record layers with popups | 🟢 Sept | FPM-851 | In progress| Click to select, show metadata, link out to timeseries UI / NRFA / EA pages. Needs site info from metadata API. |
 | Support WMS layers from the catalogue | 🟢 Sept | FPM-1085 | Ready for doing | To support the backup plan of rendering the NRFA catchments and River lines data using WMS from the data catalogue | 
+| Add query parameter support to the UI | 🟢 Sept | FPM-1114 | Ready for doing | To allow a pre-defined list of layers to be copied and stored as a url / favourite etc | 
 | Point value queries from rasters | 🟢 Sept (nice to have) | FPM-1017 | Ready for doing | Click on raster to see value. TiTiler supports natively, needs API wiring. Has implications for how rasters are stored - will need to be stored as grey-scale rather than colorised COG. Possibly stored both grey-scale (for querying) and colorised rasters (for viewing) |
 | 3D terrain visualisation | 🟢 Sept (nice to have) | FPM-1084 | Ready for doing | Prototype working with deck.gl TerrainLayer. Height exaggeration helps. Performance issues with 50m DEM at national scale. Limit to small layers to start with. |
 
