@@ -32,16 +32,16 @@ Useful links:
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Set up PostGIS connection from API | 🟢 Sept | FPM-708 | In progress | Replaces abandoned geoparquet approach. |
-| Design PostGIS database structure | 🟢 Sept | FPM-879 | Ready for deployment | Schema for layer registry: name, type, S3 URL, bounding box, categories, etc. |
-| Set up spatial index in PostGIS | 🟢 Sept | FPM-709 | Ready for deployment | Needed for geospatial querying of layers. |
+| Set up PostGIS connection from API | 🟢 Sept | FPM-708 | Done | Replaces abandoned geoparquet approach. |
+| Design PostGIS database structure | 🟢 Sept | FPM-879 | Done | Schema for layer registry: name, type, S3 URL, bounding box, categories, etc. |
+| Set up spatial index in PostGIS | 🟢 Sept | FPM-709 | Done | Needed for geospatial querying of layers. |
 | Populate PostGIS registry with initial layers | 🟢 Sept | N/A | In progress | At least one of each type as proof of concept, then bulk populate with rest of layers (see section 3 below). A spreadsheet has been produced listing all layers to go into the database along with the relevant postgis metadata |
 
 ### S3 Storage
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Design production S3 bucket structure | 🟢 Sept | FPM-710 | Ready for deployment |. Tied to AWS migration. Finalise folder/partition key conventions. API modified to automatically upload data to the correct S3 structure |
+| Design production S3 bucket structure | 🟢 Sept | FPM-710 | Done |. Tied to AWS migration. Finalise folder/partition key conventions. API modified to automatically upload data to the correct S3 structure |
 | Create S3 bucket structure | 🟢 Sept | FPM-710 | Done | Tied to AWS migration. The geospatial API has been modified to automatically upload data to the correct S3 structure |
 
 ### OGC Web Services
@@ -63,7 +63,7 @@ Useful links:
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Add IP filtering | 🟢 Sept | FPM-1086 | Ready for doing |Needed to hide the layer management router used for editing the postgis database. |
+| Add IP filtering | 🟢 Sept | FPM-1086 | In review |Needed to hide the layer management router used for editing the postgis database. |
 
 ### Core UI features (soft launch)
 
