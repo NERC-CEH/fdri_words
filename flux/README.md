@@ -1,6 +1,6 @@
 # Flux pipeline
 
-Architecture and progress as of 17 April 2026:
+Architecture and progress as of 2 July 2026:
 
 ![flux architecture](/flux/FDRI%20Flux.drawio.png)
 
