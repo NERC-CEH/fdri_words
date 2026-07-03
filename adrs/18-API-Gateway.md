@@ -7,6 +7,10 @@
 * Rate limiting
 * Authentication / authorisation on some services
 * Dashboard / observability
+* Monitoring and Alerting
+* Network exposure (e.g. inteneded enpoints publically reachable)
+* Documentation
+* approval and sign off
 
 ## Considered options
 
