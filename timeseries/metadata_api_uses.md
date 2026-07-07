@@ -134,3 +134,58 @@ sourceColumnName
 
 processingLevel
 - processingLevel.prefLabel	
+
+
+## dri-geospatial-api
+
+### Transformation and url used for extracting locations from the metadata api
+Note that the individual metadata api urls will likely vary slightly per layer, but the base format and required fields will be the same. The example below is for the cosmos network.
+
+##### Metadata url
+https://dri-metadata-api.dri.ceh.ac.uk/id/network/cosmos.json?_projection=contains.label,contains.comment,contains.identifier,contains.hasGeometry.*,contains.operatingPeriod.*,contains.altitude
+
+##### Transformed response (returned as a geojson)
+```
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -3.905963,
+                    50.773479
+                ]
+            },
+            "properties": {
+                "name": "North Wyke",
+                "description": "This site is a Rothamsted Research farm where scientists investigate the impact of agriculture on the land and atmosphere. The field where the COSMOS-UK site is located was a grassland with grazing livestock until 2019. Since then it has been used for arable crop production.",
+                "altitude": 146.0,
+                "start_date": "2014-10-16T09:00:00",
+                "end_date": "2099-12-31"
+            }
+        },
+    ]
+}
+```
+
+##### Transformation mapping
+
+Name
+- label
+
+Description
+- comment
+
+Altitude
+- altitude
+
+Start date
+- operatingPeriod.startDate
+
+End date
+- operatingPeriod.endDate
+
+Location
+- hasGeometry.asWkt (uses shapely.wkt.loads to read the WGS84 point coordinate)
