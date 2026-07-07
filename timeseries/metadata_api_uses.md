@@ -6,11 +6,13 @@ Describes the various endpoints called by the metadata api for the data api and 
 
 ### Networks endpoint
 
-endpoint url: https://dri-data-api.staging.dri.ceh.ac.uk/v1/networks
+##### Endpoint url
+https://dri-data-api.staging.dri.ceh.ac.uk/v1/networks
 
-metadata url:  https://dri-metadata-api.dri.ceh.ac.uk/id/network.json
+##### Metadata url
+https://dri-metadata-api.dri.ceh.ac.uk/id/network.json
 
-transformed response: 
+##### Transformed response
 ```
 [
   {
@@ -34,18 +36,20 @@ transformed response:
 ]
 ```
 
-transformation mapping: 
-ID: 
-	- @id 
-		(splits the returning @id value on / and takes the last item in the split identifier)
+##### Transformation mapping
 
-### Sites
+ID 
+- @id (splits the returning @id value on / and takes the last item in the split identifier)
 
-endpoint: https://dri-data-api.staging.dri.ceh.ac.uk/v1/cosmos/sites
+### Sites endpoint
 
-metadata url:  https://dri-metadata-api.dri.ceh.ac.uk/id/network/cosmos.json?_projection=contains.label,contains.comment,contains.identifier,contains.hasGeometry.*
+##### Endpoint url
+https://dri-data-api.staging.dri.ceh.ac.uk/v1/cosmos/sites
 
-transformed response: 
+##### Metadata url
+https://dri-metadata-api.dri.ceh.ac.uk/id/network/cosmos.json?_projection=contains.label,contains.comment,contains.identifier,contains.hasGeometry.*
+
+##### Transformed response
 ```
 {
   "sites": [
@@ -64,26 +68,31 @@ transformed response:
 }
 ```
 
-transformation mapping: 
+##### Transformation mapping
 
-ID: 
-	- identifier
-Label: 
-	- label
-Description: 
-	- comment
-location: 
-	hasGeometry.asWKT 
-		(Decodes both lat,lon and easting,northing using the point WKT strings)
+ID
+- identifier
+  
+Label
+- label
+  
+Description
+- comment
+  
+Location
+- hasGeometry.asWKT (Decodes both lat,lon and easting,northing using the point WKT strings)
 
 Variables
 ----------
 
-endpoint: https://dri-data-api.staging.dri.ceh.ac.uk/v1/cosmos/variables/alic1
+##### Endpoint url
+https://dri-data-api.staging.dri.ceh.ac.uk/v1/cosmos/variables/alic1
 
-metadata url: https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json?_projection=sourceColumnName,measure(aggregation(prefLabel)),originatingFacility(hasAnnotation(hasValue(value)))&_withView=
+##### Metadata url
+https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json?_projection=sourceColumnName,measure(aggregation(prefLabel)),originatingFacility(hasAnnotation(hasValue(value)))&_withView=
 
-transformed response: 
+##### Transformed response
+```
 {
   "site_id": "alic1",
   "variables": [
@@ -99,21 +108,29 @@ transformed response:
     },
   ]
 }
+```
 
-transformation mapping: 
-	ID
-		- @id
-	originating facility
-		- originatingFacility.hasAnnotation.hasValue.value
-	observedProperty
-		- observedProperty.prefLabel
-	units
-		- measure.hasUnit.@id
-	statistic
-		- measure.aggregation.prefLabel
-	resolution 
-		- measure.periodicity
-	sourceColumnName
-		- sourceColumnName
-	processingLevel
-		- processingLevel.prefLabel	
+##### Transformation mapping
+ID
+- @id
+
+Originating facility
+- originatingFacility.hasAnnotation.hasValue.value
+  
+Observed property
+- observedProperty.prefLabel
+
+units
+- measure.hasUnit.@id
+
+statistic
+- measure.aggregation.prefLabel
+
+resolution 
+- measure.periodicity
+
+sourceColumnName
+- sourceColumnName
+
+processingLevel
+- processingLevel.prefLabel	
