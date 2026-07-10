@@ -1,0 +1,15 @@
+# 2026 Week [] - DRAFT
+
+## Metadata
+
+## Timeseries processing pipeline
+
+## Public UI
+
+## Network Monitoring
+
+## Flux
+
+## Ingestion
+
+## Spatial API and UI
