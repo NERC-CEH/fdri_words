@@ -89,7 +89,7 @@ Variables
 https://dri-data-api.staging.dri.ceh.ac.uk/v1/cosmos/variables/alic1
 
 ##### Metadata url
-https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json?_projection=sourceColumnName,measure(aggregation(prefLabel)),originatingFacility(hasAnnotation(hasValue(value)))&_withView=
+https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json
 
 ##### Transformed response
 ```
@@ -99,7 +99,6 @@ https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json?_proj
     {
       "id": "http://fdri.ceh.ac.uk/id/dataset/cosmos-alic1-rh_30min_raw",
       "label": "Relative humidity",
-      "observedProperty": "Relative humidity",
       "units": "%",
       "sourceColumnName": "RH",
       "statistic": "Mean",
@@ -114,11 +113,8 @@ https://dri-metadata-api.dri.ceh.ac.uk/id/site/cosmos-alic1/_datasets.json?_proj
 ID
 - @id
 
-Originating facility
-- originatingFacility.hasAnnotation.hasValue.value
-  
-Observed property
-- observedProperty.prefLabel
+label
+- title
 
 units
 - measure.hasUnit.@id
