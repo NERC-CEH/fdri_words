@@ -13,72 +13,61 @@ This piece of work aims to address the following questions:
 
 ## Proposed Data Model
 
-We are converging towards a hierarchial model composed of four elements, from broadest to narrowest:
+We have opted for a model in which everything is a typed ``Facility``, rather than a specialised hierarchial class model.
+
+Possible ``Facility`` types include:
 
 - Site
-- Station
-- Sensor Slot
+- Platform
 - Sensor
 
-### Site
+This choice has been made for FDRI because:
 
-A ``Site`` is a geographic concept. A ``Site`` is listed in the UKCEH Site Vocabulary.
+- Existing standards indicate that this is the best solution for interoperability (see [INSPIRE Data Specification on Environmental Monitoring Facilities](https://knowledge-base.inspire.ec.europa.eu/publications/inspire-data-specification-environmental-monitoring-facilities-technical-guidelines_en))
+- This solution results in a model that is more flexible and easier to adapt to the introduction of new asset types
+- This solution results in a model that does not require every asset to respect a strict hierarchy, e.g. a platform does not necessarily have to be part of a site and may belong directly to a network.
+
+### Network (class)
+
+A ``Network`` is an operational or organisational entity. A ``Network`` consists of one or more ``Facilities``. A ``Facility`` can be part of any number of ``Networks``. A recursive hierarchical link exists between ``Networks``, meaning that any ``Network`` can be part of another ``Network``.
+
+### Facility (class)
+
+Every asset is a ``Facility``. A ``Facility`` can be fixed or mobile. A recursive hierarchical link exists between ``Facilities``, meaning that any ``Facility`` can be part of another ``Facility``.
+
+#### Site (type)
+
+A ``Site`` is a type of ``Facility``. A ``Site`` is a geographic concept. A ``Site`` is listed in the UKCEH Site Vocabulary.
 
 A ``Site``:
 
-- is defined by a polygon,
+- has a geographic location defined by a polygon,
 - represents a physical area,
 - has no operational or organisational ownership.
 
-A ``Site`` may host multiple ``Stations`` operated by different ``Networks``.
+A ``Site`` may contain multiple ``Facilities`` operated by different ``Networks``.
 
-A ``Network`` cannot be attached directly to a ``Site``, to avoid ambiguity when multiple organisations operate infrastructure at the same location.
+#### Platform (type)
 
-### Network
+A ``Platform`` is a type of ``Facility``.
 
-A ``Network`` is an operational and organisational entity that operates ``Stations`` (i.e. infrastructure at a ``Site``). A ``Network`` represents a collection of ``Stations`` managed under a common organisational structure.
+A ``Platform``:
 
-### Station
+- has a geographic location defined by a point,
+- may be moved in and out of a ``Site``.
 
-A ``Station`` represents some infrastructure operated by a ``Network`` at a Site.
+#### Sensor (type)
 
-A ``Station`` may have its own polygon, defined by the ``Netowrk`` that operates it.
-
-A ``Station`` carries operational metadata (management, maintenance responsability, etc.).
-
-We could define ``Station Types`` (e.g. AWS, soil station, flux tower) for which we could develop a template listing all possible ``Sensor Slot`` types that may exist at that ``Station Type``. This would help with consistency and validation without requiring every ``Station`` to use every ``Sensor Slot``, and allowing them to add additional ``Sensor Slots`` where required.
-
-### Platform (out of scope)
-
-We initially thought that a Platform could be for things like a TDT array, but we decided that the concept of a Platform is unnecessary as such things can also be represented as a collection of ``Sensor Slots``.
-
-Platforms may still exist in the AMS, so we must ensure that any relevant information (e.g. platform-level faults) are propagated down to concepts that are part of this model (e.g. Sensor).
-
-### Sensor Slot
-
-A ``Sensor Slot`` represents a defined measurement at a ``Station``. Each ``Sensor Slot`` corresponds to one time series dataset. Each ``Sensor Slot`` can host one ``Sensor`` at any given time. The ``Sensor`` deployed to a ``Sensor Slot`` may be replaced by another ``Sensor`` that measures the same variable, and this will not change the ``Sensor Slot``. This allows for long-term continuity in our time series datasets.
-
-``Sensor Slot`` names should describe what is measured and its instance, e.g. primary rainfall measurement, secondary rainfall measurement, Soil temperture 1, soil tempertaure 2
-
-### Sensor
-
-A ``Sensor`` is a physical device.
+A ``Sensor`` is a type of ``Facility``. A ``Sensor`` is a physical device.
 
 A ``Sensor``:
 
 - has a serial number,
 - has calibration, fault and maintenance history,
-- has a deployment start and end date in relation to each ``Sensor Slot`` to which it is deployed,
+- has a deployment start and end date in relation to each ``Platform`` to which it is deployed,
 - is replaceable by another ``Sensor``,
-- may be reused in other ``Sensor Slots`` over time.
+- may be reused in other ``Platforms`` over time.
 
-We could define ``Sensor Types`` for which we could develop a template describing that ``Sensor Type``, e.g. for when a ``Sensor`` is replaced by an identical one and all that needs changing is the serial number.
+### Facility Group (class)
 
-## Integration with the AMS
-
-- Sensors in the AMS must be tagged as FDRI so that we only pull what we need into the metadata store
-- Some concepts exist in the AMS but are intentionally not part of this data model (e.g. platform) to keep the model simple
-
-## Dataset Identifiers
-
-- Could we define a dataset ID as sensor slot ID + variable ID + frequency? Would this information suffice to unambiguously identify a time series dataset? Is information about frequency held in the AMS?
+We could create ``Facility Groups`` to bring together  ``Facilities`` that belong to a specific grouping for analytical or geographic purposes, e.g. region or catchment.
