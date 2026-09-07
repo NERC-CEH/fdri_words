@@ -2,6 +2,8 @@
 
 **Status:** Agreed - revisit in 4-6 months time.  Approved by Mike Brown (18-Jun-2026)
 
+Mike Brown has raised this ticket with IT to shut down detective - **Ticket number 184197** - Date 25th of August 2026
+
 ## Context and Problem Statement
 
 AWS staging and production accounts currently have the following security services enabled:
