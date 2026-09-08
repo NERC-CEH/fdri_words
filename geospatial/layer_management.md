@@ -57,7 +57,7 @@ The endpoints for adding and editing locations respectively are `/add_location` 
 ### Layers
 
 Layers can be considered the end product, taking information from all models mentioned previously. Please see the main documentation on the geospatial api design [here](geospatial/geospatial_api_design.md) for information on the individual field requirements.
-Where any field requests a "_key", e.g. "project_key", this should refer to the `object_key` value of the corresponding existing model instance. For example `project_key` refers to the object_key of an existing Project instance. 
+Where any field refers to a linked database table (e.g. `project`), this should refer to the `object_key` value of the corresponding existing model instance. For example `project` refers to the object_key of an existing Project instance. 
 
 #### Uploading data
 When creating or editing a layer, the supporting source data can be provided in a few ways. These are detailed in the subsections below. 
@@ -89,7 +89,15 @@ For geojson data that is to be uploaded to S3, this should be submitted using th
 
 It is expected that the `legend` and `field_metadata` fields will be also left blank. Please ensure the `send empty value` option is not checked. 
 
-#### Metadata api point locations
+#### WMS based layers
+Required field values: 
+- data_format: `wms`
+- source_type: This should point to the relevant wms source - there are likely to be several available, for example `eidc_catalogue`.
+- raw_source_id: This should contain the name of the WMS source - for example the relevant catalogue ID when fetching WMS layers from the eidc catalogue WMS source. 
+- layer_id: The name of the WMS layer to fetch from the source. It is used in the WMS url to construct the `layers=` part of the overall url. 
+
+
+#### Metadata api sites
 
 Required field values: 
 - data_format: `vector`
@@ -103,7 +111,7 @@ The `legend` field should also be left blank, but the `field_metadata` needs to 
 
 The field_metadata field is designed to store a list of dictionaries, with each dictionary containing a configuration detailing how a specific field from the metadata api should be decoded. 
 Each dictionary is expected to have the following 4 fields: 
-- display_label : This is the label to be used in the UI for displaying the field information
+- display_label : This is the label to be used in the UI for displaying the field information. If the field should not be displayed (e.g the wkt field) then this should be left blank
 - key: This is the unique identifier the decoded metadata information will be stored under.
 - field_keys: This is a list of dictionaries, each referring to a specific metadata field.
 - data_type: The data type of the final decoded metadata api value
@@ -115,8 +123,9 @@ Metadata api response data can often be stored in a nested format. As such each 
 - `key`: This should be the key in the metadata api response to be read
 - 'type': This indicates the type of data returned when the metadata key's value is returned. There are several possible `types` supported
   - `value`: Used to represent returning the raw value, regardless of it's data type
-  - 'list: Indicates that the returned value should be extracted from a list. If this is used, then an additional `index` field should also be provided to inform the API which index in the list should be chosen. For example `[{"key": "comment", "type": "list", "index": 0}]`
+  - `list`: Indicates that the returned value should be extracted from a list. If this is used, then an additional `index` field should also be provided to inform the API which index in the list should be chosen. For example `[{"key": "comment", "type": "list", "index": 0}]`
   - `wkt_list`: This is a custom type to be used only for the `hasGeometry` metadata api field. It is designed to handle the point coordinate extraction from multiple possible WKT strings, each in a different coordinate system.
+  - `annotation`: This is another custom field matching to a metadata api "annotation". It expects an `id_field` value used to identify which annotation to fetch. For example   `[{"key": "hasAnnotation", "type": "annotation", "id_value": "http://fdri.ceh.ac.uk/ref/common/annotation-property/aspect"}]`
 
 Where `hasGeometry` is part of the metadata response, this is an example configuration entry:
 
@@ -170,6 +179,80 @@ In this case, the first item (`{"key": "operatingPeriod", "type": "value"}`) wil
 ```
 And then the second item in the field_keys list (`{"key": "startDate", "type": "value"}`), allows the final start date value to be extracted as the "startDate" key is now available at the top level of the dictionary. 
 
+
+### Filter metadata
+
+The filter metadata field is used to identify which features to send to the UI to be display and which to hide. It is specifically designed to be used for those layers sourced from the Metadata API and will not be considered for any other layer sources. 
+
+Similar to the field_metadata and resource_metadata fields it is constructed as a list of dictionaries. Each dictionary is applied sequentially, meaning that only those features passing the first set of filter criteria will be passed to the second dictionary and so on. 
+
+Each dictionary configuration is expected to have the following fields:
+- `type`: Currently only the `list` type is supported. It assumes the metadata api field providing details of whether a feature should be filtered is a list containing a number of configurations, only one of which is applicable for the current filter_metadata dictionary.
+- `list_field`: Name of the field in the metadata api to read
+- `id_field_keys`: This is a copy of the field_metadata field_keys structure, and is used to decode the metadata api id field. The ID field is assumed to reference the identifier of the attribute to filter on, and will be used to match to the `expected_value` to see if the current list entry is the correct one. 
+- `value_field_keys`: Similar to `id_field_keys` this is used to decode the value metadata field. A match of the value against the expected value means the feature will be kept.
+- `expected_id`: The metadata api id identifying whether the list entry is the correct configuration to match the value against. 
+- `expected_value`: The filter value. This is likely to be a simple True/False field. 
+
+An example filter_metadata json file would be 
+
+```
+[
+    {
+        "type": "list",
+        "list_field": "hasAnnotation",
+        "id_field_keys": [{"key": "property", "type": "value"}, {"key": "@id", "type": "value"}],
+        "value_field_keys": [
+            {"key": "hasValue", "type": "value"},
+            {"key": "value", "type": "list", "index": 0}
+        ],
+        "expected_id": "http://example.com/ref/common/annotation-property/isChess",
+        "expected_value": true
+    }
+]
+```
+
+
+### Resource metadata
+
+The resource_metadata field is designed to store information about supporting information for the layer. For example links to the EIDC catalogue or other external web pages
+
+The metadata is stored as a list of dictionaries. Each dictionary is expected to contain the following fields
+- `level`: This should either be `layer` or `feature`. Layer level resources have a single link for the entire layer, whereas feature level resources construct a custom url using information within the geojson feature's properties. Feature level resources will be ignored for all layer types except vector layers. 
+- `url`: The url to link to. If this is for a feature level resource it is expected to use placeholders. For example `https://example.com?site={site_id}`. The `site_id` value will then be linked to the geojson property using the `url_mapping` field detailed next. 
+- `url_mapping`: This can be left as `{}` for layer level resources. For feature level resources it should map from the url placeholder to the corresponding geojson feature's property name. For example `"url_mapping": { "site_id": "id" }` would replace the `site_id` part of the url with the value from the `id` property of each individual geojson feature. 
+- `label`: The display text used to reference the resource in the UI.
+
+An example layer resource configuration would be: 
+
+```
+
+[
+  {
+    "level": "layer",
+    "url": "http://example.com",
+    "url_mapping": {},
+    "label": "Example details"
+  }
+]
+
+```
+
+An example feature level resource configuration would be: 
+
+```
+[
+  {
+    "level": "feature",
+    "url": "http://example.com?site={site_id}",
+    "url_mapping": { "site_id": "id" },
+    "label": "example data"
+  }
+]
+
+```
+
+
 ## Legend formatting
 
 The `legend` field is designed to store the legend configuration. At the top level there should be two fields:
@@ -204,6 +287,21 @@ The boundary format of the min - max range can be represented as `min > x <= max
                     
                 ],
             },
+```
+
+
+### Categorical legends 
+
+The `category` legend type is used to represent categorical data such as the landcover map types. An example legend is shown below. Each entry within `values` is expected to correspond to a single category. The `value` field is used as the label in the UI, and the `colour` should be an RGB representation of the colour to be used. 
+
+```
+{
+  "type": "category",
+  "values": [
+    { "value": "Suburban", "colour": [128, 128, 128] },
+  
+  ]
+}
 ```
 
 ## Boundary geometry requirements
