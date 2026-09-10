@@ -35,7 +35,7 @@ Useful links:
 | Set up PostGIS connection from API | 🟢 Sept | FPM-708 | Done | Replaces abandoned geoparquet approach. |
 | Design PostGIS database structure | 🟢 Sept | FPM-879 | Done | Schema for layer registry: name, type, S3 URL, bounding box, categories, etc. |
 | Set up spatial index in PostGIS | 🟢 Sept | FPM-709 | Done | Needed for geospatial querying of layers. |
-| Populate PostGIS registry with initial layers | 🟢 Sept | N/A | In progress | At least one of each type as proof of concept, then bulk populate with rest of layers (see section 3 below). A spreadsheet has been produced listing all layers to go into the database along with the relevant postgis metadata |
+| Populate PostGIS registry with initial layers | 🟢 Sept | N/A | Done | At least one of each type as proof of concept, then bulk populate with rest of layers (see section 3 below). A spreadsheet has been produced listing all layers to go into the database along with the relevant postgis metadata |
 
 ### S3 Storage
 
@@ -63,7 +63,7 @@ Useful links:
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Add IP filtering | 🟢 Sept | FPM-1086 | In review |Needed to hide the layer management router used for editing the postgis database. |
+| Add IP filtering | 🟢 Sept | FPM-1086 | Done |Needed to hide the layer management router used for editing the postgis database. |
 
 ### Core UI features (soft launch)
 
@@ -73,9 +73,9 @@ Useful links:
 | Layer opacity controls | 🟢 Sept | FPM-842 | Done | Essential for overlaying layers. |
 | Change basemap | 🟢 Sept | FPM-845 | Ready for doing. | Currently hardcoded. Add OS maps, satellite, light, street. Consider licencing, costs etc. |
 | Improve layer navigation/panel | 🟢 Sept | FPM-838 | Done | Likely to require some fine tuning once lots of layers available in postgis |
-| Point record layers with popups | 🟢 Sept | FPM-851 | In progress| Click to select, show metadata, link out to timeseries UI / NRFA / EA pages. Needs site info from metadata API. |
-| Support WMS layers from the catalogue | 🟢 Sept | FPM-1085 | Ready for doing | To support the backup plan of rendering the NRFA catchments and River lines data using WMS from the data catalogue | 
-| Add query parameter support to the UI | 🟢 Sept | FPM-1114 | Ready for doing | To allow a pre-defined list of layers to be copied and stored as a url / favourite etc | 
+| Point record layers with popups | 🟢 Sept | FPM-851 | Done | Click to select, show metadata, link out to timeseries UI / NRFA / EA pages. Needs site info from metadata API. |
+| Support WMS layers from the catalogue | 🟢 Sept | FPM-1085 | Done | To support the backup plan of rendering the NRFA catchments and River lines data using WMS from the data catalogue | 
+| Add query parameter support to the UI | 🟢 Sept | FPM-1114 | Done | To allow a pre-defined list of layers to be copied and stored as a url / favourite etc | 
 | Point value queries from rasters | 🟢 Sept (nice to have) | FPM-1017 | Ready for doing | Click on raster to see value. TiTiler supports natively, needs API wiring. Has implications for how rasters are stored - will need to be stored as grey-scale rather than colorised COG. Possibly stored both grey-scale (for querying) and colorised rasters (for viewing) |
 | 3D terrain visualisation | 🟢 Sept (nice to have) | FPM-1084 | Ready for doing | Prototype working with deck.gl TerrainLayer. Height exaggeration helps. Performance issues with 50m DEM at national scale. Limit to small layers to start with. |
 
@@ -101,39 +101,39 @@ Each layer may need it's own data processing scripts developed. (e.g. Automate C
 
 | Task | Target | JIRA | Current Status | Notes | Data source | Processing requirements |
 |------|--------|------|----------------|-------|-------------|-------------------------| 
-| FDRI catchment boundaries | 🟢 Sept | FPM-846 | Not started | Existing GeoJSON. Foundation layer. | Geojson | Will need uploading to S3 and adding to PostGIS. May be stored as "Locations" |
-| FDRI / COSMOS site locations | 🟢 Sept | | Not started | Point records linking to timeseries UI. Point locations taken from FDRI metadata API? | Metadata API | Needs entry adding to postgis |
-| River flow gauging stations | 🟢 Sept | FPM-847 |  Not started |EA/SEPA/NRW APIs. Highlight NRFA stations. Link out. | Metadata API | Needs entries adding to postgis | 
-| River level stations | 🟢 Sept | FPM-848 |  Not started |From EA/SEPA/NRW APIs. |  Metadata API | Needs entries adding to postgis | 
-| UKCEH rivers (IRN) | 🟢 Sept | FPM-865 |  Not started |Complex vector. ~400k features. May need vector tiles or WMS. (dependent on FPM-843). Use NRFA WMS. | ? | ? |
-| Elevation (50m DTM) | 🟢 Sept | |  Not started | Colourised COG. | Needs convert_to_cog script + raster_boundary script |
-| Average annual rainfall | 🟢 Sept | |  Not started |Existing raster, needs COG conversion. | Colourised COG. | Needs convert_to_cog script + raster_boundary script |
-| Raingauges | 🟢 Sept | FPM-849 | Not started | Point layer from various operators (e.g. EA, Met office, SEPA). | Metadata API | Needs entries adding to postgis | 
+| FDRI catchment boundaries | 🟢 Sept | FPM-846 | Done | Existing GeoJSON. Foundation layer. | Geojson | Will need uploading to S3 and adding to PostGIS. May be stored as "Locations" |
+| FDRI / COSMOS site locations | 🟢 Sept | | Done | Point records linking to timeseries UI. Point locations taken from FDRI metadata API? | Metadata API | Needs entry adding to postgis |
+| River flow gauging stations | 🟢 Sept | FPM-847 | Done |EA/SEPA/NRW APIs. Highlight NRFA stations. Link out. | Metadata API | Needs entries adding to postgis | 
+| River level stations | 🟢 Sept | FPM-848 | Done |From EA/SEPA/NRW APIs. |  Metadata API | Needs entries adding to postgis | 
+| UKCEH rivers (IRN) | 🟢 Sept | FPM-865 | Done |Complex vector. ~400k features. May need vector tiles or WMS. (dependent on FPM-843). Use NRFA WMS. | ? | ? |
+| Elevation (50m DTM) | 🟢 Sept | | Done | Colourised COG. | Needs convert_to_cog script + raster_boundary script |
+| Average annual rainfall | 🟢 Sept | |  Done | Existing raster, needs COG conversion. | Colourised COG. | Needs convert_to_cog script + raster_boundary script |
+| Raingauges | 🟢 Sept | FPM-849 | Done | Point layer from various operators (e.g. EA, Met office, SEPA). | Metadata API | Needs entries adding to postgis | 
 | NRFA catchment boundaries | 🟢 Sept | | Not started | ~1700 overlapping polygons. Complex vector — needs vector tiles. Use NRFA WMS. | WMS | Needs simplifying to make nested boundaries visible. |
-| Land cover map (latest) | 🟢 Sept | FPM-867 |  Not started | Latest year. Re-use existing EIDC WMS if possible. | WMS | Reliant on FPM-1085 | 
-| 1m EA/NRW LiDAR (clipped) | 🟢 Sept | FPM-866 |  Not started | Clipped to catchments (Chess and Severn) | S3 COG |  Needs convert_to_cog script + raster_boundary script |
-| Plynlimon monitoring sites (7 layers) | 🟢 Sept | FPM-859–864 | Not started | Flow, AWS, raingauges, soil moisture, groundwater, water quality, daily weather. | Metadata API | Needs entries adding to postgis | 
+| Land cover map (latest) | 🟢 Sept | FPM-867 | Done | Latest year. Re-use existing EIDC WMS if possible. | WMS | Reliant on FPM-1085 | 
+| 1m EA/NRW LiDAR (clipped) | 🟢 Sept | FPM-866 | Done | Clipped to catchments (Chess and Severn) | S3 COG |  Needs convert_to_cog script + raster_boundary script |
+| Plynlimon monitoring sites (7 layers) | 🟢 Sept | FPM-859–864 | Done | Flow, AWS, raingauges, soil moisture, groundwater, water quality, daily weather. | Metadata API | Needs entries adding to postgis | 
 
 ### Second Priority Layers (Operational Beta)
 
 | Task | Target | JIRA | Current Status | Notes | Data source | Processing requirements |
 |------|--------|------|----------------|-------|-------------|-------------------------| 
 | Land cover map (historical) | 🔵 Mar 27 | |  Not started | Might be nice to allow users to look back at previous land cover products to look at land cover change. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| BGS hydrogeology 625k | 🟢 Sept (nice to have) | FPM-869 |  Not started | Existing raster. Contextual layer. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| BGS superficial geology | 🟢 Sept (nice to have) | FPM-870 |  Not started | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| BGS soil texture | 🟢 Sept (nice to have) | FPM-871 | Not started | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| BGS soil thickness | 🟢 Sept (nice to have) | FPM-872 | Not started | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| BGS boreholes | 🟢 Sept (nice to have) | FPM-856 | Not started | UK-wide point data from BGS API. | Metadata API | Needs entry adding to postgis | 
-| Weather stations (MIDAS) | 🔵 Mar 27 | FPM-873 | Not started | Needs processing. Show type metadata on hover. | Metadata API | Needs entry adding to postgis | 
-| 1m EA/NRW LiDAR (national) | 🔵 Mar 27 | FPM-866 | Not started | Large dataset. Probably WMS-based. Check SEPA data for Tweed. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| Tweed UAV LiDAR DEM + imagery | 🟢 Sept (nice to have) | FPM-857/858 | Not started | 2 processed sites. Link DEM/DSM/orthomosaic per flight. | S3 COG | Needs convert_to_cog script + raster_boundary script |
-| CHASM monitoring sites + data | 🔵 Mar 27 | FPM-876–878 | Not started | Upper Severn only. TBR, AWS, flow sites. | Metadata API | Needs entry adding to postgis | 
-| Chess spring locations | 🔵 Mar 27 | FPM-854 | Not started | BGS survey. Internal only? | | |
-| BGS geophysical survey lines | 🔵 Mar 27 | FPM-855 | Not started | Internal only? | | |
-| Citizen science flow gaugings | 🔵 Mar 27 | FPM-853 | Not started | Chess only. Show summary metadata on hover. | Metadata API | Needs entry adding to postgis | 
-| EA flow gaugings | 🔵 Mar 27 | FPM-852 | Not started | Currently blocked. Chess data available, others need requesting. | Metadata API | Needs entry adding to postgis | 
-| EA water quality monitoring | 🟡 Later | FPM-874 | Not started | | Metadata API | Needs entry adding to postgis | 
-| EA groundwater sites | 🟡 Later | FPM-875 | Not started | | Metadata API | Needs entry adding to postgis | 
+| BGS hydrogeology 625k | 🟢 Sept (nice to have) | FPM-869 |  Done | Existing raster. Contextual layer. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| BGS superficial geology | 🟢 Sept (nice to have) | FPM-870 | Done | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| BGS soil texture | 🟢 Sept (nice to have) | FPM-871 | Done | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| BGS soil thickness | 🟢 Sept (nice to have) | FPM-872 | Done | Existing raster. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| BGS boreholes | 🟢 Sept (nice to have) | FPM-856 |Done | UK-wide point data from BGS API. | Metadata API | Needs entry adding to postgis | 
+| Weather stations (MIDAS) | 🔵 Mar 27 | FPM-873 | Done | Needs processing. Show type metadata on hover. | Metadata API | Needs entry adding to postgis | 
+| 1m EA/NRW LiDAR (national) | 🔵 Mar 27 | FPM-866 | Done | Large dataset. Probably WMS-based. Check SEPA data for Tweed. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| Tweed UAV LiDAR DEM + imagery | 🟢 Sept (nice to have) | FPM-857/858 | Done | 2 processed sites. Link DEM/DSM/orthomosaic per flight. | S3 COG | Needs convert_to_cog script + raster_boundary script |
+| CHASM monitoring sites + data | 🔵 Mar 27 | FPM-876–878 | Done | Upper Severn only. TBR, AWS, flow sites. | Metadata API | Needs entry adding to postgis | 
+| Chess spring locations | 🔵 Mar 27 | FPM-854 | Done | BGS survey. Internal only? | | |
+| BGS geophysical survey lines | 🔵 Mar 27 | FPM-855 | Done | Internal only? | | |
+| Citizen science flow gaugings | 🔵 Mar 27 | FPM-853 | Done | Chess only. Show summary metadata on hover. | Metadata API | Needs entry adding to postgis | 
+| EA flow gaugings | 🔵 Mar 27 | FPM-852 | Done | Currently blocked. Chess data available, others need requesting. | Metadata API | Needs entry adding to postgis | 
+| EA water quality monitoring | 🟡 Later | FPM-874 |Done | | Metadata API | Needs entry adding to postgis | 
+| EA groundwater sites | 🟡 Later | FPM-875 | Done | | Metadata API | Needs entry adding to postgis | 
 | Land cover plus crops | 🟡 Later | FPM-868 | Not started | Restricted - not public. |
 
 ---
@@ -146,17 +146,17 @@ Each layer may need it's own data processing scripts developed. (e.g. Automate C
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Define minimum metadata per layer type | 🟢 Sept | FPM-99 | Not started | Concentrate on what metadata that scientists/end users want to see in the UI. This metadata should sit in the metadata service / EIDC catalogue rather than PostGIS |
-| Layer categorisation scheme | 🟢 Sept | | Not started | Region + data type at minimum. Drives UI navigation panel. |
+| Define minimum metadata per layer type | 🟢 Sept | FPM-99 | Done | Concentrate on what metadata that scientists/end users want to see in the UI. This metadata should sit in the metadata service / EIDC catalogue rather than PostGIS |
+| Layer categorisation scheme | 🟢 Sept | |  Done | Region + data type at minimum. Drives UI navigation panel. |
 | Define dataset series (collections) and how to access from metadata API | 🟢 Sept | | Needs talks with Epimorphics. Fall back to hardcoding lists if necessary. |
-| Hardcode metadata if needed | 🟢 Sept | | Not started |Pragmatic approach: don't wait for full metadata integration. Get layers showing. |
-| Integrate with EIDC catalogue | 🟢 Sept | | Not started | Link to EIDC catalogue pages from our UI where available. |
+| Hardcode metadata if needed | 🟢 Sept | | Done |Pragmatic approach: don't wait for full metadata integration. Get layers showing. |
+| Integrate with EIDC catalogue | 🟢 Sept | | Done | Link to EIDC catalogue pages from our UI where available. |
 
 ### Full Integration (Operational Beta)
 
 | Task | Target | JIRA | Current Status | Notes |
 |------|--------|------|----------------|-------|
-| Define what metadata API provides vs PostGIS | 🔵 Mar 27 | | Not started | Key architectural question. PostGIS for spatial index + display config; metadata API for dataset descriptions? |
+| Define what metadata API provides vs PostGIS | 🔵 Mar 27 | | Done | Key architectural question. PostGIS for spatial index + display config; metadata API for dataset descriptions? |
 | API reads layer list from metadata service | 🔵 Mar 27 | FPM-98 | Not started | Generic geospatial endpoint. Discuss with Epimorphics. |
 | Fetch site info from metadata API | 🔵 Mar 27 | FPM-851 | Not started | Generic approach for FDRI, COSMOS, NRFA sites. |
 | Ingestion process for 3rd party layers | 🔵 Mar 27 | | Not started | Ingestion process for keeping 3rd party API data (EA, SEPA, Met Office) up to date (as agencies add or remove sites). Similar to timeseries ingester but metadata-only? |
