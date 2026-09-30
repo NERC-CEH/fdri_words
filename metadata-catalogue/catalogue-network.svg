@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
   <title>Metadata catalogue network view</title>
-  <desc>The production Kubernetes namespaces behind the EIDC metadata catalogue, the public hostnames that route into each one, the services behind them, and the shared SAN storage they all mount.</desc>
+  <desc>The parts of the EIDC metadata catalogue system, the entry points that route into each one, the services behind them, and the shared storage they all mount.</desc>
   <defs>
     <style>
       text { font-family: 'Suisse International', Arial, 'Liberation Sans', sans-serif; }
@@ -20,142 +20,134 @@
   </defs>
   <rect width="1920" height="1080" fill="#000000"/>
   <text class="title" x="96" y="112">Metadata catalogue network view</text>
-  <text class="sub" x="96" y="156">Production Kubernetes namespaces, the hostnames that route into them, and the storage they share</text>
+  <text class="sub" x="96" y="156">How requests reach the catalogue and its supporting services, and the storage they share</text>
   <rect x="96" y="222" width="810" height="676" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="116" y="258">eidc</text>
-  <text class="cap" x="182" y="257">the catalogue</text>
-  <rect x="120" y="302" width="222" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="130" y="325" fill="#FFFFFF">sparql.catalogue.ceh.ac.uk</text>
-  <line class="flow" marker-end="url(#arrow)" x1="342" y1="319" x2="793" y2="319"/>
-  <rect x="796" y="302" width="64" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="806" y="325" fill="#FFFFFF">fuseki</text>
-  <rect x="120" y="552" width="171" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="130" y="575" fill="#FFFFFF">catalogue.ceh.ac.uk</text>
-  <path class="flow" marker-end="url(#arrow)" d="M291,569 H305 V409 H613"/>
-  <text class="path" x="461" y="401" text-anchor="middle">/explore, /assets</text>
-  <rect x="616" y="392" width="58" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="626" y="415" fill="#FFFFFF">dri-ui</text>
-  <path class="flow" marker-end="url(#arrow)" d="M291,569 H305 V479 H613"/>
-  <text class="path" x="461" y="471" text-anchor="middle">/cmp/documents</text>
-  <rect x="616" y="462" width="92" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="626" y="485" fill="#FFFFFF">not-found</text>
-  <line class="flow" marker-end="url(#arrow)" x1="291" y1="569" x2="453" y2="569"/>
-  <text class="path" x="381" y="561" text-anchor="middle">/ (everything else)</text>
-  <rect x="456" y="552" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
-  <text class="chip" x="466" y="575" fill="#FFFFFF">proxy</text>
-  <line class="flow" marker-end="url(#arrow)" x1="518" y1="569" x2="613" y2="569"/>
-  <rect x="616" y="552" width="94" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="626" y="575" fill="#FFFFFF">catalogue</text>
-  <path class="flow" marker-end="url(#arrow)" d="M518,569 H532 V639 H613"/>
-  <rect x="616" y="622" width="91" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="626" y="645" fill="#FFFFFF">datastore</text>
-  <path class="flow" marker-end="url(#arrow)" d="M518,569 H532 V709 H613"/>
-  <rect x="616" y="692" width="100" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="626" y="715" fill="#FFFFFF">mapserver</text>
-  <line class="flow" x1="709.71875" y1="569" x2="729.71875" y2="569"/>
-  <path class="flow" marker-end="url(#arrow)" d="M729.71875,569 V362 H828.203125 V339"/>
-  <path class="flow" marker-end="url(#arrow)" d="M729.71875,569 V639 H793"/>
-  <rect x="796" y="622" width="47" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="806" y="645" fill="#FFFFFF">solr</text>
-  <circle cx="729.71875" cy="569" r="5" fill="#DBFE52"/>
-  <text class="path" x="739.71875" y="386">loads triples</text>
-  <text class="path" x="739.71875" y="404">on a schedule</text>
-  <text class="path" x="739.71875" y="630">queries</text>
-  <text class="note" x="120" y="872">Also: maintenance page (scaled to 0 until needed)</text>
+  <text class="ns" x="116" y="258">Catalogue</text>
+  <text class="cap" x="256" y="257">records, search and exports</text>
+  <rect x="120" y="302" width="157" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="130" y="325" fill="#FFFFFF">SPARQL endpoint</text>
+  <line class="flow" marker-end="url(#arrow)" x1="277" y1="319" x2="753" y2="319"/>
+  <rect x="756" y="302" width="99" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="766" y="325" fill="#FFFFFF">triple store</text>
+  <rect x="120" y="552" width="156" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="130" y="575" fill="#FFFFFF">catalogue website</text>
+  <path class="flow" marker-end="url(#arrow)" d="M276,569 H290 V439 H533"/>
+  <text class="path" x="413" y="431" text-anchor="middle">map and data explorers</text>
+  <rect x="536" y="422" width="103" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="546" y="445" fill="#FFFFFF">explorer UI</text>
+  <line class="flow" marker-end="url(#arrow)" x1="276" y1="569" x2="393" y2="569"/>
+  <text class="path" x="343" y="561" text-anchor="middle">everything else</text>
+  <rect x="396" y="552" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
+  <text class="chip" x="406" y="575" fill="#FFFFFF">proxy</text>
+  <line class="flow" marker-end="url(#arrow)" x1="458" y1="569" x2="533" y2="569"/>
+  <rect x="536" y="552" width="127" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="546" y="575" fill="#FFFFFF">catalogue app</text>
+  <path class="flow" marker-end="url(#arrow)" d="M458,569 H472 V639 H533"/>
+  <rect x="536" y="622" width="94" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="546" y="645" fill="#FFFFFF">file server</text>
+  <path class="flow" marker-end="url(#arrow)" d="M458,569 H472 V709 H533"/>
+  <rect x="536" y="692" width="105" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="546" y="715" fill="#FFFFFF">map server</text>
+  <line class="flow" x1="662.796875" y1="569" x2="682.796875" y2="569"/>
+  <path class="flow" marker-end="url(#arrow)" d="M682.796875,569 V362 H805.671875 V339"/>
+  <path class="flow" marker-end="url(#arrow)" d="M682.796875,569 V639 H753"/>
+  <rect x="756" y="622" width="116" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="766" y="645" fill="#FFFFFF">search index</text>
+  <circle cx="682.796875" cy="569" r="5" fill="#DBFE52"/>
+  <text class="path" x="692.796875" y="386">loads triples</text>
+  <text class="path" x="692.796875" y="404">on a schedule</text>
+  <text class="path" x="692.796875" y="630">queries</text>
   <rect x="934" y="222" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="954" y="258">data-package</text>
-  <text class="cap" x="1134" y="257">zips datasets for download</text>
-  <rect x="954" y="284" width="200" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="964" y="307" fill="#FFFFFF">data-package.ceh.ac.uk</text>
+  <text class="ns" x="954" y="258">Data packaging</text>
+  <text class="cap" x="1160" y="257">zips datasets</text>
+  <rect x="954" y="284" width="124" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="964" y="307" fill="#FFFFFF">download site</text>
   <rect x="974" y="340" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
   <text class="chip" x="984" y="363" fill="#FFFFFF">proxy</text>
   <line class="flow" marker-end="url(#arrow)" x1="1036" y1="357" x2="1063" y2="357"/>
-  <rect x="1066" y="340" width="212" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1076" y="363" fill="#FFFFFF">data-package (2 replicas)</text>
+  <rect x="1066" y="340" width="90" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1076" y="363" fill="#FFFFFF">packager</text>
   <path class="flow" marker-end="url(#arrow)" d="M964,318 V357 H971"/>
   <text class="note" x="954" y="408">Adds metadata and licence information to each zip</text>
   <rect x="934" y="458" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="954" y="494">hubbub</text>
-  <text class="cap" x="1063" y="493">file integrity</text>
-  <rect x="954" y="520" width="154" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="964" y="543" fill="#FFFFFF">hubbub.ceh.ac.uk</text>
+  <text class="ns" x="954" y="494">File integrity</text>
+  <text class="cap" x="1123" y="493">Hubbub</text>
+  <rect x="954" y="520" width="102" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="964" y="543" fill="#FFFFFF">upload site</text>
   <rect x="974" y="576" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
   <text class="chip" x="984" y="599" fill="#FFFFFF">proxy</text>
   <line class="flow" marker-end="url(#arrow)" x1="1036" y1="593" x2="1063" y2="593"/>
-  <rect x="1066" y="576" width="43" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1076" y="599" fill="#FFFFFF">api</text>
+  <rect x="1066" y="576" width="47" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1076" y="599" fill="#FFFFFF">API</text>
   <path class="flow" marker-end="url(#arrow)" d="M964,554 V593 H971"/>
-  <text class="note" x="954" y="644">Plus 6 scheduled validation and report jobs</text>
+  <text class="note" x="954" y="644">Scheduled jobs validate files and report problems</text>
   <rect x="934" y="694" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="954" y="730">automated-racs</text>
-  <text class="cap" x="1162" y="729">acceptance checks</text>
-  <rect x="954" y="756" width="216" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="964" y="779" fill="#FFFFFF">automated-racs.ceh.ac.uk</text>
-  <rect x="974" y="812" width="138" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="984" y="835" fill="#FFFFFF">automated-racs</text>
+  <text class="ns" x="954" y="730">Acceptance checks</text>
+  <text class="cap" x="1209" y="729">staff tool</text>
+  <rect x="954" y="756" width="83" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="964" y="779" fill="#FFFFFF">staff site</text>
+  <rect x="974" y="812" width="80" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="984" y="835" fill="#FFFFFF">checker</text>
   <path class="flow" marker-end="url(#arrow)" d="M964,790 V829 H971"/>
   <text class="note" x="954" y="880">Checks dataset files are correctly formatted</text>
   <rect x="1390" y="222" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="1410" y="258">vocabs</text>
-  <text class="cap" x="1514" y="257">vocabulary server</text>
-  <rect x="1410" y="284" width="151" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="1420" y="307" fill="#FFFFFF">vocabs.ceh.ac.uk</text>
+  <text class="ns" x="1410" y="258">Vocabularies</text>
+  <text class="cap" x="1584" y="257">Skosmos</text>
+  <rect x="1410" y="284" width="133" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="1420" y="307" fill="#FFFFFF">vocabulary site</text>
   <rect x="1430" y="340" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
   <text class="chip" x="1440" y="363" fill="#FFFFFF">proxy</text>
   <line class="flow" marker-end="url(#arrow)" x1="1492" y1="357" x2="1519" y2="357"/>
-  <rect x="1522" y="340" width="87" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1532" y="363" fill="#FFFFFF">skosmos</text>
-  <line class="flow" marker-end="url(#arrow)" x1="1609" y1="357" x2="1636" y2="357"/>
-  <rect x="1639" y="340" width="65" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1649" y="363" fill="#FFFFFF">cache</text>
-  <line class="flow" marker-end="url(#arrow)" x1="1704" y1="357" x2="1731" y2="357"/>
-  <rect x="1734" y="340" width="64" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1744" y="363" fill="#FFFFFF">fuseki</text>
+  <rect x="1522" y="340" width="90" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1532" y="363" fill="#FFFFFF">Skosmos</text>
+  <line class="flow" marker-end="url(#arrow)" x1="1611" y1="357" x2="1638" y2="357"/>
+  <rect x="1641" y="340" width="99" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1651" y="363" fill="#FFFFFF">triple store</text>
   <path class="flow" marker-end="url(#arrow)" d="M1420,318 V357 H1427"/>
-  <text class="note" x="1410" y="408">onto.nerc.ac.uk redirects from here too</text>
+  <text class="note" x="1410" y="408">The proxy keeps draft vocabularies private</text>
   <rect x="1390" y="458" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="1410" y="494">legilo</text>
-  <text class="cap" x="1492" y="493">keyword suggestions</text>
-  <rect x="1410" y="520" width="208" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="1420" y="543" fill="#FFFFFF">legilo.eds-infra.ceh.ac.uk</text>
+  <text class="ns" x="1410" y="494">Keyword suggestions</text>
+  <text class="cap" x="1694" y="493">Legilo</text>
+  <rect x="1410" y="520" width="83" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="1420" y="543" fill="#FFFFFF">staff site</text>
   <rect x="1430" y="576" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
   <text class="chip" x="1440" y="599" fill="#FFFFFF">proxy</text>
   <line class="flow" marker-end="url(#arrow)" x1="1492" y1="593" x2="1519" y2="593"/>
-  <rect x="1522" y="576" width="60" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1532" y="599" fill="#FFFFFF">client</text>
-  <line class="flow" marker-end="url(#arrow)" x1="1581" y1="593" x2="1608" y2="593"/>
-  <rect x="1611" y="576" width="78" height="34" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
-  <text class="chip" x="1621" y="599" fill="#D6EAE6">OpenAI</text>
+  <rect x="1522" y="576" width="65" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1532" y="599" fill="#FFFFFF">Legilo</text>
+  <line class="flow" marker-end="url(#arrow)" x1="1587" y1="593" x2="1614" y2="593"/>
+  <rect x="1617" y="576" width="112" height="34" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text class="chip" x="1627" y="599" fill="#D6EAE6">LLM service</text>
   <path class="flow" marker-end="url(#arrow)" d="M1420,554 V593 H1427"/>
   <text class="note" x="1410" y="644">Finds keywords in supporting documentation</text>
   <rect x="1390" y="694" width="432" height="204" fill="#000000" stroke="#D6EAE6" stroke-width="2"/>
-  <text class="ns" x="1410" y="730">order-manager</text>
-  <text class="cap" x="1607" y="729">spatial orders</text>
-  <rect x="1410" y="756" width="174" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="chip" x="1420" y="779" fill="#FFFFFF">order-eidc.ceh.ac.uk</text>
+  <text class="ns" x="1410" y="730">Orders</text>
+  <text class="cap" x="1509" y="729">spatial subsetting</text>
+  <rect x="1410" y="756" width="91" height="34" fill="#000000" stroke="#477AE2" stroke-width="2"/>
+  <text class="chip" x="1420" y="779" fill="#FFFFFF">order site</text>
   <path class="flow" marker-end="url(#arrow)" d="M1420,790 V823 H1427"/>
   <rect x="1430" y="806" width="62" height="34" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
   <text class="chip" x="1440" y="829" fill="#FFFFFF">proxy</text>
   <line class="flow" marker-end="url(#arrow)" x1="1492" y1="823" x2="1519" y2="823"/>
-  <rect x="1522" y="806" width="60" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1532" y="829" fill="#FFFFFF">client</text>
+  <rect x="1522" y="806" width="84" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1532" y="829" fill="#FFFFFF">web app</text>
   <path class="flow" marker-end="url(#arrow)" d="M1492,823 H1506 V869 H1519"/>
-  <rect x="1522" y="852" width="43" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="chip" x="1532" y="875" fill="#FFFFFF">api</text>
-  <line class="flow" marker-end="url(#arrow)" x1="1564" y1="869" x2="1591" y2="869"/>
-  <rect x="1594" y="852" width="56" height="34" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
-  <text class="chip" x="1604" y="875" fill="#D6EAE6">FME</text>
+  <rect x="1522" y="852" width="47" height="34" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="chip" x="1532" y="875" fill="#FFFFFF">API</text>
+  <line class="flow" marker-end="url(#arrow)" x1="1569" y1="869" x2="1596" y2="869"/>
+  <rect x="1599" y="852" width="197" height="34" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text class="chip" x="1609" y="875" fill="#D6EAE6">FME spatial processing</text>
   <rect x="96" y="924" width="1728" height="54" fill="#000000" stroke="#90A968" stroke-width="2"/>
-  <text class="ns" x="116" y="960">SAN</text>
-  <text class="cap" x="186" y="959">Shared storage mounted into every namespace as SMB persistent volumes: datastore, dropbox, supporting documents, map files and Fuseki databases</text>
+  <text class="ns" x="116" y="960">Storage</text>
+  <text class="cap" x="227" y="959">Shared network storage, mounted into every part of the system: datasets, uploads, supporting documents, map files and vocabulary databases</text>
   <rect x="96" y="1014" width="34" height="22" fill="#000000" stroke="#477AE2" stroke-width="2"/>
-  <text class="foot" x="140" y="1031">public hostname (ingress)</text>
-  <rect x="386.171875" y="1014" width="34" height="22" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
-  <text class="foot" x="430.171875" y="1031">authentication</text>
-  <rect x="582.296875" y="1014" width="34" height="22" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
-  <text class="foot" x="626.296875" y="1031">service and its deployment</text>
-  <rect x="879.46875" y="1014" width="34" height="22" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
-  <text class="foot" x="923.46875" y="1031">outside the cluster</text>
-  <line class="flow" marker-end="url(#arrow)" x1="1109.59375" y1="1025" x2="1159.59375" y2="1025"/>
-  <text class="foot" x="1171.59375" y="1031">request or call</text>
+  <text class="foot" x="140" y="1031">entry point</text>
+  <rect x="264.078125" y="1014" width="34" height="22" fill="#000000" stroke="#D7B7AA" stroke-width="2"/>
+  <text class="foot" x="308.078125" y="1031">authentication</text>
+  <rect x="460.203125" y="1014" width="34" height="22" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  <text class="foot" x="504.203125" y="1031">service and its deployment</text>
+  <rect x="757.375" y="1014" width="34" height="22" fill="#000000" stroke="#D6EAE6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text class="foot" x="801.375" y="1031">outside the cluster</text>
+  <line class="flow" marker-end="url(#arrow)" x1="987.5" y1="1025" x2="1037.5" y2="1025"/>
+  <text class="foot" x="1049.5" y="1031">request or call</text>
 </svg>

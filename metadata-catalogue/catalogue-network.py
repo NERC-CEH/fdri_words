@@ -73,6 +73,7 @@ def chain(x, y, items, limit):
 
 
 def panel(x, y, w, h, name, caption):
+    assert width(name, 26, True) + 14 + width(caption, 17) + 40 <= w, f'{name} header overflows'
     out.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{BLACK}" stroke="{AIR}" stroke-width="2"/>')
     out.append(f'<text class="ns" x="{x + 20}" y="{y + 36}">{esc(name)}</text>')
     out.append(f'<text class="cap" x="{x + 20 + width(name, 26, True) + 14:.0f}" y="{y + 35}">{esc(caption)}</text>')
@@ -82,38 +83,38 @@ def note(x, y, text):
     out.append(f'<text class="note" x="{x:.0f}" y="{y:.0f}">{esc(text)}</text>')
 
 
-# ===== eidc: the catalogue namespace =====
+# ===== the catalogue =====
 EX, EY, EW, EH = 96, 222, 810, 676
-panel(EX, EY, EW, EH, 'eidc', 'the catalogue')
-hx, px, ax = EX + 24, EX + 360, EX + 520
+panel(EX, EY, EW, EH, 'Catalogue', 'records, search and exports')
+hx, px, ax = EX + 24, EX + 300, EX + 440
 limit = EX + EW - 20
 
-bx = EX + 700  # back-end column: fuseki and solr
+bx = EX + 660  # back-end column: triple store and search index
 
-# sparql host -> fuseki
+# SPARQL endpoint -> triple store
 fy = EY + 80
-h_end = chip(hx, fy, 'sparql.catalogue.ceh.ac.uk', 'host')
+h_end = chip(hx, fy, 'SPARQL endpoint', 'host')
 arrow(h_end, fy + 17, bx, fy + 17)
-f_right = chip(bx, fy, 'fuseki', 'app')
+f_right = chip(bx, fy, 'triple store', 'app')
 f_mid = (bx + f_right) / 2
 
-# catalogue.ceh.ac.uk routes
+# catalogue website routes
 cy = EY + 330
-c_end = chip(hx, cy, 'catalogue.ceh.ac.uk', 'host')
+c_end = chip(hx, cy, 'catalogue website', 'host')
 route_right = 0
-for target, path, ty in (('dri-ui', '/explore, /assets', EY + 170), ('not-found', '/cmp/documents', EY + 240)):
+for target, path, ty in (('explorer UI', 'map and data explorers', EY + 200),):
     arrow(c_end, cy + 17, ax, ty + 17, path)
     route_right = max(route_right, chip(ax, ty, target, 'app'))
-arrow(c_end, cy + 17, px, cy + 17, '/ (everything else)')
+arrow(c_end, cy + 17, px, cy + 17, 'everything else')
 p_end = chip(px, cy, 'proxy', 'proxy')
 
 cat_right = None
-for target, ty in (('catalogue', cy), ('datastore', cy + 70), ('mapserver', cy + 140)):
+for target, ty in (('catalogue app', cy), ('file server', cy + 70), ('map server', cy + 140)):
     arrow(p_end, cy + 17, ax, ty + 17)
     r = chip(ax, ty, target, 'app')
     cat_right = cat_right or r
 
-# catalogue -> fuseki and solr: one trunk out of the catalogue, branching up and down
+# catalogue app -> triple store and search index: one trunk out of the catalogue, branching up and down
 vx = max(cat_right, route_right) + 20
 turn = fy + CHIP_H + 26
 sy = cy + 70
@@ -121,16 +122,15 @@ out.append(f'<line class="flow" x1="{cat_right}" y1="{cy + 17}" x2="{vx}" y2="{c
 out.append(f'<path class="flow" marker-end="url(#arrow)" '
            f'd="M{vx},{cy + 17} V{turn} H{f_mid} V{fy + CHIP_H + 3}"/>')
 out.append(f'<path class="flow" marker-end="url(#arrow)" d="M{vx},{cy + 17} V{sy + 17} H{bx - 3}"/>')
-s_right = chip(bx, sy, 'solr', 'app')
+s_right = chip(bx, sy, 'search index', 'app')
 out.append(f'<circle cx="{vx}" cy="{cy + 17}" r="5" fill="{LIME}"/>')
 out.append(f'<text class="path" x="{vx + 10}" y="{turn + 24}">loads triples</text>')
 out.append(f'<text class="path" x="{vx + 10}" y="{turn + 42}">on a schedule</text>')
 out.append(f'<text class="path" x="{vx + 10}" y="{sy + 8}">queries</text>')
 assert bx - vx >= 40, f'back-end column too close to the trunk: {bx - vx:.0f}px'
-assert max(f_right, s_right) <= limit, 'eidc back-end column overflows'
-note(hx, EY + EH - 26, 'Also: maintenance page (scaled to 0 until needed)')
+assert max(f_right, s_right) <= limit, 'back-end column overflows'
 
-# ===== the six supporting namespaces =====
+# ===== the six supporting services =====
 COLW, ROWH, GAP = 432, 204, 32
 C1 = EX + EW + 28
 C2 = C1 + COLW + 24
@@ -152,51 +152,51 @@ def simple(x, y, name, caption, host, items, extra=None):
     return edges
 
 
-simple(C1, rows[0], 'data-package', 'zips datasets for download', 'data-package.ceh.ac.uk',
-       [('proxy', 'proxy'), ('data-package (2 replicas)', 'app')],
+simple(C1, rows[0], 'Data packaging', 'zips datasets', 'download site',
+       [('proxy', 'proxy'), ('packager', 'app')],
        'Adds metadata and licence information to each zip')
-simple(C1, rows[1], 'hubbub', 'file integrity', 'hubbub.ceh.ac.uk',
-       [('proxy', 'proxy'), ('api', 'app')],
-       'Plus 6 scheduled validation and report jobs')
-simple(C1, rows[2], 'automated-racs', 'acceptance checks', 'automated-racs.ceh.ac.uk',
-       [('automated-racs', 'app')],
+simple(C1, rows[1], 'File integrity', 'Hubbub', 'upload site',
+       [('proxy', 'proxy'), ('API', 'app')],
+       'Scheduled jobs validate files and report problems')
+simple(C1, rows[2], 'Acceptance checks', 'staff tool', 'staff site',
+       [('checker', 'app')],
        'Checks dataset files are correctly formatted')
 
-simple(C2, rows[0], 'vocabs', 'vocabulary server', 'vocabs.ceh.ac.uk',
-       [('proxy', 'proxy'), ('skosmos', 'app'), ('cache', 'app'), ('fuseki', 'app')],
-       'onto.nerc.ac.uk redirects from here too')
-simple(C2, rows[1], 'legilo', 'keyword suggestions', 'legilo.eds-infra.ceh.ac.uk',
-       [('proxy', 'proxy'), ('client', 'app'), ('OpenAI', 'external')],
+simple(C2, rows[0], 'Vocabularies', 'Skosmos', 'vocabulary site',
+       [('proxy', 'proxy'), ('Skosmos', 'app'), ('triple store', 'app')],
+       'The proxy keeps draft vocabularies private')
+simple(C2, rows[1], 'Keyword suggestions', 'Legilo', 'staff site',
+       [('proxy', 'proxy'), ('Legilo', 'app'), ('LLM service', 'external')],
        'Finds keywords in supporting documentation')
 
 # order-manager: proxy fans out to client and api; api calls FME.
 ox, oy = C2, rows[2]
-panel(ox, oy, COLW, ROWH, 'order-manager', 'spatial orders')
+panel(ox, oy, COLW, ROWH, 'Orders', 'spatial subsetting')
 hy, ky = oy + 62, oy + 112
-h_end = chip(ox + 20, hy, 'order-eidc.ceh.ac.uk', 'host')
+h_end = chip(ox + 20, hy, 'order site', 'host')
 out.append(f'<path class="flow" marker-end="url(#arrow)" d="M{ox + 30},{hy + CHIP_H} V{ky + 17} H{ox + 37}"/>')
 p_end = chip(ox + 40, ky, 'proxy', 'proxy')
 cl = p_end + ARROW
 arrow(p_end, ky + 17, cl, ky + 17)
-chip(cl, ky, 'client', 'app')
+chip(cl, ky, 'web app', 'app')
 ay = ky + 46
 arrow(p_end, ky + 17, cl, ay + 17)
-a_end = chip(cl, ay, 'api', 'app')
+a_end = chip(cl, ay, 'API', 'app')
 arrow(a_end, ay + 17, a_end + ARROW, ay + 17)
-fme_end = chip(a_end + ARROW, ay, 'FME', 'external')
+fme_end = chip(a_end + ARROW, ay, 'FME spatial processing', 'external')
 assert fme_end <= ox + COLW - 16, 'order-manager overflows'
 
-# ===== SAN band =====
+# ===== storage band =====
 SY = EY + EH + 26
 out.append(f'<rect x="{EX}" y="{SY}" width="{W - 192}" height="54" fill="{BLACK}" stroke="{LAND}" stroke-width="2"/>')
-out.append(f'<text class="ns" x="{EX + 20}" y="{SY + 36}">SAN</text>')
-out.append(f'<text class="cap" x="{EX + 90}" y="{SY + 35}">Shared storage mounted into every namespace as SMB persistent volumes: '
-           f'datastore, dropbox, supporting documents, map files and Fuseki databases</text>')
+out.append(f'<text class="ns" x="{EX + 20}" y="{SY + 36}">Storage</text>')
+out.append(f'<text class="cap" x="{EX + 34 + width('Storage', 26, True):.0f}" y="{SY + 35}">Shared network storage, mounted into every part of the system: '
+           f'datasets, uploads, supporting documents, map files and vocabulary databases</text>')
 
 # ===== legend =====
 LY = 1030
 lx = EX
-for text, kind, desc in (('host', 'host', 'public hostname (ingress)'), ('proxy', 'proxy', 'authentication'),
+for text, kind, desc in (('host', 'host', 'entry point'), ('proxy', 'proxy', 'authentication'),
                          ('app', 'app', 'service and its deployment'), ('external', 'external', 'outside the cluster')):
     stroke, dash, _ = KINDS[kind]
     d = f' stroke-dasharray="{dash}"' if dash else ''
@@ -208,7 +208,7 @@ out.append(f'<text class="foot" x="{lx + 62}" y="{LY + 1}">request or call</text
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <title>Metadata catalogue network view</title>
-  <desc>The production Kubernetes namespaces behind the EIDC metadata catalogue, the public hostnames that route into each one, the services behind them, and the shared SAN storage they all mount.</desc>
+  <desc>The parts of the EIDC metadata catalogue system, the entry points that route into each one, the services behind them, and the shared storage they all mount.</desc>
   <defs>
     <style>
       text {{ font-family: 'Suisse International', Arial, 'Liberation Sans', sans-serif; }}
@@ -228,7 +228,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
   </defs>
   <rect width="{W}" height="{H}" fill="{BLACK}"/>
   <text class="title" x="96" y="112">Metadata catalogue network view</text>
-  <text class="sub" x="96" y="156">Production Kubernetes namespaces, the hostnames that route into them, and the storage they share</text>
+  <text class="sub" x="96" y="156">How requests reach the catalogue and its supporting services, and the storage they share</text>
 {chr(10).join('  ' + s for s in out)}
 </svg>
 '''
