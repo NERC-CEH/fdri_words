@@ -5,32 +5,7 @@ aws-vault can be installed via brew
 > [!NOTE]  
 > The original `aws-vault` is an abandoned project; an [active fork provides updates for range of platforms](https://github.com/byteness/aws-vault/releases/tag/v7.9.8)
 
-## Guide for existing AWS account
-
-```
-# Store AWS credentials for the "ceh-test" profile
-$ aws-vault add ceh-test
-Enter Access Key Id: ABDCDEFDASDASF
-Enter Secret Key: %%%
-```
-
-Create a profile in .aws/config. If you have MFA setup on your account this needs to be added.
-
-```
-[profile ceh-test]
-region=eu-west-2
-mfa_serial=arn:aws:iam::<AWS-account-id>:mfa/personal-phone
-```
-
-You can now start a subshell with temporary credentials. These will last for 1 hour by default but can be changed by overriding the AWS_SESSION_TOKEN_TTL environment variable.
-
-```
-# Start a subshell with temporary credentials
-$ aws-vault exec ceh-test
-Starting subshell /bin/zsh, use `exit` to exit the subshell
-```
-
-## Guide for new AWS accounts (through the landing zone)
+## Guide for adding AWS accounts
 
 ### One-time: install aws-vault (if not installed already)
 
